@@ -51,3 +51,9 @@ Why is this important? In today's digital age, attackers are constantly evolving
 Our approach is not just theoretical. It has practical applications in cybersecurity training, red/blue team exercises, and enhancing overall system security. Imagine being able to train your cybersecurity team in an environment that is as complex and unpredictable as the real world, or having a system that constantly adapts to emerging threats.
 
 SANDMAN is more than just a project; it's a leap towards a future where our digital environments are as resilient and adaptive as we are. We're not just defending against threats; we're outsmarting them.
+
+## Other Project Names
+
+- **Sand**boxed **M**ulti-**A**gent **N**etwork
+- **S**ynthetic **A**gent **N**etwork for **D**igital **M**imicry and **A**daptive **N**etworking
+- **S**imulated **A**rtificial **N**etwork for **D**efense via **M**ulti-**A**gent **N**egotiation
