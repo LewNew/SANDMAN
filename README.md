@@ -1,4 +1,4 @@
-# SANDMAN: Simulated Agent Network for Defense via Multi-Agent Negotiation
+# SANDMAN: Sandboxed Multi-Agent Network
 
 Private repo for the SANDMAN project. Please contribute to this README with any new ideas or concepts that you may have.
 
