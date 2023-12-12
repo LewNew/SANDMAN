@@ -1,10 +1,10 @@
-# SANDMAN: Sandboxed Multi-Agent Network
+# SANDMAN: Sandbox Multi-Agent Network
 
-Private repo for the SANDMAN project. Please contribute to this README with any new ideas or concepts that you may have.
+Private repo for the SANDMAN project. Please contribute to IDEAS.md with any new ideas or concepts that you may have.
 
 ## Project Overview
 
-The SANDMAN (**S**imulated **A**gent **N**etwork for **D**efense via **M**ulti-**A**gent **N**egotiation) project is an innovative venture in the realm of cybersecurity, leveraging advanced artificial intelligence to simulate user behavior within digital environments. Our goal is to create highly realistic, dynamic simulations that serve as deceptive landscapes to mislead and analyze potential cyber attackers, while enhancing the robustness of cybersecurity defenses.
+The SANDMAN (**Sand**box **M**ulti-**A**gent **N**etwork) project is an innovative venture in the realm of cybersecurity, leveraging advanced artificial intelligence to simulate user behavior within digital environments. Our goal is to create highly realistic, dynamic simulations that serve as deceptive landscapes to mislead and analyze potential cyber attackers, while enhancing the robustness of cybersecurity defenses.
 
 ## Objectives
 
