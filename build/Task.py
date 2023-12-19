@@ -1,9 +1,10 @@
 from datetime import datetime
 from abc import ABC, abstractmethod
 
-class Task(ABC):
+class Task:
     """
     Represents a task with details such as name, type, inception time, percent complete, and last worked on.
+    this class overwrites __str__ so it can be printed
 
     Attributes:
         name (str): The name of the task.
@@ -13,7 +14,6 @@ class Task(ABC):
         inception_time (str, optional): The date and time when the task was created. Default is the current time.
 
     Methods:
-        display_task_details(): Display detailed information about the task.
         set_last_worked_on(datatime=None): Set the last worked on time for the task. If no time is provided, the current time is used.
         get_task_data(): Return a dictionary containing the task data.
     """
@@ -30,17 +30,25 @@ class Task(ABC):
             inception_time (datetime, optional): The date and time when the task was created. Default is the current time.
         """
 
-        # TODO not finished this __init__ will most likely change
-        # TODO probably add channel object that does not exsist yet
+        #TODO not finished this __init__ will most likely change
+        #TODO probably add channel object that does not exsist yet
 
         self.name = name
         self.task_type = task_type
         self.percent_complete = percent_complete
-        # TODO add functionality to manulary set last_worked_on and inception_time
-        self.last_worked_on = last_worked_on if last_worked_on else datetime.now()
-        self.inception_time = inception_time if inception_time else datetime.now()
-        #self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #TODO add functionality to manulary set last_worked_on and inception_time
+        self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def __str__(self):
+        """
+        Return a string representation of the Task.
+
+        Returns:
+            str: A formatted string representing the Task.
+        """
+        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items())
+        return f"{task_details_str}"
 
     def set_last_worked_on(self, datatime=None):
         """
@@ -52,16 +60,6 @@ class Task(ABC):
         # TODO: Add functionality to manually set last_worked_on
         self.last_worked_on = datatime if datatime else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def display_task_details(self):
-        """
-        Display detailed information about the task.
-        """
-        print(f"Task: {self.name}")
-        print(f"Type: {self.task_type}")
-        print(f"Inception Time: {self.inception_time.strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"Percent Complete: {self.percent_complete}%")
-        print(f"Last Worked On: {self.last_worked_on.strftime('%Y-%m-%d %H:%M:%S')}")
-
     def get_task_data(self):
         """
         Return a dictionary containing the task data.
@@ -69,22 +67,10 @@ class Task(ABC):
         Returns:
             dict: A dictionary containing task data.
         """
-        return {
-            "name": self.name,
-            "type": self.task_type,
-            "percent_complete": self.percent_complete,
-            "last_worked_on": self.last_worked_on.strftime('%Y-%m-%d %H:%M:%S'),
-            "inception_time": self.inception_time.strftime('%Y-%m-%d %H:%M:%S')
-        }
-
-    def get_duration(self):
-        """
-        Calculate the duration since the task was last worked on.
-        """
-        return datetime.now() - self.last_worked_on
+        return vars(self)
 
     @abstractmethod
-    def do_work(self, **kwargs):
+    def do_work(self,**kwargs):
         """
         abstract method for sub classes to implement to facilitate the funcionality of a task
 
@@ -97,9 +83,10 @@ class Task(ABC):
         """
         pass
 
-
+# Example usage:      
 if __name__ == "__main__":
-    # Example usage:
+
     task1 = Task("Project A", "Development")
-    task1.display_task_details()
-    task1.set_last_worked_on()
+    print(task1)
+    # task1.set_last_worked_on()
+
