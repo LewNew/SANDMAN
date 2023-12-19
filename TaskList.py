@@ -88,10 +88,8 @@ class TaskList:
             raise IndexError("Index out of range")
 
 
-
+# Example usage:
 if __name__ == "__main__":
-    from Task import Task
-    # Example usage:
     task_list = TaskList()
 
     task1 = Task("Project A", "Development")
