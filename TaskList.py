@@ -18,10 +18,44 @@ class TaskList:
         """
         Initializes a new TaskList object with an empty list of tasks.
         """
-
         #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
 
         self.taskList = []
+
+    def __str__(self):
+        """
+        Return a string representation of the TaskList.
+
+        Returns:
+            str: A formatted string representing all tasks in the TaskList.
+        """
+        tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
+        return f"All tasks:\n-------\n{tasks_str}\n-------"
+
+    def __iter__(self):
+        """
+        Allow iteration over tasks in the task list.
+
+        Yields:
+            Task: The next Task object in the task list.
+        """
+        for task in self.taskList:
+            yield task
+
+    def __getitem__(self, index):
+        """
+        Allow accessing a task from the task list using square brackets.
+
+        Parameters:
+            index (int): The index of the task to retrieve.
+
+        Returns:
+            Task: The Task object at the specified index.
+        """
+        if 0 <= index < len(self.taskList):
+            return self.taskList[index]
+        else:
+            raise IndexError("Index out of range")
 
     def add_task(self, task):
         """
@@ -51,41 +85,7 @@ class TaskList:
 
         self.taskList.remove(task)
 
-    def __str__(self):
-        """
-        Return a string representation of the TaskList.
-
-        Returns:
-            str: A formatted string representing all tasks in the TaskList.
-        """
-        tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
-        return f"All tasks:\n-------\n{tasks_str}\n-------"
-
-
-    def __iter__(self):
-        """
-        Allow iteration over tasks in the task list.
-
-        Yields:
-            Task: The next Task object in the task list.
-        """
-        for task in self.taskList:
-            yield task
-
-    def __getitem__(self, index):
-        """
-        Allow accessing a task from the task list using square brackets.
-
-        Parameters:
-            index (int): The index of the task to retrieve.
-
-        Returns:
-            Task: The Task object at the specified index.
-        """
-        if 0 <= index < len(self.taskList):
-            return self.taskList[index]
-        else:
-            raise IndexError("Index out of range")
+    
 
 
 # Example usage:

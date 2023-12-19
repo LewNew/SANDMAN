@@ -40,18 +40,6 @@ class Task:
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-
-    def set_last_worked_on(self, datatime=None):
-        """
-        Set the last worked on time for the task. If no time is provided, the current time is used.
-
-        Parameters:
-            datatime (str, optional): The date and time to set as the last worked on time. Default is None.
-        """
-        # TODO: Add functionality to manually set last_worked_on
-        self.last_worked_on = datatime if datatime else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-
     def __str__(self):
         """
         Return a string representation of the Task.
@@ -62,6 +50,15 @@ class Task:
         task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items())
         return f"{task_details_str}"
 
+    def set_last_worked_on(self, datatime=None):
+        """
+        Set the last worked on time for the task. If no time is provided, the current time is used.
+
+        Parameters:
+            datatime (str, optional): The date and time to set as the last worked on time. Default is None.
+        """
+        # TODO: Add functionality to manually set last_worked_on
+        self.last_worked_on = datatime if datatime else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def get_task_data(self):
         """
