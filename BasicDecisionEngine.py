@@ -15,7 +15,7 @@ class BasicDecisionEngine:
         """
         self.task_list = TaskList()
 
-    def make_decision(self)
+    def make_decision(self):
         """
         method that decideds what task to do
         """
@@ -34,5 +34,10 @@ if __name__ == "__main__":
     decision_engine.task_list.add_task(task1)
     decision_engine.task_list.add_task(task2)
 
-    print("All tasks:")
-    decision_engine.task_list.print_all_tasks()
+    # decision_engine.task_list.print_all_tasks()
+    # print(decision_engine.task_list[0].get_task_data())
+
+    print(decision_engine.task_list)
+
+    for task in decision_engine.task_list:
+        print(task)

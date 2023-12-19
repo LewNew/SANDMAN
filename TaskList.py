@@ -51,15 +51,41 @@ class TaskList:
 
         self.taskList.remove(task)
 
-    def print_all_tasks(self):
+    def __str__(self):
         """
-        Display detailed information about all tasks in the list.
-        """
-        print("All tasks:\n-------")
+        Return a string representation of the TaskList.
 
+        Returns:
+            str: A formatted string representing all tasks in the TaskList.
+        """
+        tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
+        return f"All tasks:\n-------\n{tasks_str}\n-------"
+
+
+    def __iter__(self):
+        """
+        Allow iteration over tasks in the task list.
+
+        Yields:
+            Task: The next Task object in the task list.
+        """
         for task in self.taskList:
-            task.display_task_details()
-            print("-------")
+            yield task
+
+    def __getitem__(self, index):
+        """
+        Allow accessing a task from the task list using square brackets.
+
+        Parameters:
+            index (int): The index of the task to retrieve.
+
+        Returns:
+            Task: The Task object at the specified index.
+        """
+        if 0 <= index < len(self.taskList):
+            return self.taskList[index]
+        else:
+            raise IndexError("Index out of range")
 
 
 
@@ -75,10 +101,10 @@ if __name__ == "__main__":
     task_list.add_task(task2)
 
     
-    task_list.print_all_tasks()
+    print(task_list)
 
     print("\nRemoving task1:")
     task_list.remove_task(task1)
 
     print("Remaining tasks:\n")
-    task_list.print_all_tasks()
+    print(task_list)

@@ -1,4 +1,5 @@
 from datetime import datetime
+from abc import ABC, abstractmethod
 
 class Task:
     """
@@ -51,15 +52,16 @@ class Task:
         self.last_worked_on = datatime if datatime else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-    def display_task_details(self):
+    def __str__(self):
         """
-        Display detailed information about the task.
+        Return a string representation of the Task.
+
+        Returns:
+            str: A formatted string representing the Task.
         """
-        print(f"Task: {self.name}")
-        print(f"Type: {self.task_type}")
-        print(f"Inception Time: {self.inception_time}")
-        print(f"Percent Complete: {self.percent_complete}%")
-        print(f"Last Worked On: {self.last_worked_on}")
+        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items())
+        return f"{task_details_str}"
+
 
     def get_task_data(self):
         """
@@ -68,13 +70,7 @@ class Task:
         Returns:
             dict: A dictionary containing task data.
         """
-        return {
-            "name": self.name,
-            "type": self.type,
-            "percent_complete": self.percent_complete,
-            "last_worked_on": self.last_worked_on,
-            "inception_time": self.inception_time
-        }
+        return vars(self)
 
     @abstractmethod
     def do_work(self,**kwargs):
@@ -93,5 +89,6 @@ class Task:
 if __name__ == "__main__":
     # Example usage:
     task1 = Task("Project A", "Development")
-    task1.display_task_details()
-    task1.set_last_worked_on()
+    print(task1)
+    # task1.set_last_worked_on()
+
