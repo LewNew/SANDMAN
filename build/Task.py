@@ -1,6 +1,7 @@
 from datetime import datetime
+from abc import ABC, abstractmethod
 
-class Task:
+class Task(ABC):
     """
     Represents a task with details such as name, type, inception time, percent complete, and last worked on.
 
@@ -36,8 +37,10 @@ class Task:
         self.task_type = task_type
         self.percent_complete = percent_complete
         # TODO add functionality to manulary set last_worked_on and inception_time
-        self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.last_worked_on = last_worked_on if last_worked_on else datetime.now()
+        self.inception_time = inception_time if inception_time else datetime.now()
+        #self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def set_last_worked_on(self, datatime=None):
         """
@@ -55,9 +58,9 @@ class Task:
         """
         print(f"Task: {self.name}")
         print(f"Type: {self.task_type}")
-        print(f"Inception Time: {self.inception_time}")
+        print(f"Inception Time: {self.inception_time.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"Percent Complete: {self.percent_complete}%")
-        print(f"Last Worked On: {self.last_worked_on}")
+        print(f"Last Worked On: {self.last_worked_on.strftime('%Y-%m-%d %H:%M:%S')}")
 
     def get_task_data(self):
         """
@@ -68,11 +71,17 @@ class Task:
         """
         return {
             "name": self.name,
-            "type": self.type,
+            "type": self.task_type,
             "percent_complete": self.percent_complete,
-            "last_worked_on": self.last_worked_on,
-            "inception_time": self.inception_time
+            "last_worked_on": self.last_worked_on.strftime('%Y-%m-%d %H:%M:%S'),
+            "inception_time": self.inception_time.strftime('%Y-%m-%d %H:%M:%S')
         }
+
+    def get_duration(self):
+        """
+        Calculate the duration since the task was last worked on.
+        """
+        return datetime.now() - self.last_worked_on
 
     @abstractmethod
     def do_work(self, **kwargs):

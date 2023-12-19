@@ -1,5 +1,3 @@
-from Task import Task
-
 class TaskList:
     """
     Represents a list of tasks with the ability to add and remove tasks.

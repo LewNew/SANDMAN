@@ -17,16 +17,27 @@ class DecisionEngine:
 
     def make_decision(self):
         """
-        Decides what task to do next. Currently, this method is a placeholder and needs to be implemented.
+        Decides what task to do next based on the duration the task has been pending and the completion percentage.
 
         Returns:
             Task: The next task to be executed.
         """
-        # TODO: Implement the logic to decide the next task based on certain criteria.
-        # Placeholder logic: return the first task in the list
-        if self.task_list.taskList:  # Make sure there is at least one task
-            return self.task_list.taskList[0]
-        return None  # If no tasks are available, return None
+        if not self.task_list.taskList:
+            return None  # If no tasks are available, return None
+
+        # Sort tasks by duration they have been pending (from time_created to last_worked)
+        self.task_list.taskList.sort(key=lambda task: task.get_duration(), reverse=True)
+
+        # If there are tasks that are nearly complete, prioritize them
+        nearly_complete_tasks = [task for task in self.task_list.taskList if task.percent_complete > 80]
+        if nearly_complete_tasks:
+            # Assuming the personality trait 'completionist' is high, prioritize tasks that are almost complete
+            # Need to define personality traits. Completionist is just a trait for an agent that intends to complete
+            # ongoing or pending tasks prior to starting new ones.
+            return nearly_complete_tasks[0]
+
+        # Otherwise, return the task with the longest duration
+        return self.task_list.taskList[0]
 
     def execute_task(self, task):
         """
