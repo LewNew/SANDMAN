@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 class Task:
     """
     Represents a task with details such as name, type, inception time, percent complete, and last worked on.
+    this class overwrites __str__ so it can be printed
 
     Attributes:
         name (str): The name of the task.
@@ -13,7 +14,6 @@ class Task:
         inception_time (str, optional): The date and time when the task was created. Default is the current time.
 
     Methods:
-        display_task_details(): Display detailed information about the task.
         set_last_worked_on(datatime=None): Set the last worked on time for the task. If no time is provided, the current time is used.
         get_task_data(): Return a dictionary containing the task data.
     """

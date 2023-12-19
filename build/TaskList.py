@@ -4,13 +4,16 @@ class TaskList:
     """
     Represents a list of tasks with the ability to add and remove tasks.
 
+    this class overwrites __str__, __iter__ and __getitem__ so it unctions as as list
+    allowing of getting elements by doing TaskList[0] and iterateing over tasks
+    in a loop e.g. for Task in TaskList
+
     Attributes:
         tasks (list): A list to store Task objects.
 
     Methods:
         add_task(Task)
         remove_task(Task)
-        print_all_tasks()
     """
     
 
