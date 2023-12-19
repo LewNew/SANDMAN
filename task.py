@@ -36,15 +36,16 @@ class Task:
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-    def set_last_worked_on(self,datatime=None):
-         """
+    def set_last_worked_on(self, datatime=None):
+        """
         Set the last worked on time for the task. If no time is provided, the current time is used.
 
         Parameters:
             datatime (str, optional): The date and time to set as the last worked on time. Default is None.
         """
-        #TODO add functionality to manulary set last_worked_on
-        self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # TODO: Add functionality to manually set last_worked_on
+        self.last_worked_on = datatime if datatime else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
     def display_task_details(self):
         """
