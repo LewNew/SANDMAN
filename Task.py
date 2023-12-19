@@ -25,12 +25,12 @@ class Task:
             name (str): The name of the task.
             task_type (str): The type or category of the task.
             percent_complete (int, optional): The percentage of completion for the task.
-            last_worked_on (str, optional): The date when the task was last worked on. Default is None.
-            inception_time (str, optional): The date and time when the task was created. Default is the current time.
+            last_worked_on (datetime, optional): The date when the task was last worked on. Default is None.
+            inception_time (datetime, optional): The date and time when the task was created. Default is the current time.
         """
 
         #TODO not finished this __init__ will most likely change
-        #TODO probably add channel object
+        #TODO probably add channel object that does not exsist yet
 
         self.name = name
         self.task_type = task_type
