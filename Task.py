@@ -30,6 +30,7 @@ class Task:
         """
 
         #TODO not finished this __init__ will most likely change
+        #TODO probably add channel object
 
         self.name = name
         self.task_type = task_type
@@ -75,9 +76,19 @@ class Task:
             "inception_time": self.inception_time
         }
 
+    @abstractmethod
+    def do_work(self,**kwargs):
+        """
+        abstract method for sub classes to implement to facilitate the funcionality of a task
 
-    
+        e.g. a "do word document" task will have a do_work function that will facilitate writeing into a word document
+        the purpose of this is so that lots of different types of work will have differnet ways of completeing it
+        but they will all have a do_work function so all the Task object can be treated the same by the decision engine ragardless of the type of task
+        hopefully makeing it extendable as if you want to add a new type of task you can extand tast and implement the do_work function
+        without needing to change task list or the decision engine.
 
+        """
+        pass
         
 if __name__ == "__main__":
     # Example usage:
