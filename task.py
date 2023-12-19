@@ -14,6 +14,7 @@ class Task:
     Methods:
         display_task_details(): Display detailed information about the task.
         set_last_worked_on(datatime=None): Set the last worked on time for the task. If no time is provided, the current time is used.
+        get_task_data(): Return a dictionary containing the task data.
     """
 
     def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None):
@@ -56,6 +57,22 @@ class Task:
         print(f"Inception Time: {self.inception_time}")
         print(f"Percent Complete: {self.percent_complete}%")
         print(f"Last Worked On: {self.last_worked_on}")
+
+    def get_task_data(self):
+        """
+        Return a dictionary containing the task data.
+
+        Returns:
+            dict: A dictionary containing task data.
+        """
+        return {
+            "name": self.name,
+            "type": self.type,
+            "percent_complete": self.percent_complete,
+            "last_worked_on": self.last_worked_on,
+            "inception_time": self.inception_time
+        }
+
 
     
 
