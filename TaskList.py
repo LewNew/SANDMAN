@@ -5,11 +5,15 @@ class TaskList:
     Attributes:
         tasks (list): A list to store Task objects.
     """
+    from Task import Task
 
     def __init__(self):
         """
         Initializes a new TaskList object with an empty list of tasks.
         """
+
+        #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
+
         self.taskList = []
 
     def add_task(self, task):
@@ -19,6 +23,11 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be added.
         """
+
+        #makes sure that a Task object was passed into the method
+        if not isinstance(task, Task):
+            raise TypeError(f"Expected a Task object, but received {type(task)}")
+
         self.taskList.append(task)
 
     def remove_task(self, task):
@@ -28,6 +37,11 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be removed.
         """
+
+        #makes sure that a Task object was passed into the method
+        if not isinstance(task, Task):
+            raise TypeError(f"Expected a Task object, but received {type(task)}")
+
         self.taskList.remove(task)
 
     def display_all_tasks(self):
