@@ -1,11 +1,18 @@
+from Task import Task
+
 class TaskList:    
     """
     Represents a list of tasks with the ability to add and remove tasks.
 
     Attributes:
         tasks (list): A list to store Task objects.
+
+    Methods:
+        add_task(Task)
+        remove_task(Task)
+        print_all_tasks()
     """
-    from Task import Task
+    
 
     def __init__(self):
         """
@@ -44,7 +51,7 @@ class TaskList:
 
         self.taskList.remove(task)
 
-    def display_all_tasks(self):
+    def print_all_tasks(self):
         """
         Display detailed information about all tasks in the list.
         """
@@ -55,8 +62,9 @@ class TaskList:
             print("-------")
 
 
-from Task import Task
+
 if __name__ == "__main__":
+    from Task import Task
     # Example usage:
     task_list = TaskList()
 
@@ -67,10 +75,10 @@ if __name__ == "__main__":
     task_list.add_task(task2)
 
     
-    task_list.display_all_tasks()
+    task_list.print_all_tasks()
 
     print("\nRemoving task1:")
     task_list.remove_task(task1)
 
     print("Remaining tasks:\n")
-    task_list.display_all_tasks()
+    task_list.print_all_tasks()

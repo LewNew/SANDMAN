@@ -29,6 +29,8 @@ class Task:
             inception_time (str, optional): The date and time when the task was created. Default is the current time.
         """
 
+        #TODO not finished this __init__ will most likely change
+
         self.name = name
         self.task_type = task_type
         self.percent_complete = percent_complete
