@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     print(notepadTask)
 
+    #TODO this will soon change to task and persona instead of text
     notepadTask.do_work(text = "textThatWillBeTyped")
 
     print(notepadTask.read_work())
-    
