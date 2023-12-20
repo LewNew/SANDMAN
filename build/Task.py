@@ -40,7 +40,6 @@ class Task:
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.channel = channel
-        
 
 
     def __str__(self):
@@ -72,6 +71,7 @@ class Task:
         """
         return vars(self)
 
+    #TODO replace **kwargs with persona which is a instance of persona
     @abstractmethod
     def do_work(self,**kwargs):
         """
