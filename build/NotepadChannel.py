@@ -6,20 +6,55 @@ from Channel import Channel
 import os
 
 
-
 class NotepadChannel(Channel):
-    def __init__(self,file_path,file_name):
+    """
+    NotepadChannel Class
+
+    This class represents a communication channel with Notepad, inheriting from the Channel class.
+
+    Attributes:
+    - file_path (str): The path to the directory where files are stored.
+    - file_name (str): The name of the file to be manipulated.
+
+    Methods:
+    - __init__: Constructor for the NotepadChannel class.
+    - send: Implementation of the send method for sending text to Notepad.
+    - recv: Implementation of the recv method for receiving data (not implemented).
+    - read: Implementation of the read method for reading text from a Notepad file.
+    - save_new_file: Save a new Notepad file.
+    - check_file_exists: Check if a Notepad file exists.
+    - new_file: Create and save a new Notepad file.
+    - continue_file: Continue an existing Notepad file.
+
+    """
+
+    def __init__(self, file_path, file_name):
+        """
+        Constructor for the NotepadChannel class.
+
+        Parameters:
+        - file_path (str): The path to the directory where file is stored.
+        - file_name (str): The name of the file to be manipulated.
+
+        Returns:
+        - None
+        """
         super().__init__()
         self.file_path = file_path
         self.file_name = file_name
 
-    #parent method #
-    #needs:
-    #text = "text to be imputted"
     def send(self, **kwargs):
+        """
+        Implementation of the send method for sending text to Notepad.
 
+        Parameters:
+        - kwargs (dict): Keyword arguments representing data to be sent.
+            - text (str): The text to be sent to Notepad.
+
+        Returns:
+        - bool: True if the operation is successful.
+        """
         text = kwargs["text"]
-
 
         # Open Notepad using subprocess
         if not self.check_file_exists():
@@ -28,107 +63,129 @@ class NotepadChannel(Channel):
             self.continue_file(text)
 
         return True
-        
-    #parent method
+
     def recv(self):
-        # This method could be used to receive data from Notepad, if applicable
+        """
+        Implementation of the recv method for receiving data (not implemented).
+
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
         pass
 
-    #parent method
     def read(self):
-        #see if the file exsists
-        if self.check_file_exists():
-            #if it does return all the text
+        """
+        Implementation of the read method for reading text from a Notepad file.
 
-            #content of the file
+        Parameters:
+        - None
+
+        Returns:
+        - str or None: The content of the Notepad file, or None if an error occurs.
+        """
+        # Check if the file exists
+        if self.check_file_exists():
             content = ""
 
-            #reading the file
+            # Read the file
             try:
-                with open(self.file_path+self.file_name, 'r') as file:
+                with open(self.file_path + self.file_name, 'r') as file:
                     content = file.read()
             except FileNotFoundError:
-                print(f"Error: The file '{self.file_path+self.file_name}' does not exist.")
+                print(f"Error: The file '{self.file_path + self.file_name}' does not exist.")
                 return None
             except Exception as e:
                 print(f"Error: An unexpected error occurred - {e}")
                 return None
 
-
-            #then simulate reading it
-            #open the file
-            subprocess.Popen(['notepad.exe',self.file_path+self.file_name])
-            #spend 5 seconds reading it
-            time.sleep(5)
+            # Simulate reading it
+            subprocess.Popen(['notepad.exe', self.file_path + self.file_name])
+            time.sleep(5)  # Spend 5 seconds reading it
             pyautogui.hotkey('alt', 'f4')
 
-            #then return the content
+            # Then return the content
             return content
-            
         else:
-            #else the file does not exsist
-            #TODO something here if trying to read a file that does not exsist
+            # File does not exist
+            # TODO: Handle the case where trying to read a file that does not exist
             pass
 
-
-
-
     def save_new_file(self):
-        # Press Ctrl + S to trigger the Save dialog
+        """
+        Save a new Notepad file.
+
+        Parameters:
+        - None
+
+        Returns:
+        - None
+        """
         pyautogui.hotkey('ctrl', 's')
-        # Wait for the Save As dialog to appear
         time.sleep(2)
-        # Type the file path and press Enter
-        pyautogui.typewrite(self.file_path+self.file_name)
-        # Wait for the file path to be registered
+        pyautogui.typewrite(self.file_path + self.file_name)
         time.sleep(2)
         pyautogui.press('enter')
-        # Wait for the Save dialog to close
         time.sleep(2)
 
     def check_file_exists(self):
-        return os.path.exists(self.file_path+self.file_name)
+        """
+        Check if a Notepad file exists.
 
-    def new_file(self,text):
+        Parameters:
+        - None
 
+        Returns:
+        - bool: True if the file exists, False otherwise.
+        """
+        return os.path.exists(self.file_path + self.file_name)
+
+    def new_file(self, text):
+        """
+        Create and save a new Notepad file.
+
+        Parameters:
+        - text (str): The text to be written to the new file.
+
+        Returns:
+        - None
+        """
         subprocess.Popen(['notepad.exe'])
-        # Wait for Notepad to open
         time.sleep(2)
-        # Type and send the text to Notepad
-        pyautogui.typewrite(text,interval=0.2)
-        # wait to save
+        pyautogui.typewrite(text, interval=0.2)
         time.sleep(2)
-        #save the file
         self.save_new_file()
-        #close the program
         pyautogui.hotkey('alt', 'f4')
         pass
 
-    def continue_file(self,text):
+    def continue_file(self, text):
+        """
+        Continue an existing Notepad file.
 
-        #if file already exsists continue it
-        subprocess.Popen(['notepad.exe',self.file_path+self.file_name])
-        #open and wait 2 seconds
+        Parameters:
+        - text (str): The text to be appended to the existing file.
+
+        Returns:
+        - None
+        """
+        subprocess.Popen(['notepad.exe', self.file_path + self.file_name])
         time.sleep(2)
-        #move curser to EofF
         pyautogui.hotkey('ctrl', 'end')
-        #type
-        pyautogui.typewrite(text,interval=0.2)
-        #wait 2 seconds
+        pyautogui.typewrite(text, interval=0.2)
         time.sleep(2)
-        #save the file
         pyautogui.hotkey('ctrl', 's')
         pyautogui.hotkey('alt', 'f4')
         pass
-
 
 
 
 
 # Example usage:
 if __name__ == "__main__":
-    notepad_channel = NotepadChannel("H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework.txt")
-    notepad_channel.send(text="continueing!")
+    notepad_channel = NotepadChannel("H:\\PhD\\sandman\\project\\SANDMAN\\","fakework.txt")
+    notepad_channel.send(text="hello!")
     time.sleep(2)
     print(notepad_channel.read())
 
