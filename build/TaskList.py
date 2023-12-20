@@ -88,7 +88,6 @@ class TaskList:
 
         self.taskList.remove(task)
 
-    
 
 
 # Example usage:
