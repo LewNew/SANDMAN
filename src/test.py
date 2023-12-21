@@ -15,4 +15,3 @@ if __name__ == "__main__":
     notepadTask.do_work(notepadTask,"Boss","Happy")
 
     print(notepadTask.read_work())
-C
