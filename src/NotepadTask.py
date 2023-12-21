@@ -17,7 +17,7 @@ class NotepadTask(Task):
         self.channel = NotepadChannel(self.file_path,self.file_name)
         
         
-    def do_work(self,task=None,persona=None,mood=None):
+    def do_work(self,task=None,persona=None,mood=None,Memory=None):
         print("doing work")
         #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
         self.channel.send(text = self.generator.generate_text(task,persona,mood))

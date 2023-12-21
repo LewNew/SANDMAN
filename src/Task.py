@@ -73,7 +73,7 @@ class Task:
 
     #TODO replace **kwargs with persona which is a instance of persona
     @abstractmethod
-    def do_work(self,task=None,persona=None,mood=None):
+    def do_work(self,task=None,persona=None,mood=None,memory=None):
         """
         abstract method for sub classes to implement to facilitate the funcionality of a task
 
