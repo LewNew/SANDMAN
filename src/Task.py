@@ -18,7 +18,7 @@ class Task:
         get_task_data(): Return a dictionary containing the task data.
     """
 
-    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None):
+    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.
 
@@ -33,6 +33,8 @@ class Task:
         #TODO not finished this __init__ will most likely change
         #TODO probably add channel object that does not exsist yet
 
+        print(task_list)
+
         self.name = name
         self.task_type = task_type
         self.percent_complete = percent_complete
@@ -40,6 +42,7 @@ class Task:
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.channel = channel
+        self.task_list=task_list
 
 
     def __str__(self):

@@ -2,7 +2,6 @@ from Task import Task
 
 class TaskList:    
     """
-    Represents a list of tasks with the ability to add and remove tasks.
 
     this class overwrites __str__, __iter__ and __getitem__ so it unctions as as list
     allowing of getting elements by doing TaskList[0] and iterateing over tasks
@@ -25,15 +24,15 @@ class TaskList:
 
         self.taskList = []
 
-    def __str__(self):
-        """
-        Return a string representation of the TaskList.
+    # def __str__(self):
+    #     """
+    #     Return a string representation of the TaskList.
 
-        Returns:
-            str: A formatted string representing all tasks in the TaskList.
-        """
-        tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
-        return f"All tasks:\n-------\n{tasks_str}\n-------"
+    #     Returns:
+    #         str: A formatted string representing all tasks in the TaskList.
+    #     """
+    #     tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
+    #     return f"All tasks:\n-------\n{tasks_str}\n-------"
 
     def __iter__(self):
         """
