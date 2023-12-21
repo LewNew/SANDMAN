@@ -4,6 +4,8 @@ import pyautogui
 import time
 from Channel import Channel
 import os
+import imaplib
+import email
 
 
 class MailChannel(Channel):
@@ -65,28 +67,83 @@ class MailChannel(Channel):
 
         return True
 
-    def recv(self):
+    def recv(self, imap_server, email_account, password):
         """
-        Implementation of the recv method for receiving data (not implemented).
+        Fetches all unread emails from the inbox.
+        Navigates through all unread emails in the client.
+        
+        Parameters:
+        - imap_server (str): IMAP server address.
+        - email_account (str): Email account username.
+        - password (str): Email account password.
+
+        Returns:
+        - unread_messages: A list of unread emails.
+        """
+        mail = imaplib.IMAP4_SSL(imap_server)
+        mail.login(email_account, password)
+        mail.select('inbox')
+
+        status, response = mail.search(None, 'UNSEEN')
+        unread_emails = response[0].split()
+        unread_messages = []
+
+        subprocess.Popen([self.client_path])
+        time.sleep(1)
+        for i in range(9): pyautogui.press('tab'); time.sleep(0.1)
+        time.sleep(1)
+        for email_id in unread_emails:
+            pyautogui.press('space')
+            pyautogui.press('enter')
+            
+            time.sleep(5)
+            
+            pyautogui.press('m')
+            pyautogui.press('esc')
+
+            status, data = mail.fetch(email_id, '(RFC822)')
+            raw_email = data[0][1]
+            msg = email.message_from_bytes(raw_email)
+
+            unread_messages.append(msg)
+
+        mail.logout()
+
+        return unread_messages
+
+    def read(self, unread_messages):
+        """
+        Reads unread emails in the mail client.
 
         Parameters:
-        - None
+        - unread_messages (list): A list of unread emails.
 
         Returns:
         - None
         """
-        pass
 
-    def read(self):
-        """
-        Implementation of the read method for reading text from the subject and body of an email.
+        for msg in unread_messages:
+            # Extracting subject, sender, and body
+            subject = msg["subject"]
+            sender = msg["from"]
+            body = msg.get_payload(decode=True).decode()
 
-        Parameters:
-        - None
 
-        Returns:
-        - str: The content of subject and body.
-        """
+            # apply some kind of logic for deciding how to handle each message
+
+            # append new tasks to the task list or discard emails
+
+            # pass subject back for further correspondance
+
+            # can either choose from set: None, notepad, word, MailSendTask
+
+            # if none, ignore
+
+            # else if MailSendTask create new MailSendTask with ap. info
+
+            # else if notepad/word create new np/word task with ap. info
+
+
 
     def transmit(self):
         """
