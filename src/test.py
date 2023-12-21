@@ -13,9 +13,9 @@ if __name__ == "__main__":
     print(notepadTask)
 
     #TODO this will soon change to persona instead of text
-    notepadTask.do_work(notepadTask,"Boss","Happy")
+    # notepadTask.do_work(notepadTask,"Boss","Happy")
 
-    print(notepadTask.read_work())
+    # print(notepadTask.read_work())
 
     # raw = RAWChannel("H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","RawTest.txt")
 
