@@ -1,6 +1,7 @@
 from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
+from RAWChannel import RAWChannel
 
 class NotepadTask(Task):
     
@@ -15,9 +16,10 @@ class NotepadTask(Task):
         self.file_name = file_name
         
         self.channel = NotepadChannel(self.file_path,self.file_name)
+        self.rawChannel = RAWChannel(self.file_path,self.file_name)
         
         
-    def do_work(self,task=None,persona=None,mood=None,Memory=None):
+    def do_work(self,task=None,persona=None,mood=None,memory=None):
         print("doing work")
         #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
         self.channel.send(text = self.generator.generate_text(task,persona,mood))

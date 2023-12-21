@@ -35,7 +35,7 @@ class RAWChannel(Channel):
         self.file_path = file_path
         self.file_name = file_name
 
-    @abstractmethod
+
     def send(self, **kwargs):
         """
         Abstract method to send data through the channel.
@@ -46,9 +46,19 @@ class RAWChannel(Channel):
         Returns:
         - None
         """
-        pass
+        text = kwargs["text"]
 
-    @abstractmethod
+        try:
+            with open(self.file_path + self.file_name, 'w') as file:
+                file.write(text)
+            print(f"Content successfully written to '{self.file_path + self.file_name}'.")
+        except Exception as e:
+            print(f"Error writing to file '{self.file_path + self.file_name}': {e}")
+
+        
+
+
+
     def recv(self, **kwargs):
         """
         Abstract method to receive data through the channel.
@@ -61,7 +71,7 @@ class RAWChannel(Channel):
         """
         pass
 
-    @abstractmethod
+
     def read(self, **kwargs):
         """
         Abstract method to read data through the channel.
@@ -72,5 +82,16 @@ class RAWChannel(Channel):
         Returns:
         - None
         """
-        pass
+
+        try:
+            with open(self.file_path + self.file_name, 'r') as file:
+                content = file.read()
+            return content
+        except FileNotFoundError:
+            print(f"Error: File '{self.file_path + self.file_name}' not found.")
+            return None
+        except Exception as e:
+            print(f"Error reading file '{self.file_path + self.file_name}': {e}")
+            return None
+
 
