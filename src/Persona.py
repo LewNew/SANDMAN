@@ -43,7 +43,9 @@ class Persona:
         if hierarchy_level not in self.HIERARCHY_LEVELS:
             raise ValueError("Invalid hierarchy level.")
 
-        self.name = name
+        self.name = "Bob Smith"
+        self.first_name = "Bob"
+        self.last_name = "Smith"
         self.role = role
         self.age = age
         self.gender = gender

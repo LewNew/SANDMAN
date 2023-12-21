@@ -71,6 +71,7 @@ class Task:
         """
         return vars(self)
 
+
     #TODO replace **kwargs with persona which is a instance of persona
     @abstractmethod
     def do_work(self,task=None,persona=None,mood=None,memory=None):
@@ -93,6 +94,7 @@ class Task:
 
         """
         raise NotImplementedError("do_work method must be implemented in the concrete subclass")
+
 
 
 # Example usage:      
