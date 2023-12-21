@@ -5,7 +5,7 @@ from Channel import Channel
 from NotepadChannel import NotepadChannel
 
 if __name__ == "__main__":
-    print("start test")
+    print("start models")
 
     notepadTask = NotepadTask("notepad","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework.txt")
 
