@@ -77,7 +77,7 @@ def type_text(text, typing_speed=0.02):
             time.sleep(random.uniform(0.2, 1.5))  # Random pause between 0.2 to 1.5 sec
 
 def main():
-    prompt = "Very concisely give me an overview of Lancaster University in the UK\n\n"
+    prompt = "Act as a supervisor giving their student a new research task around generative AI. Present this in an email format as if it was an automated agent giving a task to another agent\n\n"
     #prompt = "True or false: a banana is smaller than a lemon.\n\n"
     gpt_response = get_gpt_response(prompt)
 
