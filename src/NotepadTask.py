@@ -6,14 +6,16 @@ class NotepadTask(Task):
     
     def __init__(self, name, task_type,file_path,file_name, percent_complete=0, last_worked_on=None, inception_time=None):
         super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
-        self.file_path = file_path
-        self.file_name = file_name
         
         #TODO dont know if this key is right??? just fond it and used it from TextGenerator.py class
         self.generator = TextGenerator("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")
 
+        #TODO the file_path should proably be hard coded but the file name can be created from the generator class
+        self.file_path = file_path
+        self.file_name = file_name
+        
         self.channel = NotepadChannel(self.file_path,self.file_name)
-        #TODO have the generate text class here
+        
         
     def do_work(self,task,persona,mood):
         print("doing work")
