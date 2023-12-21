@@ -8,15 +8,17 @@ class NotepadTask(Task):
         super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
         self.file_path = file_path
         self.file_name = file_name
+        
+        #TODO dont know if this key is right??? just fond it and used it from TextGenerator.py class
+        self.generator = TextGenerator("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")
+
         self.channel = NotepadChannel(self.file_path,self.file_name)
-        self.generator = TextGenerator()
         #TODO have the generate text class here
         
-    #TODO text  should be generated here, this function should take a personality and pass that to a generate class that
-    #TODO !!!!!!!!!
-    def do_work(self,task,persona):
+    def do_work(self,task,persona,mood):
         print("doing work")
-        self.channel.send(text = self.generator.generate_text(task,"persona here"))
+        #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
+        self.channel.send(text = self.generator.generate_text(task,persona,mood))
         print("finished work")
 
         #TODO do work should return some usefull value

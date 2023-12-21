@@ -34,6 +34,7 @@ class TextGenerator:
         base_name = f"{persona}_{task}".replace(" ", "_")
         return f"{base_name}.txt"
 
+#TODO should this not be in a if __name__ == "__main__" ??
 
 # Initialize the Mood object (assuming you've already done so)
 agent_mood = Mood()
