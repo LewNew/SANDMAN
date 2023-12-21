@@ -31,8 +31,9 @@ class Mood:
     def randomize_mood(self):
         self.current_mood = random.choice(Mood.MOODS)
 
+if __name__ == "__main__":
 
-agent = Mood()
-agent.randomize_mood()  # Randomly set the mood
-task = "Writing"
-print(f"{agent} is performing {task} task. Their current mood is {agent.get_mood()}.")
+    agent = Mood()
+    agent.randomize_mood()  # Randomly set the mood
+    task = "Writing"
+    print(f"{agent} is performing {task} task. Their current mood is {agent.get_mood()}.")

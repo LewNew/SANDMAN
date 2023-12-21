@@ -36,23 +36,25 @@ class TextGenerator:
 
 #TODO should this not be in a if __name__ == "__main__" ??
 
-# Initialize the Mood object (assuming you've already done so)
-agent_mood = Mood()
-agent_mood.randomize_mood()
+if __name__ == "__main__":
 
-# Define the task and persona
-task_description = "Write a report"
-persona_description = "Research Analyst"
+    # Initialize the Mood object (assuming you've already done so)
+    agent_mood = Mood()
+    agent_mood.randomize_mood()
 
-# Retrieve the current mood of the agent
-current_mood = agent_mood.get_mood()
+    # Define the task and persona
+    task_description = "Write a report"
+    persona_description = "Research Analyst"
 
-# Initialize and use the TextGenerator
-api_key = "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"
-text_generator = TextGenerator(api_key="your-api-key")
-generated_text = text_generator.generate_text(task_description, persona_description, current_mood)
+    # Retrieve the current mood of the agent
+    current_mood = agent_mood.get_mood()
 
-# Output the results
-print(f"Mood: {current_mood}")
-print(f"Generated Text: {generated_text}")
+    # Initialize and use the TextGenerator
+    api_key = "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"
+    text_generator = TextGenerator(api_key="your-api-key")
+    generated_text = text_generator.generate_text(task_description, persona_description, current_mood)
+
+    # Output the results
+    print(f"Mood: {current_mood}")
+    print(f"Generated Text: {generated_text}")
 
