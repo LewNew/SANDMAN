@@ -8,7 +8,7 @@ import os
 
 class RAWChannel(Channel):
     """
-    Abstract Base Class for Communication Channels
+    Abstract Base Class for reading RAW files
 
     Attributes:
     - None
