@@ -33,7 +33,7 @@ class Task:
         #TODO not finished this __init__ will most likely change
         #TODO probably add channel object that does not exsist yet
 
-        print(task_list)
+        # print(task_list)
 
         self.name = name
         self.task_type = task_type
@@ -52,8 +52,14 @@ class Task:
         Returns:
             str: A formatted string representing the Task.
         """
-        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items())
+        #TODO Task does not print its parent task list otherwise printing a TaskList or task would cause an infinate recuresie look
+        # might want to change this
+        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items() if key != 'task_list')
         return f"{task_details_str}"
+
+    def add_to_parent_task_list(self,task):
+        self.task_list.add_task(task)
+
 
     def set_last_worked_on(self, datatime=None):
         """

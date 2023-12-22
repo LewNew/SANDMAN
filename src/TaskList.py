@@ -24,15 +24,16 @@ class TaskList:
 
         self.taskList = []
 
-    # def __str__(self):
-    #     """
-    #     Return a string representation of the TaskList.
+    #TODO removed this becase now that Tasks has the Task list
+    def __str__(self):
+        """
+        Return a string representation of the TaskList.
 
-    #     Returns:
-    #         str: A formatted string representing all tasks in the TaskList.
-    #     """
-    #     tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
-    #     return f"All tasks:\n-------\n{tasks_str}\n-------"
+        Returns:
+            str: A formatted string representing all tasks in the TaskList.
+        """
+        tasks_str = "\n-------\n".join(str(task) for task in self.taskList)
+        return f"All tasks:\n-------\n{tasks_str}\n-------"
 
     def __iter__(self):
         """
