@@ -5,23 +5,7 @@ import openai
 import json
 from ElementsDict import *
 
-# This script does not currently take in any information relating to the agent as parameters. It's purely
-# for engineering prompts to pass in variables. For SANDMAN, a similar chat() function such as the one in here
-# would ideally pass in information relating to the agent, such as def chat(self, mood, persona). I think our goal
-# with this is to also pass in context relating to previous tasks performed. Perhaps we can do this by using an LM
-# or some NLP technique to summarise what the agent has done today. For example, if the agent has performed 3 tasks
-# already on X, Y, and Z then we read that, get the context of those tasks in a CONDENSED form (so we're not passing
-# too much into the prompt), which is then passed through alongside other parameters such as those declared in here.
-# This is an extensible approach again because you can just update the ElementsDict to suit your needs
-
-# Trying to avoid generating too many API keys because I'm not tracking them.
-# Set OPEN_API_KEY as an environment variable in CMD prompt with setx OPEN_API_KEY "<KEY>" or do it manually
-# Get your own key ya slugs
-
 openai.api_key = os.environ["OPENAI_API_KEY"]
-
-# Ignore max_tokens. I couldn't get Tokenizer() from tiktoken to work
-# I wanted to print the token count that's all but it's not significant
 
 def chat(system, user_assistant, max_tokens):
     assert isinstance(system, str), "`system` should be a string"
@@ -103,4 +87,7 @@ for i in range(highest_prompt_number + 1, highest_prompt_number + 1 + num_prompt
 with open(output_file_path, 'w') as output_file:
     json.dump(output_data, output_file, indent=4)
 
-print(f"JSON saved to {output_file_path} as {output_file} with {num_prompts} prompts")
+print(f"JSON saved to {output_file_path} with {num_prompts} prompts")
+
+for i, prompt_data in enumerate(output_data[-num_prompts:]):
+    print(f"Prompt {i + 1}: {prompt_data['Role']} - {prompt_data['Organization']} - {prompt_data['Topic']} - {prompt_data['Style']}")
