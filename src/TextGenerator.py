@@ -1,3 +1,4 @@
+import openai
 import requests
 from prompts import gpt_requests
 from Mood import Mood
@@ -7,12 +8,23 @@ class TextGenerator:
 
     def __init__(self, api_key):
         self.api_key = api_key
-        self.api_url = "https://api.openai.com/v1/engines/davinci-codex/completions"
 
     def generate_text(self, task, persona, mood):
-        message = f"This is a test message for generate_text in TextGenerator.py. Your task is {task} and your " \
-                  f"current mood is {mood}."
-        return gpt_requests.ChatGPT_request(message, task)
+        # Setting up the prompt
+        system_msg = f"You are a text generator. Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
+        messages = [
+            {"role": "system", "content": system_msg}
+        ]
+
+        # Making the API call
+        openai.api_key = self.api_key
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # or the most appropriate model you have access to
+            messages=messages,
+        )
+
+        # Extracting and returning the generated text
+        return response.choices[0].message.content
 
     '''
     def generate_text(self, task, persona, mood):
