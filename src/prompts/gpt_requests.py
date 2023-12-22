@@ -28,5 +28,5 @@ def prompt_request(prompt):
 response = prompt_request("Translate the following English text to French: 'Hello, how are you?'")
 print(response)
 
-system_msg = f"You are {name} with role {role} and occupation {occupation}. Your current mood is {mood}."
+system_msg = f"Test message. Ignore this"
 prompt = "My next task is to discuss the potential of generative AI agents for deception"
