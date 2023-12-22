@@ -83,6 +83,17 @@ class Task:
         """
         return vars(self)
 
+    def finish_work(self):
+        """
+        finihsed work method to set percent complete 100
+        #TODO maybe not the best way of doing this
+
+        """
+        self.percent_complete = 100
+        self.set_last_worked_on()
+
+        return True
+
 
     #TODO replace **kwargs with persona which is a instance of persona
     @abstractmethod
