@@ -1,9 +1,11 @@
 import os
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 import tiktoken
 
 # Set your OpenAI API key
-openai.api_key = os.environ["OPENAI_API_KEY"]
+
 
 # Define a function to count tokens in a list of messages
 def count_tokens(messages):
@@ -33,10 +35,8 @@ def chat(system, user_assistant, max_tokens):
     if token_count > max_tokens:
         raise ValueError(f"Total tokens ({token_count}) exceed the maximum allowed tokens ({max_tokens}).")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-    )
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=messages)
 
     status_code = response["choices"][0]["finish_reason"]
     assert status_code == "stop", f"The status code was {status_code}."

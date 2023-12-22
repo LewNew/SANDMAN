@@ -1,14 +1,16 @@
 import datetime
 import os
 import random
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 from ElementsDict import *
 
 # Trying to avoid generating too many API keys because I'm not tracking them.
 # Set OPEN_API_KEY as an environment variable in CMD prompt with setx OPEN_API_KEY "<KEY>" or do it manually
 # Get your own key ya slugs
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
+
 
 
 def chat(system, user_assistant, max_tokens):
@@ -24,10 +26,8 @@ def chat(system, user_assistant, max_tokens):
 
     messages = [system_msg] + user_assistant_msgs
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-    )
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=messages)
 
     status_code = response["choices"][0]["finish_reason"]
     assert status_code == "stop", f"The status code was {status_code}."
