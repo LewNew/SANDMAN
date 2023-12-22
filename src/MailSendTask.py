@@ -21,7 +21,7 @@ class MailSendTask(Task):
         do_work(task, persona, mood, Memory): Perform the task
 
     """
-    def __init__(self, name, task_type, client_path, recipients, percent_complete=0, last_worked_on=None, inception_time=None):
+    def __init__(self, name, task_type, client_path, recipients, subject, body, percent_complete=0, last_worked_on=None, inception_time=None):
         super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
         """
         Initializes a new Task object.
@@ -38,6 +38,8 @@ class MailSendTask(Task):
         """
         self.client_path = client_path
         self.recipients = recipients
+        self.subject = subject
+        self.body = body
         
         self.channel = MailChannel(self.client_path)
         
@@ -47,7 +49,7 @@ class MailSendTask(Task):
         #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
 
         # Hard coded for initial test
-        self.channel.send(sender="", recipients="b.fowley@lancaster.ac.uk", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
+        self.channel.send(sender="", recipients="SANDMAN_A1@outlook.com", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
         print("finished work")
 
         #TODO do work should return some usefull value
@@ -55,5 +57,5 @@ class MailSendTask(Task):
 
 if __name__ == "__main__":
     
-    mail_task_instance = MailSendTask(name="Example Task", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients="b.fowley@lancaster.ac.uk")
+    mail_task_instance = MailSendTask(name="Example Task", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients="SANDMAN_A1@outlook.com", subject="Test Subject", body="Dear Agent,\nHello!")
     print(mail_task_instance.do_work(mail_task_instance,"persona"))

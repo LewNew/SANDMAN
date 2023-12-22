@@ -30,7 +30,7 @@ class MailChannel(Channel):
 
     """
 
-    def __init__(self, client_path):
+    def __init__(self, client_path): #, imap_server, email_account, password
         """
         Constructor for the MailChannel class.
 
@@ -42,6 +42,9 @@ class MailChannel(Channel):
         """
         super().__init__()
         self.client_path = client_path
+        #self.imap_server = imap_server
+        #self.email_account = email_account
+        #self.password = password
 
     def send(self, **kwargs):
         """
@@ -113,6 +116,9 @@ class MailChannel(Channel):
             unread_messages.append(msg)
 
         mail.logout()
+        time.sleep(2)
+        pyautogui.hotkey('ctrl', 'w')
+        pyautogui.hotkey('alt', 'f4')
 
         return unread_messages
 
@@ -167,6 +173,8 @@ class MailChannel(Channel):
         pyautogui.hotkey('ctrl', 'enter')
         time.sleep(1)
         pyautogui.hotkey('ctrl', 'enter')
+        time.sleep(5)
+        pyautogui.hotkey('alt', 'f4')
         pass
 
     def compose(self, sender, recipients, date, subject, body, attachments):

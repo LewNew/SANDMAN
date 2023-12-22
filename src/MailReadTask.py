@@ -1,7 +1,9 @@
 from Task import Task
 from MailChannel import MailChannel
+from MailSendTask import MailSendTask
 import imaplib
 import email
+
 
 class MailReadTask(Task):
     """
@@ -43,20 +45,24 @@ class MailReadTask(Task):
         self.email_account = email_account
         self.password = password
 
-        self.channel = MailChannel(self.client_path, self.imap_server, self.email_account, self.password)
+        self.channel = MailChannel(self.client_path) #, self.imap_server, self.email_account, self.password
         
         
-    def do_work(self):
+    def do_work(self,task=None,persona=None,mood=None,Memory=None):
         
         print("Doing work")
 
-        unread_messages = self.channel.recv(self.imap_server, self.email_account, self.password)
+        unread_messages = self.channel.recv(imap_server=self.imap_server, email_account=self.email_account, password=self.password)
 
         for msg in unread_messages:
             # Extracting subject, sender, and body
             subject = msg["subject"]
             sender = msg["from"]
             body = msg.get_payload(decode=True).decode()
+
+            reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, subject=subject, body=body, percent_complete=0, last_worked_on=None, inception_time=None)
+
+            self.add_to_parent_task_list(reply)
 
 
             
@@ -86,5 +92,5 @@ class MailReadTask(Task):
 
 if __name__ == "__main__":
     
-    mail_task_instance = MailReadTask(name="Example Task", task_type="mailRead", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", imap_server="imap-mail.outlook.com", email_account="", password="")
+    mail_task_instance = MailReadTask(name="Example Task", task_type="mailRead", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", imap_server="imap-mail.outlook.com", email_account="SANDMAN_A1@outlook.com", password="$4NDM4N1")
     print(mail_task_instance.do_work(mail_task_instance,"persona"))
