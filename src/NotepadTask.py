@@ -29,6 +29,9 @@ class NotepadTask(Task):
         self.channel.send(text = self.generator.generate_text(task,persona,mood))
         print("finished work")
 
+        #update task so that its finished
+        task.finish_work()
+
         #TODO do work should return some usefull value
         return True
 
