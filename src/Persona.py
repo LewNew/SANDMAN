@@ -19,7 +19,8 @@ class Persona:
         # Extend as needed
     }
 
-    def __init__(self, name, role, age, gender, personality_traits, type_speed, occupation, hierarchy_level):
+    def __init__(self, name, first_name, last_name, role, age, gender, personality_traits, type_speed, occupation,
+                 hierarchy_level):
         """
         Initialize a new Persona object with various characteristics and hierarchy level.
 
@@ -34,27 +35,17 @@ class Persona:
             hierarchy_level (int): The hierarchy level of the agent (1 for Employee, 2 for Manager, etc.).
         """
 
-        if not isinstance(age, int) or age <= 0:
-            raise ValueError("Age must be a positive integer.")
-
-        if not isinstance(type_speed, int) or type_speed <= 0:
-            raise ValueError("Type speed must be a positive integer.")
-
-        if hierarchy_level not in self.HIERARCHY_LEVELS:
-            raise ValueError("Invalid hierarchy level.")
-
-        self.name = "Bob Smith"
-        self.first_name = "Bob"
-        self.last_name = "Smith"
-        self.role = role
-        self.age = age
-        self.gender = gender
-        self.personality_traits = personality_traits
-        self.type_speed = type_speed
-        self.occupation = occupation
-        self.hierarchy_level = hierarchy_level
-        self.task_list = TaskList()
+        self.name = None
+        self.first_name = None
+        self.last_name = None
+        self.age = None
+        self.role = None
+        self.occupation = None
+        self.gender = None
+        self.innate = None
         self.mood = Mood()
+
+        self.personality_traits = personality_traits
 
     def update_mood(self, new_mood):
         # Initialise object
