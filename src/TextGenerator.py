@@ -11,13 +11,11 @@ class TextGenerator:
     def generate_text(self, task, persona, mood):
         # Setting up the prompt to be more dynamic
         system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
-                     f"is {persona} and their mood is {mood}"
+                     f"is {persona} and their mood is {mood}. Context of the task is {task}."
         messages = [
             {"role": "system", "content": system_msg},
-            {"role": "user", "content": f"Please perform the task based on the {task} context provided."}  # User's
-            # request can be more specific based
-            # on actual use
-            # case
+            {"role": "user", "content": f"Please perform the task based on the {task} context provided."}
+            # User's request can be more specific based on actual use case
         ]
 
         # Making the API call
