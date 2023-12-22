@@ -10,9 +10,9 @@ if __name__ == "__main__":
 
     taskList = TaskList()
 
-    notepadTask1 = NotepadTask("q2Report","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework1.txt")
-    notepadTask2 = NotepadTask("scriptForPresentation","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework2.txt")
-    notepadTask3 = NotepadTask("resaerchPaper","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework3.txt")
+    notepadTask1 = NotepadTask("q2Report","typeing","..\\fakeWork\\","fakework1.txt")
+    notepadTask2 = NotepadTask("scriptForPresentation","typeing","..\\fakeWork\\","fakework2.txt")
+    notepadTask3 = NotepadTask("resaerchPaper","typeing","..\\fakeWork\\","fakework3.txt")
 
     taskList.add_task(notepadTask1)
     taskList.add_task(notepadTask2)

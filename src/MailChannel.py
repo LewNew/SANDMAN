@@ -67,7 +67,7 @@ class MailChannel(Channel):
 
         return True
 
-    def recv(self, imap_server, email_account, password):
+    def recv(self, **kwargs):
         """
         Fetches all unread emails from the inbox.
         Navigates through all unread emails in the client.
@@ -80,6 +80,11 @@ class MailChannel(Channel):
         Returns:
         - unread_messages: A list of unread emails.
         """
+
+        imap_server = kwargs["imap_server"]
+        email_account = kwargs["email_account"]
+        password = kwargs["password"]
+
         mail = imaplib.IMAP4_SSL(imap_server)
         mail.login(email_account, password)
         mail.select('inbox')

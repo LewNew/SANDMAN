@@ -50,7 +50,31 @@ class MailReadTask(Task):
         
         print("Doing work")
 
-        work = self.channel.read(self.channel.recv(self.imap_server, self.email_account, self.password))
+        unread_messages = self.channel.recv(self.imap_server, self.email_account, self.password)
+
+        for msg in unread_messages:
+            # Extracting subject, sender, and body
+            subject = msg["subject"]
+            sender = msg["from"]
+            body = msg.get_payload(decode=True).decode()
+
+
+            
+
+
+            # apply some kind of logic for deciding how to handle each message
+
+            # append new tasks to the task list or discard emails
+
+            # pass subject back for further correspondance
+
+            # can either choose from set: None, notepad, word, MailSendTask
+
+            # if none, ignore
+
+            # else if MailSendTask create new MailSendTask with ap. info
+
+            # else if notepad/word create new np/word task with ap. info
 
         print("finished work")
 
