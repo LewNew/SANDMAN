@@ -19,8 +19,10 @@ if __name__ == "__main__":
     taskList.add_task(notepadTask1)
     print(taskList)
     notepadTask1.add_to_parent_task_list(notepadTask2)
-    
     print(taskList)
+    notepadTask1.remvoe_from_parent_task_list(notepadTask2)
+    print(taskList)
+
 
     for task in taskList:
         task.do_work(task=task,persona=None,mood=None,memory=None)

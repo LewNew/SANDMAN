@@ -60,6 +60,9 @@ class Task:
     def add_to_parent_task_list(self,task):
         self.task_list.add_task(task)
 
+    def remvoe_from_parent_task_list(self,task):
+        self.task_list.remove_task(task)
+
 
     def set_last_worked_on(self, datatime=None):
         """
