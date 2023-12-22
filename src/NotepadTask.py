@@ -5,8 +5,12 @@ from RAWChannel import RAWChannel
 
 class NotepadTask(Task):
     
-    def __init__(self, name, task_type,file_path,file_name, percent_complete=0, last_worked_on=None, inception_time=None):
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+    def __init__(self, name, task_type,file_path,file_name, percent_complete=0, last_worked_on=None, inception_time=None,task_list=None):
+
+
+        #TODO dont know why i need to do "a ="" but if i pass task_list as is its just None
+        a = task_list
+        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time, task_list=a)
         
         #TODO dont know if this key is right??? just fond it and used it from TextGenerator.py class
         self.generator = TextGenerator("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")
@@ -33,8 +37,6 @@ class NotepadTask(Task):
         work = self.channel.read()
         print("finished reading")
         return work
-
-
 
 
 if __name__ == "__main__":
