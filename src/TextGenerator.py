@@ -10,9 +10,16 @@ class TextGenerator:
         self.api_url = "https://api.openai.com/v1/engines/davinci-codex/completions"
 
     def generate_text(self, task, persona, mood):
+        message = f"This is a test message for generate_text in TextGenerator.py. Your task is {task} and your " \
+                  f"current mood is {mood}."
+        return gpt_requests.ChatGPT_request(message, task)
+
+    '''
+    def generate_text(self, task, persona, mood):
         system_msg = f"You are {self.name}. "
         user_prompt = f"Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
         return gpt_requests.ChatGPT_request(user_prompt, system_msg)
+    '''
 
     def generate_file_name(self, task, persona):
         base_name = f"{persona}_{task}".replace(" ", "_")

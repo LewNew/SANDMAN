@@ -2,7 +2,6 @@ from Task import Task
 
 class TaskList:    
     """
-    Represents a list of tasks with the ability to add and remove tasks.
 
     this class overwrites __str__, __iter__ and __getitem__ so it unctions as as list
     allowing of getting elements by doing TaskList[0] and iterateing over tasks
@@ -25,6 +24,7 @@ class TaskList:
 
         self.taskList = []
 
+    #TODO removed this becase now that Tasks has the Task list
     def __str__(self):
         """
         Return a string representation of the TaskList.

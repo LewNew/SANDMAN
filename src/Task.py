@@ -18,7 +18,7 @@ class Task:
         get_task_data(): Return a dictionary containing the task data.
     """
 
-    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None):
+    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.
 
@@ -33,6 +33,8 @@ class Task:
         #TODO not finished this __init__ will most likely change
         #TODO probably add channel object that does not exsist yet
 
+        # print(task_list)
+
         self.name = name
         self.task_type = task_type
         self.percent_complete = percent_complete
@@ -40,6 +42,7 @@ class Task:
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.channel = channel
+        self.task_list=task_list
 
 
     def __str__(self):
@@ -49,8 +52,17 @@ class Task:
         Returns:
             str: A formatted string representing the Task.
         """
-        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items())
+        #TODO Task does not print its parent task list otherwise printing a TaskList or task would cause an infinate recuresie look
+        # might want to change this
+        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items() if key != 'task_list')
         return f"{task_details_str}"
+
+    def add_to_parent_task_list(self,task):
+        self.task_list.add_task(task)
+
+    def remvoe_from_parent_task_list(self,task):
+        self.task_list.remove_task(task)
+
 
     def set_last_worked_on(self, datatime=None):
         """
