@@ -1,6 +1,7 @@
 from openai import OpenAI
 
 client = OpenAI(api_key="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")
+# Hello
 
 class TextGenerator:
 
