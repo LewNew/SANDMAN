@@ -12,14 +12,14 @@ class NothingTask(Task):
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
-        #TODO wait time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
+        #TODO wait_time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
         #or from the task name or something.
         wait_time = 5
         time.sleep(wait_time)
 
         print("finished work")
 
-        #TODO maybe dont do self.finish_work() as a do nothing isnt something you can complete, its just do nothing
+        #TODO maybe dont do self.finish_work() as a do nothing isnt something you can complete, its just do nothing, still probably need to update the last_worked_on var tho
         #update task so that its finished
         self.finish_work()
 
