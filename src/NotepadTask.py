@@ -4,6 +4,15 @@ from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
 
 class NotepadTask(Task):
+
+    @classmethod
+    def get_class_metadata(cls):
+        _metadata = {
+            'name': 'NotepadTask',
+            'description': 'Interacts with a simple txt file document',
+            'status':'valid'
+        }
+        return _metadata
     
     def __init__(self, name, task_type,file_path,file_name, percent_complete=0, last_worked_on=None, inception_time=None,task_list=None):
 

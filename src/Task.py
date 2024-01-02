@@ -17,6 +17,23 @@ class Task:
         set_last_worked_on(datatime=None): Set the last worked on time for the task. If no time is provided, the current time is used.
         get_task_data(): Return a dictionary containing the task data.
     """
+    
+    @classmethod
+    @abstractmethod
+    def get_class_metadata(cls):
+        '''A class method used to extract information about the task for dynamic loading
+        It should retun the following type of structure with the key fields
+
+        _metadata = {
+            'name': 'ParentTaskClass',
+            'description': 'The parent abstract class to be extended'
+            'status':'ignore'
+        }
+        '''
+        raise NotImplementedError(f'not implemented')
+        #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
+
+    
 
     def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
@@ -60,7 +77,7 @@ class Task:
     def add_to_parent_task_list(self,task):
         self.task_list.add_task(task)
 
-    def remvoe_from_parent_task_list(self,task):
+    def remove_from_parent_task_list(self,task):
         self.task_list.remove_task(task)
 
 

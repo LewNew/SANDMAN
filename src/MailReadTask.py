@@ -23,6 +23,15 @@ class MailReadTask(Task):
         do_work(task, persona, mood, Memory): Perform the task
 
     """
+    @classmethod
+    def get_class_metadata(cls):
+        _metadata = {
+            'name': 'MailReadTask',
+            'description': 'A task to read emails interactively',
+            'status':'valid'
+        }
+        return _metadata
+    
     def __init__(self, name, task_type, client_path, imap_server, email_account, password, percent_complete=0, last_worked_on=None, inception_time=None):
         super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
         """
