@@ -31,7 +31,7 @@ if __name__ == "__main__":
     print(taskList)
 
     for task in taskList:
-        task.do_work(task=task,persona=None,mood=None,memory=None)
+        task.do_work(persona=None,mood=None,memory=None)
 
     print(taskList)
 

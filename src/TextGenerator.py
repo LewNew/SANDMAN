@@ -33,20 +33,22 @@ class TextGenerator:
 if __name__ == "__main__":
 
     # Define the task and persona
-    task_description = "compose a poem"
-    persona_description = "poetic assistant"
-    mood_description = "creative"
+    agent_name = "Bob Smith"
+    task_type = "Write an Email"
+    new_task_description = "Email to supervisor about research"
+    persona_description = "PhD Student"
+    #mood_description = "Angry"
 
     # Initialize TextGenerator with an API key
     text_generator = TextGenerator(api_key="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")
 
     # Generate text
-    generated_text = text_generator.generate_text(task_description, persona_description, mood_description)
+    generated_text = text_generator.generate_text(task_type, new_task_description, persona_description, mood_description)
     print(f"Generated Text: {generated_text}")
 
     # Assuming a mood is set here for the sake of the example
-    current_mood = "Happy"
+    #current_mood = mood_description
 
     # Print out the updated prompt from the program itself
-    system_msg = f"You are a text generator. Your task is {task_description}. Your persona is {persona_description}, and your current mood is {current_mood}."
+    system_msg = f"You are a text generator purposed to write Emails"
     print(f"System Message: {system_msg}")
