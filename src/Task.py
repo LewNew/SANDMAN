@@ -87,7 +87,6 @@ class Task:
         """
         finihsed work method to set percent complete 100
         #TODO maybe not the best way of doing this
-
         """
         self.percent_complete = 100
         self.set_last_worked_on()
@@ -97,7 +96,7 @@ class Task:
 
     #TODO replace **kwargs with persona which is a instance of persona
     @abstractmethod
-    def do_work(self,task=None,persona=None,mood=None,memory=None):
+    def do_work(self,persona=None,mood=None,memory=None):
         """
         abstract method for sub classes to implement to facilitate the funcionality of a task
 
