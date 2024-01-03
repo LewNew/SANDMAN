@@ -10,13 +10,16 @@ cfg = {  "path" : "./src/",
             {
                 "DecisionEngine":
                     {"module": "testEng",
-                    "class": "testEng"},
+                    "class": "testEng",
+                    'path': "./src/"},
                 "BootstrapTask":
                     {"module": "PlanTaskTask",
-                    "class": "PlanTaskTask"},
+                    "class": "PlanTaskTask",
+                    'path': './src/tasks'},
                 "TaskList":
                     {"module":"TaskList",
-                    "class": "TaskList"}
+                    "class": "TaskList",
+                    'path': "./src/"}
             },
         'TaskConfig': {
             'TaskClassPath': './src/tasks',
@@ -55,36 +58,7 @@ cfg = {  "path" : "./src/",
             'ChannelClassPath': './src/channels',
         }
 }
-'''
 
-cfg = {  "path" : "./src/",
-        'CoreObjects': 
-            {
-                "DecisionEngine": 
-                    {"module": "testEng",
-                    "class": "testEng"},
-                "BootstrapTask": 
-                    {"module": "PlanTaskTask",
-                    "class": "PlanTaskTask"},
-                "TaskList":
-                    {"module":"TaskList",
-                    "class": "TaskList"}               
-            },
-        'TaskConfig': {
-            'TaskClassPath': './src/tasks',
-            'TaskClasses': 
-                {
-                    
-                    'NothingTask': {
-                        'Config': None
-                    },
-                    'MeetingTask': {
-                        'Config': None
-                    },
-                }
-            },
-}
-'''
 def ConfigureLogger():
     pass
 
@@ -149,20 +123,17 @@ def LoadClass(class_name, module_name, path="./src/"):
     return mod_class
 
 if __name__ == "__main__":
+    #Load the config
     cfg_data = LoadConfig()
     src_path = cfg_data['path']
     sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
     sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])
     print(sys.path)
-    tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], src_path)
+    tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], cfg_data['CoreObjects']['TaskList']['path'])
     tl_obj = tl_class(cfg_data['TaskConfig'])
-    bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], src_path)
+    bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], cfg_data['CoreObjects']['BootstrapTask']['path'])
     bt_obj = bt_class()
     tl_obj.add_task(bt_obj)
-    de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], src_path)
+    de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], cfg_data['CoreObjects']['DecisionEngine']['path'])
     de_obj = de_class(tl_obj)
-    #Call the bootstrapper
-    #de_obj.execute_task()
-    #de_obj.make_decision()
-    #de_obj.execute_task()
     de_obj.run()
