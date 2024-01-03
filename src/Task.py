@@ -40,8 +40,8 @@ class Task:
     
     @TaskList.setter
     def TaskList(self, newList):
-        if not isinstance(newList, TaskList):
-            raise TypeError(f"Expected a TaskList object, but received {type(newList)}")
+        #if not isinstance(newList, TaskList):
+        #    raise TypeError(f"Expected a TaskList object, but received {type(newList)}")
         self.task_list = newList
 
     
