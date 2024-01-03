@@ -42,6 +42,7 @@ class NotepadChannel(Channel):
         super().__init__()
         self.file_path = file_path
         self.file_name = file_name
+        self.full_path = os.path.abspath(self.file_path)
 
     def send(self, **kwargs):
         """
@@ -92,17 +93,17 @@ class NotepadChannel(Channel):
 
             # Read the file
             try:
-                with open(self.file_path + self.file_name, 'r') as file:
+                with open(self.full_path + "\\" + self.file_name, 'r') as file:
                     content = file.read()
             except FileNotFoundError:
-                print(f"Error: The file '{self.file_path + self.file_name}' does not exist.")
+                print(f"Error: The file '{self.full_path + "\\" + self.file_name}' does not exist.")
                 return None
             except Exception as e:
                 print(f"Error: An unexpected error occurred - {e}")
                 return None
 
             # Simulate reading it
-            subprocess.Popen(['notepad.exe', self.file_path + self.file_name])
+            subprocess.Popen(['notepad.exe', self.full_path + "\\" + self.file_name])
             time.sleep(5)  # Spend 5 seconds reading it
             pyautogui.hotkey('alt', 'f4')
 
@@ -125,7 +126,8 @@ class NotepadChannel(Channel):
         """
         pyautogui.hotkey('ctrl', 's')
         time.sleep(2)
-        pyautogui.typewrite(self.file_path + self.file_name)
+        #uses full path
+        pyautogui.typewrite(self.full_path + "\\" + self.file_name,interval=0.2)
         time.sleep(2)
         pyautogui.press('enter')
         time.sleep(2)
@@ -140,7 +142,7 @@ class NotepadChannel(Channel):
         Returns:
         - bool: True if the file exists, False otherwise.
         """
-        return os.path.exists(self.file_path + self.file_name)
+        return os.path.exists(self.full_path +"\\"+ self.file_name)
 
     def new_file(self, text):
         """
@@ -170,7 +172,7 @@ class NotepadChannel(Channel):
         Returns:
         - None
         """
-        subprocess.Popen(['notepad.exe', self.file_path + self.file_name])
+        subprocess.Popen(['notepad.exe', self.full_path + "\\" + self.file_name])
         time.sleep(2)
         pyautogui.hotkey('ctrl', 'end')
         pyautogui.typewrite(text, interval=0.2)
