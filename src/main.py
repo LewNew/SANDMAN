@@ -4,6 +4,7 @@ import os
 import json
 import logging
 import time
+import random
 
 
 cfg = {  "path" : "./src/",
@@ -58,6 +59,13 @@ cfg = {  "path" : "./src/",
 
 
 def ConfigureLogger(cfg_data):
+    """
+    ConfigureLogger: configures a logger
+    arges:config
+
+    returns:
+        logger object
+    """
 
     with open(cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],'a') as file:
         # Get the current timestamp
@@ -68,15 +76,14 @@ def ConfigureLogger(cfg_data):
 
     logging.basicConfig(
         filename=cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],
+        #TODO allow for custom level to be selected based on config file
         level=logging.DEBUG,
         datefmt='%Y-%m-%d %H:%M:%S',
         format=f'%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s - Line:%(lineno)d - %(message)s'
     )
-    
-    logger = logging.getLogger('logger.'+__name__)
 
+    logger = logging.getLogger('logger.' + __name__)
     logger.info('Succsessfully configured logger')
-    
     return logger
         
 
@@ -112,6 +119,8 @@ def LoadClass(class_name, module_name, path="./src/"):
         ModuleNotFoundError: If the module cannot be loaded
         Exception: For everything else including the original error
     '''
+    logger.info(f'Loading {module_name}')
+
     # do some path checking to make sure that if it exists it has a / at the end of the pat
     if path and not path.endswith('/'):
         path = path +'/'

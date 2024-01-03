@@ -1,5 +1,7 @@
 from Task import Task
 from ClassLoaderHelpers import LoadClasses
+import random
+import logging
 
 class TaskList:    
     """
@@ -21,6 +23,10 @@ class TaskList:
         args:
             cfg_data: a dictionary which contains all the task classes, their configs and where to find them
         """
+        #createing logger object for dbuging
+        self.logger = logging.getLogger('logger.'+__name__)
+
+        
         #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
         self._task_classes = LoadClasses(cfg_data['TaskClasses'].keys(), cfg_data['TaskClassPath'])
         print('===================\nLoaded Task Classes')
