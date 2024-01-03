@@ -1,6 +1,6 @@
 from MemoryClass import MemoryClass
 
-class Memmory():
+class Memory():
     def __init__(self):
         self._memoryCollection = {}
 
