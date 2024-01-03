@@ -2,6 +2,7 @@
 import importlib.util
 import os
 import json
+import sys
 
 
 cfg = {  "path" : "./src/",
@@ -18,8 +19,8 @@ cfg = {  "path" : "./src/",
                     "class": "TaskList"}
             },
         'TaskConfig': {
-            'TaskClassPath': './src/',
-            'TaskClasses':
+            'TaskClassPath': './src/tasks',
+            'TaskClasses': 
                 {
                     'NotepadTask': {
                         'Config': {
@@ -50,8 +51,40 @@ cfg = {  "path" : "./src/",
                     },
                 }
             },
+        'ChannelConfig': {
+            'ChannelClassPath': './src/channels',
+        }
 }
+'''
 
+cfg = {  "path" : "./src/",
+        'CoreObjects': 
+            {
+                "DecisionEngine": 
+                    {"module": "testEng",
+                    "class": "testEng"},
+                "BootstrapTask": 
+                    {"module": "PlanTaskTask",
+                    "class": "PlanTaskTask"},
+                "TaskList":
+                    {"module":"TaskList",
+                    "class": "TaskList"}               
+            },
+        'TaskConfig': {
+            'TaskClassPath': './src/tasks',
+            'TaskClasses': 
+                {
+                    
+                    'NothingTask': {
+                        'Config': None
+                    },
+                    'MeetingTask': {
+                        'Config': None
+                    },
+                }
+            },
+}
+'''
 def ConfigureLogger():
     pass
 
@@ -118,6 +151,9 @@ def LoadClass(class_name, module_name, path="./src/"):
 if __name__ == "__main__":
     cfg_data = LoadConfig()
     src_path = cfg_data['path']
+    sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
+    sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])
+    print(sys.path)
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], src_path)
     tl_obj = tl_class(cfg_data['TaskConfig'])
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], src_path)
