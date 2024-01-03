@@ -5,6 +5,7 @@ import json
 import logging
 import time
 import random
+import sys
 
 
 cfg = {  "path" : "./src/",
@@ -53,7 +54,7 @@ cfg = {  "path" : "./src/",
             'Log':{
                 'LogPath':'./log/',
                 'LogFileName':'log.log'
-            }
+            },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
         }
