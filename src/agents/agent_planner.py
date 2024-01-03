@@ -23,9 +23,8 @@ def agent_daily_plan_chat(agent_details):
     Age: {agent_details["Age"]}
     Role: {agent_details["Role"]}
     Gender: {agent_details["Gender"]}
-    Mood: Happiness: {agent_details["Mood"]["Happiness"]}, Stress: {agent_details["Mood"]["Stress"]}, Energy: {agent_details["Mood"]["Energy"]}
+    
 
-    Create a detailed plan for the day that takes into account the agent's mood, role, and preferences.
     '''
 
     response = client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to

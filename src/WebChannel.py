@@ -37,6 +37,11 @@ class WebChannel:
         if self.driver:
             self.driver.quit()
 
+
+    def retrieve(self, url):
+        pass
+
+
 # Example usage:
 if __name__ == "__main__":
     web_channel = WebChannel("https://www.reddit.com")

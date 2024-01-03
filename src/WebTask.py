@@ -5,15 +5,20 @@ from TextGenerator import TextGenerator
 
 class WebTask(Task):
 
-    def __init__(self, name, task_type, url, percent_complete=0, last_worked_on=None, inception_time=None,
-                 task_list=None):
+    @classmethod
+    def get_class_metadata(cls):
+        _metadata = {
+            'name': 'WebTask',
+            'description': 'This is a bootstrapping task for sandman status',
+            'status':'valid'
+        }
+        return _metadata
 
-        # Initialize the Task attributes
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time, task_list)
+    def __init__(self,config):
 
-        # WebTask-specific attributes
-        self.url = url  # URL to browse
-        self.generator = TextGenerator()  # Assuming it's used for generating browsing queries or other text-based tasks
+        super(WebTask, self).__init__(config)
+        self.name = 'WebTask'
+        self.url = config['url']
 
         # Initialize a WebChannel or similar class for managing web interactions
         self.channel = WebChannel(self.url)

@@ -87,6 +87,7 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be added.
         """
+        self.logger.info(f'adding {task.Name} to taskList')
 
         #makes sure that a Task object was passed into the method
         if not isinstance(task, Task):

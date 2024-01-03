@@ -8,21 +8,21 @@ import random
 
 
 cfg = {  "path" : "./src/",
-        'CoreObjects': 
+        'CoreObjects':
             {
-                "DecisionEngine": 
+                "DecisionEngine":
                     {"module": "testEng",
                     "class": "testEng"},
-                "BootstrapTask": 
+                "BootstrapTask":
                     {"module": "PlanTaskTask",
                     "class": "PlanTaskTask"},
                 "TaskList":
                     {"module":"TaskList",
-                    "class": "TaskList"}               
+                    "class": "TaskList"}
             },
         'TaskConfig': {
             'TaskClassPath': './src/',
-            'TaskClasses': 
+            'TaskClasses':
                 {
                     'NotepadTask': {
                         'Config': {
@@ -32,16 +32,16 @@ cfg = {  "path" : "./src/",
                     'MailSendTask': {
                         'Config': {
                             'client_path': './',
-                            'imap_server': '127.0.0.1', 
-                            'email_account': 'test@testdomain.com', 
+                            'imap_server': '127.0.0.1',
+                            'email_account': 'test@testdomain.com',
                             'password': 'testpassword1234'          #We need a better password storage solution
                         }
                     },
                     'MailReadTask': {
                         'Config': {
                             'client_path': './',
-                            'imap_server': '127.0.0.1', 
-                            'email_account': 'test@testdomain.com', 
+                            'imap_server': '127.0.0.1',
+                            'email_account': 'test@testdomain.com',
                             'password': 'testpassword1234'          #We need a better password storage solution
                         }
                     },
@@ -50,13 +50,11 @@ cfg = {  "path" : "./src/",
                     }
                 }
             },
-        'Log':{
-            'LogPath':'./log/',
-            'LogFileName':'log.log'
+            'Log':{
+                'LogPath':'./log/',
+                'LogFileName':'log.log'
             }
-        }
-
-
+}
 
 def ConfigureLogger(cfg_data):
     """
@@ -92,7 +90,7 @@ def LoadConfig(path='./'):
     LoadConfig: Loads a JSON configuration file and does validation checking
     args:
         path: The full path to the config file location
-    
+
     returns:
         dictionary: A config in a dictionary format
 
