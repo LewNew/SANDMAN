@@ -48,6 +48,9 @@ cfg = {  "path" : "./src/",
                 }
             },
 }
+
+def ConfigureLogger():
+    pass
         
 
 def LoadConfig(path='./'):
