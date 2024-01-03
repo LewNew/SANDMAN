@@ -1,7 +1,7 @@
 from datetime import datetime
 from abc import ABC, abstractmethod
 
-class Task:
+class Task(ABC):
     """
     Represents a task with details such as name, type, inception time, percent complete, and last worked on.
     this class overwrites __str__ so it can be printed
@@ -32,7 +32,6 @@ class Task:
         '''
         raise NotImplementedError(f'not implemented')
         #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
-
 
     @property
     def TaskList(self):
