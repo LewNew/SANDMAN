@@ -6,8 +6,6 @@ roles = [
     "Ph.D. Student",
     "Dean",
     "Lecturer",
-    "Lab Technician",
-    "Librarian",
     "Student Advisor",
     "Graduate Assistant"
 ]
@@ -52,9 +50,4 @@ style = [
     "Grant Application",
     "Dissertation",
     "Teaching Plan"
-]
-
-interests = [
-
-
 ]
