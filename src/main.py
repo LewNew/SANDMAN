@@ -2,6 +2,8 @@
 import importlib.util
 import os
 import json
+import logging
+import time
 
 
 cfg = {  "path" : "./src/",
@@ -44,10 +46,35 @@ cfg = {  "path" : "./src/",
                     }
                 }
             },
-}
+        'Log':{
+            'LogPath':'./log/',
+            'LogFileName':'log.log'
+            }
+        }
 
-def ConfigureLogger():
-    pass
+
+
+def ConfigureLogger(cfg_data):
+
+    with open(cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],'a') as file:
+        # Get the current timestamp
+        current_time = time.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Write the "NEW RUN" message with the timestamp to the file
+        file.write(f'\n{current_time} - NEW RUN:\n')
+
+    logging.basicConfig(
+        filename=cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],
+        level=logging.DEBUG,
+        datefmt='%Y-%m-%d %H:%M:%S',
+        format=f'%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s - Line:%(lineno)d - %(message)s'
+    )
+    
+    logger = logging.getLogger('logger.'+__name__)
+
+    logger.info('Succsessfully configured logger')
+    
+    return logger
         
 
 def LoadConfig(path='./'):
@@ -110,7 +137,12 @@ def LoadClass(class_name, module_name, path="./src/"):
     return mod_class
 
 if __name__ == "__main__":
+
     cfg_data = LoadConfig()
+
+    logger = ConfigureLogger(cfg_data)
+    logger.info('Start of main')
+
     src_path = cfg_data['path']
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], src_path)
     tl_obj = tl_class(cfg_data['TaskConfig'])
@@ -123,3 +155,4 @@ if __name__ == "__main__":
     de_obj.execute_task()
     de_obj.make_decision()
     de_obj.execute_task()
+    pass
