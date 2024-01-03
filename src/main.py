@@ -21,8 +21,8 @@ cfg = {  "path" : "./src/",
                     "class": "TaskList"}
             },
         'TaskConfig': {
-            'TaskClassPath': './src/',
-            'TaskClasses':
+            'TaskClassPath': './src/tasks',
+            'TaskClasses': 
                 {
                     'NotepadTask': {
                         'Config': {
@@ -54,7 +54,11 @@ cfg = {  "path" : "./src/",
                 'LogPath':'./log/',
                 'LogFileName':'log.log'
             }
+        'ChannelConfig': {
+            'ChannelClassPath': './src/channels',
+        }
 }
+
 
 def ConfigureLogger(cfg_data):
     """
@@ -154,6 +158,9 @@ if __name__ == "__main__":
     logger.info('Start of main')
 
     src_path = cfg_data['path']
+    sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
+    sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])
+    print(sys.path)
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], src_path)
     tl_obj = tl_class(cfg_data['TaskConfig'])
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], src_path)

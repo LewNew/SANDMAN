@@ -1,6 +1,6 @@
 from TaskList import TaskList
 from Task import Task
-from NotepadTask import NotepadTask
+from tasks.NotepadTask import NotepadTask
 from Channel import Channel
 from NotepadChannel import NotepadChannel
 from RAWChannel import RAWChannel
