@@ -2,7 +2,7 @@ from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
-from NotepadTask import NotepadTask
+from tasks.NotepadTask import NotepadTask
 
 class PlanTaskTask(Task):
     """
