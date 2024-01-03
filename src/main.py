@@ -4,22 +4,22 @@ import os
 import json
 
 
-cfg = {  "path" : "./src/",
-        'CoreObjects': 
+cfg = {  "path" : "../src/",
+        'CoreObjects':
             {
-                "DecisionEngine": 
+                "DecisionEngine":
                     {"module": "testEng",
                     "class": "testEng"},
-                "BootstrapTask": 
+                "BootstrapTask":
                     {"module": "PlanTaskTask",
                     "class": "PlanTaskTask"},
                 "TaskList":
                     {"module":"TaskList",
-                    "class": "TaskList"}               
+                    "class": "TaskList"}
             },
         'TaskConfig': {
-            'TaskClassPath': './src/',
-            'TaskClasses': 
+            'TaskClassPath': '../src/',
+            'TaskClasses':
                 {
                     'NotepadTask': {
                         'Config': {
@@ -29,36 +29,39 @@ cfg = {  "path" : "./src/",
                     'MailSendTask': {
                         'Config': {
                             'client_path': './',
-                            'imap_server': '127.0.0.1', 
-                            'email_account': 'test@testdomain.com', 
+                            'imap_server': '127.0.0.1',
+                            'email_account': 'test@testdomain.com',
                             'password': 'testpassword1234'          #We need a better password storage solution
                         }
                     },
                     'MailReadTask': {
                         'Config': {
                             'client_path': './',
-                            'imap_server': '127.0.0.1', 
-                            'email_account': 'test@testdomain.com', 
+                            'imap_server': '127.0.0.1',
+                            'email_account': 'test@testdomain.com',
                             'password': 'testpassword1234'          #We need a better password storage solution
                         }
                     },
                     'NothingTask': {
                         'Config': None
-                    }
+                    },
+                    'MeetingTask': {
+                        'Config': None
+                    },
                 }
             },
 }
 
 def ConfigureLogger():
     pass
-        
+
 
 def LoadConfig(path='./'):
     '''
     LoadConfig: Loads a JSON configuration file and does validation checking
     args:
         path: The full path to the config file location
-    
+
     returns:
         dictionary: A config in a dictionary format
 
@@ -69,12 +72,12 @@ def LoadConfig(path='./'):
 
 main_de = None
 
-def LoadClass(class_name, module_name, path="./src/"):
+def LoadClass(class_name, module_name, path="../src/"):
     '''Loads a class given a class name a module and a source path to load from
     Args:
         class_name (string): the class to load from the module
         module_name (string): this is the python module name to load from i.e. module_name.py
-        path (string): this is the path to find module_name.py. the default is ./src/
+        path (string): this is the path to find module_name.py. the default is ../src/
     
     Returns:
         class: the class object for the class found in the module
