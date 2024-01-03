@@ -4,7 +4,7 @@ import os
 import json
 
 
-cfg = {  "path" : "../src/",
+cfg = {  "path" : "./src/",
         'CoreObjects':
             {
                 "DecisionEngine":
@@ -18,7 +18,7 @@ cfg = {  "path" : "../src/",
                     "class": "TaskList"}
             },
         'TaskConfig': {
-            'TaskClassPath': '../src/',
+            'TaskClassPath': './src/',
             'TaskClasses':
                 {
                     'NotepadTask': {
@@ -72,12 +72,12 @@ def LoadConfig(path='./'):
 
 main_de = None
 
-def LoadClass(class_name, module_name, path="../src/"):
+def LoadClass(class_name, module_name, path="./src/"):
     '''Loads a class given a class name a module and a source path to load from
     Args:
         class_name (string): the class to load from the module
         module_name (string): this is the python module name to load from i.e. module_name.py
-        path (string): this is the path to find module_name.py. the default is ../src/
+        path (string): this is the path to find module_name.py. the default is ./src/
     
     Returns:
         class: the class object for the class found in the module
