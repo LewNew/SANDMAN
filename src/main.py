@@ -4,17 +4,62 @@ import os
 import json
 
 
-cfg = '''{  "path" : "./src/",
-            "DecisionEngine": 
-                {"module": "testEng",
-                "class": "testEng"},
-            "BootstrapTask": 
-                {"module": "PlanTaskTask",
-                 "class": "PlanTaskTask"},
-            "TaskList":
-                {"module":"TaskList",
-                 "class": "TaskList"}            
-        }'''
+cfg = {  "path" : "./src/",
+        'CoreObjects': 
+            {
+                "DecisionEngine": 
+                    {"module": "testEng",
+                    "class": "testEng"},
+                "BootstrapTask": 
+                    {"module": "PlanTaskTask",
+                    "class": "PlanTaskTask"},
+                "TaskList":
+                    {"module":"TaskList",
+                    "class": "TaskList"}               
+            },
+        'TaskConfig': {
+            'TaskClassPath': './src/',
+            'TaskClasses': 
+                {
+                    'NotepadTask': {
+                        'Config': {
+                            'workingdir': './fakeWork'
+                        }
+                    },
+                    'MailSendTask': {
+                        'Config': {
+                            'client_path': './',
+                            'imap_server': '127.0.0.1', 
+                            'email_account': 'test@testdomain.com', 
+                            'password': 'testpassword1234'          #We need a better password storage solution
+                        }
+                    },
+                    'MailReadTask': {
+                        'Config': {
+                            'client_path': './',
+                            'imap_server': '127.0.0.1', 
+                            'email_account': 'test@testdomain.com', 
+                            'password': 'testpassword1234'          #We need a better password storage solution
+                        }
+                    }
+                }
+            },
+}
+        
+
+def LoadConfig(path='./'):
+    '''
+    LoadConfig: Loads a JSON configuration file and does validation checking
+    args:
+        path: The full path to the config file location
+    
+    returns:
+        dictionary: A config in a dictionary format
+
+    raises:
+        Exception: if there is an issue with the config file
+    '''
+    return cfg
 
 main_de = None
 
@@ -62,16 +107,14 @@ def LoadClass(class_name, module_name, path="./src/"):
     return mod_class
 
 if __name__ == "__main__":
-    print(cfg)
-    cfg_data = dict(json.loads(cfg))
-    print(cfg_data)
+    cfg_data = LoadConfig()
     src_path = cfg_data['path']
-    tl_class = LoadClass(cfg_data['TaskList']['class'], cfg_data['TaskList']['module'], src_path)
-    tl_obj = tl_class(task_path = src_path)
-    bt_class = LoadClass(cfg_data['BootstrapTask']['class'], cfg_data['BootstrapTask']['module'], src_path)
+    tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], src_path)
+    tl_obj = tl_class(cfg_data['TaskConfig'])
+    bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], src_path)
     bt_obj = bt_class("taskPlan","taskPlan",task_list = tl_obj)
     tl_obj.add_task(bt_obj)
     bt_obj.do_work()
-    de_class = LoadClass(cfg_data['DecisionEngine']['class'], cfg_data['DecisionEngine']['module'], src_path)
+    de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], src_path)
     de_obj = de_class(tl_obj)
     de_obj.make_decision()
