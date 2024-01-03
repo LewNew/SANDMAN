@@ -87,6 +87,7 @@ class TaskList:
             raise TypeError(f"Expected a Task object, but received {type(task)}")
 
         self.taskList.append(task)
+        task.TaskList = self
 
     def remove_task(self, task):
         """

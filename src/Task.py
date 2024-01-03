@@ -33,8 +33,19 @@ class Task:
         raise NotImplementedError(f'not implemented')
         #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
 
-    
 
+    @property
+    def TaskList(self):
+        return self.task_list
+    
+    @TaskList.setter
+    def TaskList(self, newList):
+        if not isinstance(newList, TaskList):
+            raise TypeError(f"Expected a TaskList object, but received {type(newList)}")
+        self.task_list = newList
+
+    
+    #def __init__(self, task_type, config)
     def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.
@@ -51,6 +62,7 @@ class Task:
         #TODO probably add channel object that does not exsist yet
 
         # print(task_list)
+        self.task_list = None
 
         self.name = name
         self.task_type = task_type
@@ -60,7 +72,6 @@ class Task:
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.channel = channel
         self.task_list=task_list
-
 
     def __str__(self):
         """
