@@ -17,8 +17,40 @@ class Task:
         set_last_worked_on(datatime=None): Set the last worked on time for the task. If no time is provided, the current time is used.
         get_task_data(): Return a dictionary containing the task data.
     """
+    
+    @classmethod
+    @abstractmethod
+    def get_class_metadata(cls):
+        '''A class method used to extract information about the task for dynamic loading
+        It should retun the following type of structure with the key fields
 
-    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
+        _metadata = {
+            'name': 'ParentTaskClass',
+            'description': 'The parent abstract class to be extended'
+            'status':'ignore'
+        }
+        '''
+        raise NotImplementedError(f'not implemented')
+        #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
+
+
+    @property
+    def TaskList(self):
+        return self.task_list
+    
+    @TaskList.setter
+    def TaskList(self, newList):
+        #if not isinstance(newList, TaskList):
+        #    raise TypeError(f"Expected a TaskList object, but received {type(newList)}")
+        self.task_list = newList
+
+    @property
+    def Name(self):
+        return self.name
+
+    
+    def __init__(self, config=None):
+    #def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.
 
@@ -34,16 +66,16 @@ class Task:
         #TODO probably add channel object that does not exsist yet
 
         # print(task_list)
+        self.task_list = None
 
-        self.name = name
-        self.task_type = task_type
-        self.percent_complete = percent_complete
+        self.name = 'unset'
+        #self.task_type = task_type
+        self.percent_complete = 0
         #TODO add functionality to manulary set last_worked_on and inception_time
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.channel = channel
-        self.task_list=task_list
-
+        self.channel = None
+        self.config = config
 
     def __str__(self):
         """
@@ -60,7 +92,7 @@ class Task:
     def add_to_parent_task_list(self,task):
         self.task_list.add_task(task)
 
-    def remvoe_from_parent_task_list(self,task):
+    def remove_from_parent_task_list(self,task):
         self.task_list.remove_task(task)
 
 
