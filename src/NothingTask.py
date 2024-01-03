@@ -41,10 +41,3 @@ class NothingTask(Task):
         return None
 
 
-if __name__ == "__main__":
-    
-    nothing_task_instance = NothingTask(name="Nothing Task", task_type="Nothing",percent_complete=0)
-    print(nothing_task_instance.do_work(persona=None,mood=None,memory=None))
-    print(nothing_task_instance)
-
-
