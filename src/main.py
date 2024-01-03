@@ -25,7 +25,7 @@ cfg = {  "path" : "./src/",
                 {
                     'NotepadTask': {
                         'Config': {
-                            'workingdir': './fakeWork'
+                            'workingdir': './fakeWork/'
                         }
                     },
                     'MailSendTask': {
@@ -43,6 +43,9 @@ cfg = {  "path" : "./src/",
                             'email_account': 'test@testdomain.com', 
                             'password': 'testpassword1234'          #We need a better password storage solution
                         }
+                    },
+                    'NothingTask': {
+                        'Config': None
                     }
                 }
             },
@@ -152,7 +155,7 @@ if __name__ == "__main__":
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], src_path)
     de_obj = de_class(tl_obj)
     #Call the bootstrapper
-    de_obj.execute_task()
-    de_obj.make_decision()
-    de_obj.execute_task()
-    pass
+    #de_obj.execute_task()
+    #de_obj.make_decision()
+    #de_obj.execute_task()
+    de_obj.run()
