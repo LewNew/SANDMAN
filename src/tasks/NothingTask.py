@@ -2,6 +2,16 @@ from Task import Task
 from NothingChannel import NothingChannel
 import time
 import random
+from MemoryList import MemoryList, MemoryDataBlock
+
+class NothingTaskMemoryBlock(MemoryDataBlock):
+    
+    def __init__(self, data):
+        super().__init__()
+        self._data = data
+    
+    def __str__(self):
+        return f'Created:{self._created}, data: {self._data}'
 
 class NothingTask(Task):
 
@@ -26,11 +36,17 @@ class NothingTask(Task):
         #TODO wait_time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
         #or from the task name or something.
 
-        wait_time = random.randint(5,10)
         for _ in range(0, random.randint(5,10)):
             print('*', end='')
             time.sleep(1)
         print("\nfinished work")
+
+        if not memory == None:
+            if not 'NothingTask' in memory:
+                memory['NothingTask'] = MemoryList(2)
+
+            new_ntmb = NothingTaskMemoryBlock(self.name)
+            memory['NothingTask'].append(new_ntmb)
 
         #TODO maybe dont do self.finish_work() as a do nothing isnt something you can complete, its just do nothing, still probably need to update the last_worked_on var tho
         #update task so that its finished
