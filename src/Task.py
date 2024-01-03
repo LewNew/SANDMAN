@@ -45,8 +45,8 @@ class Task:
         self.task_list = newList
 
     
-    #def __init__(self, task_type, config)
-    def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
+    def __init__(self, config=None):
+    #def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.
 
@@ -64,14 +64,14 @@ class Task:
         # print(task_list)
         self.task_list = None
 
-        self.name = name
-        self.task_type = task_type
-        self.percent_complete = percent_complete
+        self.name = 'unset'
+        #self.task_type = task_type
+        self.percent_complete = 0
         #TODO add functionality to manulary set last_worked_on and inception_time
         self.last_worked_on = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.channel = channel
-        self.task_list=task_list
+        self.channel = None
+        self.config = config
 
     def __str__(self):
         """
