@@ -25,6 +25,7 @@ class TaskList:
         """
         #createing logger object for dbuging
         self.logger = logging.getLogger('logger.'+__name__)
+        self.logger.info(f'Created {__name__}')
 
         
         #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
@@ -87,7 +88,7 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be added.
         """
-        self.logger.info(f'adding {task.Name} to taskList')
+        self.logger.info(f'Adding {task.Name} to taskList')
 
         #makes sure that a Task object was passed into the method
         if not isinstance(task, Task):
@@ -103,6 +104,7 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be removed.
         """
+        self.logger.info(f'Removeing {task.Name} Fron taskList')
 
         #makes sure that a Task object was passed into the method
         if not isinstance(task, Task):

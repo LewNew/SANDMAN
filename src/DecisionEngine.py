@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from Memory import Memory
 from Mood import Mood
 from Persona import Persona
+import logging
 
 class DecisionEngine(ABC):
     
@@ -37,6 +38,7 @@ class DecisionEngine(ABC):
         return [self._persona, self._memory, self._mood]
 
     def __init__ (self, task_list):
+        self.logger = logging.getLogger('logger.'+__name__)
         self._task_list = task_list
         self._memory = None
         self._persona = None

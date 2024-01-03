@@ -27,6 +27,7 @@ class PlanTaskTask(Task):
         #TODO dont know why i need to do "a ="" but if i pass task_list as is its just None
         super().__init__()
         self.name = 'PlanTaskTask'
+        self.logger.info(f"created {self.name}")
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")

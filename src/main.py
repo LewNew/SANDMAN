@@ -80,9 +80,9 @@ def ConfigureLogger(cfg_data):
     logging.basicConfig(
         filename=cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],
         #TODO allow for custom level to be selected based on config file
-        level=logging.DEBUG,
+        level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S',
-        format=f'%(asctime)s - %(levelname)s - %(name)s - %(filename)s - %(funcName)s - Line:%(lineno)d - %(message)s'
+        format='%(asctime)-19s - %(levelname)-6s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
     )
 
     logger = logging.getLogger('logger.' + __name__)
@@ -141,11 +141,14 @@ def LoadClass(class_name, module_name, path="./src/"):
         mod_spec.loader.exec_module(module) # load the module into programme memory
         mod_class = getattr(module, class_name) # get the class we are looking for
     except AttributeError: #Bail if the class does not exist
+        logger.warning(f"Class '{class_name}' not found in module '{module_name}' at {mod_path}")
         raise AttributeError(f"Class '{class_name}' not found in module '{module_name}' at {mod_path}")
     except ModuleNotFoundError: #bail if the module does not exist
+        logger.warning(f"Module '{module_name}' not found at {mod_path}")
         raise ModuleNotFoundError(f"Module '{module_name}' not found at {mod_path}")
     except Exception as e: # bail on all other exceptions.
         # Handle other potential exceptions
+        logger.warning(f"An error occurred: {e}")
         print(f"An error occurred: {e}")
     
     # Return the goodies

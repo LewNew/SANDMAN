@@ -11,7 +11,7 @@ from PlanTaskTask import PlanTaskTask
 class testEng(DecisionEngine.DecisionEngine):
 
     def __init__(self, task_list):
-        self._task_list = task_list
+        super().__init__(task_list)
         #print(self._task_list)
         #self._task_list.add_task(PlanTaskTask("taskPlan","taskPlan",task_list=self._task_list))
         #print(self._task_list)
@@ -19,6 +19,7 @@ class testEng(DecisionEngine.DecisionEngine):
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
         self._current_task = task_list[0]
+        self.logger.info(f"Created {__name__}")
 
     def make_decision(self):
         """
@@ -27,7 +28,7 @@ class testEng(DecisionEngine.DecisionEngine):
         Returns:
             Task: The next task to be executed.
         """
-        
+        self.logger.info(f"Makeing decision")
         print(self._task_list) 
         if not self._task_list.taskList:
             raise Exception(f'TaskList is empty opps - no bootstrap task')
@@ -38,6 +39,7 @@ class testEng(DecisionEngine.DecisionEngine):
             self._current_task = self._task_list[0]
         else:
             self._current_task = self._task_list[1]
+        self.logger.info(f"Decided on: {self._current_task.name}")
 
   
     def execute_task(self):
@@ -47,6 +49,7 @@ class testEng(DecisionEngine.DecisionEngine):
         Parameters:
             task (Task): The task to be executed.
         """
+        self.logger.info(f"Executing task: {self._current_task.Name}")
         # TODO: Implement the logic to execute the task
         print(f"Executing task: {self._current_task.Name}")
         # Assuming the Task class has a method 'do_work' that handles task execution
@@ -59,7 +62,9 @@ class testEng(DecisionEngine.DecisionEngine):
         '''
         Runs the loop of getting and processing tasks
         '''
+        self.logger.info(f"Running")
         self.execute_task() # run for the first time to bootstrap any further tasks
         while(True):
+            self.logger.info(f"Loop")
             self.make_decision()
             self.execute_task()
