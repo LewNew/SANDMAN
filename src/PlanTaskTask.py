@@ -36,7 +36,7 @@ class PlanTaskTask(Task):
         #TODO very hard coded must be changed
         for key, value in self.task_list.task_classes.items():
             print(key)
-            if key == 'NotepadTask':
+            if key == 'NothingTask':
                 task_class = value['module_class']
                 task_config = None
                 if 'Config' in value:

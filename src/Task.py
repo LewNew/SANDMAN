@@ -1,7 +1,7 @@
 from datetime import datetime
 from abc import ABC, abstractmethod
 
-class Task:
+class Task(ABC):
     """
     Represents a task with details such as name, type, inception time, percent complete, and last worked on.
     this class overwrites __str__ so it can be printed
@@ -33,7 +33,6 @@ class Task:
         raise NotImplementedError(f'not implemented')
         #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
 
-
     @property
     def TaskList(self):
         return self.task_list
@@ -46,9 +45,14 @@ class Task:
 
     @property
     def Name(self):
+        '''
+            Name: returns the name the class is defined. 
+                Note: If this is 'unset' then the inheritor has not overriden it properly
+            returns:
+                string: the name of the task.      
+        '''
         return self.name
 
-    
     def __init__(self, config=None):
     #def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
@@ -90,9 +94,13 @@ class Task:
         return f"{task_details_str}"
 
     def add_to_parent_task_list(self,task):
+        if (self.task_list == None):
+            raise Exception(f'Add to parent task list called in {self.name} but no task_list set')
         self.task_list.add_task(task)
 
     def remove_from_parent_task_list(self,task):
+        if (self.task_list == None):
+            raise Exception(f'remove from parent task list called in {self.name} but no task_list set')
         self.task_list.remove_task(task)
 
 
@@ -148,13 +156,3 @@ class Task:
 
         """
         raise NotImplementedError("do_work method must be implemented in the concrete subclass")
-
-
-
-# Example usage:      
-if __name__ == "__main__":
-
-    task1 = Task("Project A", "Development")
-    print(task1)
-
-
