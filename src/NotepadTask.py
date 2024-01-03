@@ -30,6 +30,7 @@ class NotepadTask(Task):
 
         #TODO the file_path should proably be hard coded but the file name can be created from the generator class
         self.file_path = config['workingdir']
+        
         characters = string.ascii_letters + string.digits
 
         self.file_name = ''.join(secrets.choice(characters) for _ in range(16))

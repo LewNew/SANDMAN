@@ -114,7 +114,9 @@ if __name__ == "__main__":
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], src_path)
     bt_obj = bt_class()
     tl_obj.add_task(bt_obj)
-    bt_obj.do_work()
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], src_path)
     de_obj = de_class(tl_obj)
+    #Call the bootstrapper
+    de_obj.execute_task()
     de_obj.make_decision()
+    de_obj.execute_task()
