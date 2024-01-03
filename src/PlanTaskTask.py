@@ -26,7 +26,7 @@ class PlanTaskTask(Task):
         
         
         
-    def do_work(self,task=None,persona=None,mood=None,memory=None):
+    def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
 
         #TODO very hard coded must be changed

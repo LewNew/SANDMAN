@@ -1,12 +1,8 @@
-import datetime
+from openai import OpenAI
 import json
 import os
-import re
 
-import openai
-
-openai.api_key = os.environ["OPENAI_API_KEY"]
-
+client = OpenAI(api_key="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")
 
 def read_agent_metadata(file_path):
     with open(file_path, 'r') as file:
@@ -20,8 +16,8 @@ def chat_with_openai(agent_details):
     of an ordinary working day from 09:00 to 05:00 with lunch between 12:00 - 13:00 and 
     breaks throughout for meetings etc. Be very specific and to the point, do not add too much description. The plan
     should very easy to read and understand. Attach (T) or (B) or (M) in front of each distinct time step containing 
-    activities. (T) is task, (B) is break, and (M) is meeting. This is to support parsing. Here are details of the 
-    agent:
+    activities. (T) is task, (B) is break, and (M) is meeting. This is to support parsing. 
+    Provide the output in JSON format. Activities are in plan, and time, activity, and type should be nested in plan.
 
     Name: {agent_details["Name"]}
     Age: {agent_details["Age"]}
@@ -32,15 +28,16 @@ def chat_with_openai(agent_details):
     Create a detailed plan for the day that takes into account the agent's mood, role, and preferences.
     '''
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # or the most appropriate model you have access to
-        messages=[
-            {"role": "system", "content": prompt}
-        ],
-    )
+    response = client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to
+                                              messages=[
+                                                  {"role": "system", "content": prompt}
+                                              ])
 
-    return response["choices"][0]["message"]["content"]
+    response_message = response.choices[0].message.content
+    print(response_message)
 
+    #return response["choices"][0]["content"]  # Access the content directly
+    #return response["choices"][0]["message"]["content"]
 
 def generate_daily_plan(agent):
     return chat_with_openai(agent)
@@ -48,19 +45,20 @@ def generate_daily_plan(agent):
 
 def main():
     # Reading agent metadata from the file
-    agents_metadata = read_agent_metadata('agent_metadata.json')
+    agents_metadata = read_agent_metadata('/Users/lewnew/PycharmProjects/SANDMAN/src/agents/agent_metadata.json')
 
     # Ensuring to process only 5 agents if there are more
     agents_metadata = agents_metadata[:1]
 
     # Generating and printing plans for each agent
     for agent in agents_metadata:
+
         plan = generate_daily_plan(agent)
 
         # Print the plan to the terminal
         print(f'Plan for {agent["Name"]}:')
-        print(plan)
-        print('---------------------------------------------')
+        #print(plan)
+        #print('---------------------------------------------')
 
         # Save the plan to a JSON file
         plan_filename = f'plan_{agent["Name"].replace(" ", "_")}.json'

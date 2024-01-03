@@ -1,12 +1,15 @@
 import json
 import random
+
 from ElementsDict import *
+
 
 class Mood:
     def __init__(self):
         self.happiness = random.uniform(0, 1)
         self.stress = random.uniform(0, 1)
         self.energy = random.uniform(0, 1)
+
 
 class Agent:
     def __init__(self):
@@ -19,6 +22,7 @@ class Agent:
         self.gender = None
         self.innate = None
         self.mood = Mood()
+
 
 # Read first names from first-names.txt and last names from last-names.txt
 with open('first-names.txt', 'r') as first_names_file:
@@ -44,7 +48,7 @@ for i in range(5):
 
 # Print the metadata in the specified style
 for i, agent in enumerate(agents):
-    print(f"Agent {i+1} Metadata:")
+    print(f"Agent {i + 1} Metadata:")
     print(f"Name: {agent.name}")
     print(f"Age: {agent.age} years old")
     print(f"Role: {agent.role} at the University")
