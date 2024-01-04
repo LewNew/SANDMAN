@@ -58,7 +58,7 @@ class MemoryList():
         self._datablocks.append(value)
     
     def __str__(self):
-        ml_str = f'+ BD Max SizeL{self._db_max_size}\n+ Memory count:{len(self._datablocks)}\n'
+        ml_str = f'+ BD Max Size:{self._db_max_size}\n+ Memory count:{len(self._datablocks)}\n'
         for mb in self._datablocks:
             ml_str += f'+ {str(mb)}\n'
         return ml_str

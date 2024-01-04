@@ -31,29 +31,29 @@ class RawTextTask(Task):
     def __init__(self, config=None, context=None):
         super().__init__(config,context)
         #set the name pf the task to RawTextTasl-{random numbers}
-        self.name = ''.join(str(random.randint(0,9)) for _ in range(5))
-        self.name = "RawTextTask-"+self.name
+        self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
+        self._name = "RawTextTask-"+self._name
         #set the filename to random letters
         characters = string.ascii_letters + string.digits
-        self.file_name = ''.join(secrets.choice(characters) for _ in range(16))
-        self.file_name = self.file_name + '.txt'
+        self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
+        self._file_name = self._file_name + '.txt'
         #load file path from config
-        self.file_path = config['workingdir']
+        self._file_path = config['workingdir']
 
         #create the RawChannel and TextGenerator
-        self.logger.info(f"created {self.name}")
-        self.channel = RAWChannel(self.file_path,self.file_name)
-        self.generator = TextGenerator("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")
+        self._logger.info(f"created {self._name}")
+        self._channel = RAWChannel(self._file_path,self._file_name)
+        self._generator = TextGenerator("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")
 
         
         
         
     def do_work(self,persona=None,mood=None,memory=None):
-        self.logger.info(f"{self.name} doing work")
+        self._logger.info(f"{self._name} doing work")
         print("doing work")
         
         #sending the data to channel
-        self.channel.send(text = self.generator.generate_text(self,persona,mood))
+        self._channel.send(text = self._generator.generate_text(self,persona,mood))
 
         #wait a few seconds just for padding
         #TODO probably want to remove this wait in future
@@ -68,7 +68,7 @@ class RawTextTask(Task):
             if not 'RawTextTask' in memory:
                 memory['RawTextTask'] = MemoryList(2)
 
-            new_rttmb = RawTextTaskMemoryBlock(self.name)
+            new_rttmb = RawTextTaskMemoryBlock(self._name)
             memory['RawTextTask'].append(new_rttmb)
 
 
@@ -81,6 +81,6 @@ class RawTextTask(Task):
 
     def read_work(self,**kwargs):
         print("reading work")
-        work = self.channel.read()
+        work = self._channel.read()
         print("finished reading")
         return work
