@@ -52,6 +52,7 @@ class MoodAspect():
 
     def __init__(self, name, description, context_len=10, max_val=255, min_val=0, initial_value=-1)->None:
         #check all the input, trust no one!
+        self.logger = logging.getLogger('logger.'+__name__)
         if not isinstance(name, str):
             raise TypeError(f'Name is not a string - type {type(name)}')
         if not isinstance(description, str):
@@ -107,6 +108,7 @@ class Mood:
 
         
     def __init__(self, mood_aspect_list):
+        self.logger = logging.getLogger('logger.'+__name__)
         if not isinstance(mood_aspect_list, dict):
             raise TypeError(f'mood_aspect_list is not a dict - type:{type(mood_aspect_list)}')
         

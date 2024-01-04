@@ -30,6 +30,7 @@ class MemoryList():
     def max_size(self):
         return self._db_max_size
     def __init__(self, max_size=10):
+        self.logger = logging.getLogger('logger.'+__name__)
         self._datablocks = []
         self._db_max_size = max_size
 

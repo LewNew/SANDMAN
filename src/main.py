@@ -72,7 +72,7 @@ def ConfigureLogger(cfg_data):
     returns:
         logger object
     """
-
+    #HOW TO LOG
     #this configures the logger for all classes. each logger should follow the convention of
     #logger = logging.getLogger('logger.' + __name__)
     #this should be done in the __init__ of the parent class, if their is no parent then any
@@ -81,6 +81,7 @@ def ConfigureLogger(cfg_data):
     # logger.info('')
     #to create warnings do
     # logger.warning('')
+    #Logs are saved in ./log/log.log
     # documentation can be found at: https://docs.python.org/3/library/logging.html
 
     with open(cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],'a') as file:

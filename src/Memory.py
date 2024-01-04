@@ -10,6 +10,7 @@ class Memory():
         MemoryDataBlock objects can be extended to hold the data the owner needs to remember
     '''
     def __init__(self):
+        self.logger = logging.getLogger('logger.'+__name__)
         self._memory_collection = {}
     
     def __getitem__(self, key):
