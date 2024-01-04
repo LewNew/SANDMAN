@@ -1,12 +1,13 @@
 from openai import OpenAI
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="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")
 # Hello
 
 class TextGenerator:
 
     def __init__(self, api_key):
         self.api_key = api_key
+        print(api_key)
 
     def generate_text(self, task, persona, mood):
         # Setting up the prompt to be more dynamic
@@ -19,10 +20,14 @@ class TextGenerator:
         ]
 
         # Making the API call
-        
-        response = client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to
-        messages=messages)
-
+        #simple try catch incase api call fails
+        try:
+            response = client.chat.completions.create(model="gpt-3.5-turbo-instruct",  # or the most appropriate model you have access to
+            messages=messages)
+        except Exception as e:
+            #should really have alogger here that prints critical message
+            print(e)        
+            return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + str(e)
         # Extracting and returning the generated text
         return response.choices[0].message.content
 
