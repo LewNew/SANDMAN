@@ -1,12 +1,5 @@
 import DecisionEngine
-from TaskList import TaskList
-from Task import Task
-from tasks.NotepadTask import NotepadTask
-from Channel import Channel
-from NotepadChannel import NotepadChannel
-from RAWChannel import RAWChannel
-from TaskList import TaskList
-from PlanTaskTask import PlanTaskTask
+from Memory import Memory
 
 class testEng(DecisionEngine.DecisionEngine):
 
@@ -15,12 +8,14 @@ class testEng(DecisionEngine.DecisionEngine):
         #print(self._task_list)
         #self._task_list.add_task(PlanTaskTask("taskPlan","taskPlan",task_list=self._task_list))
         #print(self._task_list)
+        self._memory = Memory()
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
         self._current_task = task_list[0]
         self.logger.info(f"Created {__name__}")
+
 
     def make_decision(self):
         """
@@ -56,7 +51,7 @@ class testEng(DecisionEngine.DecisionEngine):
         # TODO: Implement the logic to execute the task
         print(f"Executing task: {self._current_task.Name}")
         # Assuming the Task class has a method 'do_work' that handles task execution
-        self._current_task.do_work(persona=None,mood=None,memory=None)
+        self._current_task.do_work(persona=None,mood=None,memory=self.Memory)
         if (self._current_task.get_task_data()['percent_complete'] == 100):
             self._task_list.remove_task(self._current_task)
             self._current_task = None
@@ -71,3 +66,4 @@ class testEng(DecisionEngine.DecisionEngine):
             self.logger.info(f"Loop")
             self.make_decision()
             self.execute_task()
+            print(self.Memory)
