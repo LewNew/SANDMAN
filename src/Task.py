@@ -55,7 +55,7 @@ class Task(ABC):
         '''
         return self.name
 
-    def __init__(self, config=None):
+    def __init__(self, config=None,context=None):
     #def __init__(self, name, task_type, percent_complete=0, last_worked_on=None, inception_time=None,channel=None,task_list=None):
         """
         Initializes a new Task object.

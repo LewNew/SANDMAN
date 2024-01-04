@@ -47,6 +47,19 @@ class PlanTaskTask(Task):
                 task_obj = task_class(task_config)
                 self.add_to_parent_task_list(task_obj)
                 self.add_to_parent_task_list(task_class(task_config))
+
+            #adds a RawTextTask
+            if key == 'RawTextTask':
+                task_class = value['module_class']
+                task_config = None
+                if 'Config' in value:
+                    task_config = value['Config']
+                print(task_config)
+                task_obj = task_class(task_config)
+                self.add_to_parent_task_list(task_obj)
+
+
+                    
                 #self.add_to_parent_task_list(value['module_class']('scriptforpresentation',key,"./fakeWork", "fakework2.txt", task_list=self.task_list))
         #task.add_to_parent_task_list(NotepadTask("q2Report","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework1.txt",task_list=self.task_list))
         #task.add_to_parent_task_list(NotepadTask("scriptForPresentation","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework2.txt",task_list=self.task_list))

@@ -79,7 +79,6 @@ class testEng(DecisionEngine.DecisionEngine):
             self._current_task = self._task_list[0]
         else:
             self._current_task = self._task_list[1]
-        self.logger.info(f"Decided on: {self._current_task.name}")
         self._memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
         self.logger.info(f"Decided on: {self._current_task.name}")
 

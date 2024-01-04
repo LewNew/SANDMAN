@@ -34,6 +34,8 @@ class RAWChannel(Channel):
         super().__init__()
         self.file_path = file_path
         self.file_name = file_name
+        self.logger.debug(f"created {self}")
+
 
 
     def send(self, **kwargs):
@@ -46,13 +48,17 @@ class RAWChannel(Channel):
         Returns:
         - None
         """
+        self.logger.info(f"{self} sending data")
+
         text = kwargs["text"]
 
         try:
             with open(self.file_path + self.file_name, 'w') as file:
                 file.write(text)
+            self.logger.info(f"Content successfully written to '{self.file_path + self.file_name}'.")
             print(f"Content successfully written to '{self.file_path + self.file_name}'.")
         except Exception as e:
+            self.logger.warning(f"Error writing to file '{self.file_path + self.file_name}': {e}")
             print(f"Error writing to file '{self.file_path + self.file_name}': {e}")
 
         
@@ -82,6 +88,7 @@ class RAWChannel(Channel):
         Returns:
         - None
         """
+        self.logger.info(f"{self} reading data")
 
         try:
             with open(self.file_path + self.file_name, 'r') as file:

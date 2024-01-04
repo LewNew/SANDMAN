@@ -18,11 +18,11 @@ class NotepadTask(Task):
         }
         return _metadata
     
-    def __init__(self, config):
+    def __init__(self, config, context):
 
 
         #TODO dont know why i need to do "a ="" but if i pass task_list as is its just None
-        super().__init__(config)
+        super().__init__(config,context)
         self.name = 'NotepadTask'
         
         #TODO dont know if this key is right??? just fond it and used it from TextGenerator.py class
@@ -37,7 +37,6 @@ class NotepadTask(Task):
         print(self.file_name)
         
         self.channel = NotepadChannel(self.file_path,self.file_name)
-        self.rawChannel = RAWChannel(self.file_path,self.file_name)
         
         
     def do_work(self,persona=None,mood=None,memory=None):
