@@ -45,7 +45,7 @@ class Task(ABC):
             'args': None
         }
         '''
-        self.logger.warning(f"not implemented")
+        #self.logger.warning(f"not implemented")
         raise NotImplementedError(f'not implemented')
     
     @property
@@ -109,7 +109,8 @@ class Task(ABC):
         """
         #TODO Task does not print its parent task list otherwise printing a TaskList or task would cause an infinate recuresie look
         # might want to change this
-        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items() if key != 'task_list')
+        obj_vars = vars(self)
+        task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items() if key != '_task_list')
         return f"{task_details_str}"
 
     def add_to_parent_task_list(self,task):
@@ -151,7 +152,7 @@ class Task(ABC):
         """
         self._percent_complete = 100
         self.set_last_worked_on()
-        self.logger.info(f'{self.name} completed')
+        self.logger.info(f'{self.Name} completed')
         return True
 
 
