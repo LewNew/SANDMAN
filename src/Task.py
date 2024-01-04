@@ -31,6 +31,7 @@ class Task(ABC):
             'status':'ignore'
         }
         '''
+        self.logger.warning(f"not implemented")
         raise NotImplementedError(f'not implemented')
         #return {'name': 'ParentTaskClass', 'description': 'The parent abstract class to be extended','status':'ignore'}
 

@@ -70,6 +70,16 @@ def ConfigureLogger(cfg_data):
         logger object
     """
 
+    #this configures the logger for all classes. each logger should follow the convention of
+    #logger = logging.getLogger('logger.' + __name__)
+    #this should be done in the __init__ of the parent class, if their is no parent then any
+    #__init__ is fine.
+    #to create a log do:
+    # logger.info('')
+    #to create warnings do
+    # logger.warning('')
+    # documentation can be found at: https://docs.python.org/3/library/logging.html
+
     with open(cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],'a') as file:
         # Get the current timestamp
         current_time = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -82,7 +92,7 @@ def ConfigureLogger(cfg_data):
         #TODO allow for custom level to be selected based on config file
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S',
-        format='%(asctime)-19s - %(levelname)-6s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
+        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
     )
 
     logger = logging.getLogger('logger.' + __name__)
@@ -131,6 +141,7 @@ def LoadClass(class_name, module_name, path="./src/"):
     
     # Bail out if the path does not exist
     if not os.path.exists(mod_path):
+        logger.warning(f"The module file:{module_name} for class:{class_name} at {mod_path} does not exist.")
         raise FileNotFoundError(f"The module file:{module_name} for class:{class_name} at {mod_path} does not exist.")
     mod_class = None
 

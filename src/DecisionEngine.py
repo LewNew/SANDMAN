@@ -13,6 +13,7 @@ class DecisionEngine(ABC):
     @Memory.setter
     def Memory(self, newMemory):
         if not isinstance(newMemory, Memory):
+            self.logger.warning(f"Expected a Memory object, but received {type(newMemory)}")
             raise TypeError(f"Expected a Memory object, but received {type(newMemory)}")
         
     @property
@@ -22,6 +23,7 @@ class DecisionEngine(ABC):
     @Persona.setter
     def Persona(self, newPersona):
         if not isinstance(newPersona, Persona):
+            self.logger.warning(f"Expected a Persona object, but received {type(newPersona)}")
             raise TypeError(f"Expected a Persona object, but received {type(newPersona)}")
         
     @property
@@ -31,6 +33,7 @@ class DecisionEngine(ABC):
     @Mood.setter
     def Mood(self, newMood):
         if not isinstance(newMood, Mood):
+            self.logger.warning(f"Expected a Mood object, but received {type(newMood)}")
             raise TypeError(f"Expected a Mood object, but received {type(newMood)}")
         
     @property

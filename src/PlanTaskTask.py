@@ -32,6 +32,7 @@ class PlanTaskTask(Task):
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
         if self.task_list == None:
+            self.logger.warning(f'Parent TaskList not specified in {self.name}')
             raise Exception(f'Parent TaskList not specified in {self.name}')
 
         #TODO very hard coded must be changed
