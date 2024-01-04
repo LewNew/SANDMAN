@@ -21,6 +21,7 @@ class TextGenerator:
 
         # Making the API call
         #simple try catch incase api call fails
+        #TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!
         try:
             response = client.chat.completions.create(model="gpt-3.5-turbo-instruct",  # or the most appropriate model you have access to
             messages=messages)
