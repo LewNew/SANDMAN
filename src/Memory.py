@@ -1,6 +1,14 @@
 from MemoryList import MemoryList
 
 class Memory():
+    '''
+        class Memory: A class which represents the memory of Sandman. 
+        
+        This class is essentially a dictionay with additional management functions.
+        The Keys are names which correspond to the owners of the memory items
+        The items are then Memorylist objects which are used to hold MemoryDataBlock objects
+        MemoryDataBlock objects can be extended to hold the data the owner needs to remember
+    '''
     def __init__(self):
         self._memory_collection = {}
     
@@ -37,6 +45,14 @@ class Memory():
             
         return f"All Memories:\n===========\n{mem_str}\n=========="
     
-    def force_forget_by_count(self, count):
+    def force_forget_by_count(self, count) -> None:
+        '''
+            force_forget_by_count: Used to forget all of the MemoryDataBlocks beyond count
+
+            args:
+                count: integer which tells it how many blocks to forget
+            
+            returns: None            
+        '''
         for key, ml in self._memory_collection.items():
             ml.force_forget_by_count(count)

@@ -1,7 +1,10 @@
 import time
 
 class MemoryDataBlock():
-
+    '''
+        class MemoryDataBlock: Stores a chunk of memory 
+        Each rememberer must extend this class to manage the specific information it needs to remember.
+    '''
     @property
     def created(self):
         return self._created
@@ -16,7 +19,13 @@ class MemoryDataBlock():
 
 
 class MemoryList():
-    
+    '''
+        class MemoryList: Represents a list of data blocks with some additional
+        management functions for data blocks.
+        Only types of MemoryDataBlock are accepted into the list
+
+        The class can be extended if the rememberer needs additional features.
+    '''
     @property
     def max_size(self):
         return self._db_max_size
