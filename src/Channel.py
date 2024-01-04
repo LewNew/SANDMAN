@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import logging
 
 class Channel(ABC):
     """
@@ -24,6 +25,7 @@ class Channel(ABC):
         Returns:
         - None
         """
+        self.logger = logging.getLogger('logger.'+__name__)
         pass
 
     @abstractmethod

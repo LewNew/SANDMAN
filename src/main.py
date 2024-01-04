@@ -2,6 +2,9 @@
 import importlib.util
 import os
 import json
+import logging
+import time
+import random
 import sys
 
 
@@ -48,20 +51,58 @@ cfg = {  "path" : "./src/",
                     },
                     'NothingTask': {
                         'Config': None
-                    },
-                    'MeetingTask': {
-                        'Config': None
-                    },
+                    }
                 }
+            },
+            'Log':{
+                'LogPath':'./log/',
+                'LogFileName':'log.log'
             },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
         }
 }
 
-def ConfigureLogger():
-    pass
 
+def ConfigureLogger(cfg_data):
+    """
+    ConfigureLogger: configures a logger
+    arges:config
+
+    returns:
+        logger object
+    """
+    #HOW TO LOG
+    #this configures the logger for all classes. each logger should follow the convention of
+    #logger = logging.getLogger('logger.' + __name__)
+    #this should be done in the __init__ of the parent class, if their is no parent then any
+    #__init__ is fine.
+    #to create a log do:
+    # logger.info('')
+    #to create warnings do
+    # logger.warning('')
+    #Logs are saved in ./log/log.log
+    # documentation can be found at: https://docs.python.org/3/library/logging.html
+
+    with open(cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],'a') as file:
+        # Get the current timestamp
+        current_time = time.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Write the "NEW RUN" message with the timestamp to the file
+        file.write(f'\n{current_time} - NEW RUN:\n')
+
+    logging.basicConfig(
+        filename=cfg_data['Log']['LogPath'] + cfg_data['Log']['LogFileName'],
+        #TODO allow for custom level to be selected based on config file
+        level=logging.INFO,
+        datefmt='%Y-%m-%d %H:%M:%S',
+        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
+    )
+
+    logger = logging.getLogger('logger.' + __name__)
+    logger.info('Succsessfully configured logger')
+    return logger
+        
 
 def LoadConfig(path='./'):
     '''
@@ -95,6 +136,8 @@ def LoadClass(class_name, module_name, path="./src/"):
         ModuleNotFoundError: If the module cannot be loaded
         Exception: For everything else including the original error
     '''
+    logger.info(f'Loading {module_name}')
+
     # do some path checking to make sure that if it exists it has a / at the end of the pat
     if path and not path.endswith('/'):
         path = path +'/'
@@ -102,6 +145,7 @@ def LoadClass(class_name, module_name, path="./src/"):
     
     # Bail out if the path does not exist
     if not os.path.exists(mod_path):
+        logger.warning(f"The module file:{module_name} for class:{class_name} at {mod_path} does not exist.")
         raise FileNotFoundError(f"The module file:{module_name} for class:{class_name} at {mod_path} does not exist.")
     mod_class = None
 
@@ -112,11 +156,14 @@ def LoadClass(class_name, module_name, path="./src/"):
         mod_spec.loader.exec_module(module) # load the module into programme memory
         mod_class = getattr(module, class_name) # get the class we are looking for
     except AttributeError: #Bail if the class does not exist
+        logger.warning(f"Class '{class_name}' not found in module '{module_name}' at {mod_path}")
         raise AttributeError(f"Class '{class_name}' not found in module '{module_name}' at {mod_path}")
     except ModuleNotFoundError: #bail if the module does not exist
+        logger.warning(f"Module '{module_name}' not found at {mod_path}")
         raise ModuleNotFoundError(f"Module '{module_name}' not found at {mod_path}")
     except Exception as e: # bail on all other exceptions.
         # Handle other potential exceptions
+        logger.warning(f"An error occurred: {e}")
         print(f"An error occurred: {e}")
     
     # Return the goodies
@@ -125,6 +172,10 @@ def LoadClass(class_name, module_name, path="./src/"):
 if __name__ == "__main__":
     #Load the config
     cfg_data = LoadConfig()
+
+    logger = ConfigureLogger(cfg_data)
+    logger.info('Start of main')
+
     src_path = cfg_data['path']
     sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
     sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])

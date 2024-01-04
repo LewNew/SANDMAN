@@ -52,9 +52,11 @@ class testEng(DecisionEngine.DecisionEngine):
         print(self._mood.current_mood)
 
         if not task_list.taskList or len(task_list.taskList) > 1:
+            self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
         self._current_task = task_list[0]
+        self.logger.info(f"Created {__name__}")
 
 
     def make_decision(self):
@@ -64,19 +66,22 @@ class testEng(DecisionEngine.DecisionEngine):
         Returns:
             Task: The next task to be executed.
         """
-        
-        #print(self._task_list) 
+        self.logger.info(f"Makeing decision")
+        print(self._task_list) 
         if not self._task_list.taskList:
+            self.logger.warning(f"TaskList is empty opps - no bootstrap task")
             raise Exception(f'TaskList is empty opps - no bootstrap task')
         if len(self._task_list.taskList) == 1:
             print (f'should be boot straptask')
             if not self._task_list[0] == self._bootstrap_task:
+                self.logger.warning(f"Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}")
                 raise Exception(f'Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}')
             self._current_task = self._task_list[0]
         else:
             self._current_task = self._task_list[1]
-        
+        self.logger.info(f"Decided on: {self._current_task.name}")
         self._memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
+        self.logger.info(f"Decided on: {self._current_task.name}")
 
   
     def execute_task(self):
@@ -86,6 +91,7 @@ class testEng(DecisionEngine.DecisionEngine):
         Parameters:
             task (Task): The task to be executed.
         """
+        self.logger.info(f"Executing task: {self._current_task.Name}")
         # TODO: Implement the logic to execute the task
         print(f"Executing task: {self._current_task.Name}")
         # Assuming the Task class has a method 'do_work' that handles task execution
@@ -101,8 +107,10 @@ class testEng(DecisionEngine.DecisionEngine):
         '''
         Runs the loop of getting and processing tasks
         '''
+        self.logger.info(f"Running")
         self.execute_task() # run for the first time to bootstrap any further tasks
         while(True):
+            self.logger.info(f"Loop")
             self.make_decision()
             self.execute_task()
             print(self.Memory)

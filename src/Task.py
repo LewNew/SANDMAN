@@ -1,5 +1,6 @@
 from datetime import datetime
 from abc import ABC, abstractmethod
+import logging
 
 class Task(ABC):
     """
@@ -44,6 +45,7 @@ class Task(ABC):
             'args': None
         }
         '''
+        self.logger.warning(f"not implemented")
         raise NotImplementedError(f'not implemented')
     
     @property
@@ -87,7 +89,7 @@ class Task(ABC):
                   the task to make sure a lack of information is handled properly.
         """
 
-    
+        self.logger = logging.getLogger('logger.'+__name__)
         self._task_list = None
 
         self._name = 'unset'
@@ -112,11 +114,13 @@ class Task(ABC):
 
     def add_to_parent_task_list(self,task):
         if (self._task_list == None):
+            self.logger.warning(f'Add to parent task list called in {self.name} but no task_list set')
             raise Exception(f'Add to parent task list called in {self._name} but no task_list set')
         self._task_list.add_task(task)
 
     def remove_from_parent_task_list(self,task):
         if (self._task_list == None):
+            self.logger.warning(f'remove from parent task list called in {self.name} but no task_list set')
             raise Exception(f'remove from parent task list called in {self._name} but no task_list set')
         self._task_list.remove_task(task)
 
@@ -147,7 +151,7 @@ class Task(ABC):
         """
         self._percent_complete = 100
         self.set_last_worked_on()
-
+        self.logger.info(f'{self.name} completed')
         return True
 
 
@@ -163,6 +167,7 @@ class Task(ABC):
         hopefully makeing it extendable as if you want to add a new type of task you can extand tast and implement the do_work function
         without needing to change task list or the decision engine.
         """
+        self.logger.warning(f'do_work method in {__name__} being called without being implemented in the concrete subclass')
         raise NotImplementedError("do_work method must be implemented in the concrete subclass")
 
     @abstractmethod
@@ -172,4 +177,5 @@ class Task(ABC):
         or reading a partialy complete word document to then continue that word document
 
         """
-        raise NotImplementedError("do_work method must be implemented in the concrete subclass")
+        self.logger.warning(f'read_work method in {__name__} being called without being implemented in the concrete subclass')
+        raise NotImplementedError("read_work method must be implemented in the concrete subclass")

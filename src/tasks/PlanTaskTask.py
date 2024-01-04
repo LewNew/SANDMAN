@@ -26,10 +26,12 @@ class PlanTaskTask(Task):
 
         super().__init__(config, context)
         self.name = 'PlanTaskTask'
+        self.logger.info(f"created {self.name}")
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
         if self._task_list == None:
+            self.logger.warning(f'Parent TaskList not specified in {self.name}')
             raise Exception(f'Parent TaskList not specified in {self.name}')
 
         #TODO very hard coded must be changed
