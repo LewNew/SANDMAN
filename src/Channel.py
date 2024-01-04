@@ -25,7 +25,7 @@ class Channel(ABC):
         Returns:
         - None
         """
-        self.logger = logging.getLogger('logger.'+__name__)
+        self._logger = logging.getLogger('logger.'+__name__)
         pass
 
     @abstractmethod

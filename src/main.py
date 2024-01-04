@@ -193,3 +193,4 @@ if __name__ == "__main__":
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], cfg_data['CoreObjects']['DecisionEngine']['path'])
     de_obj = de_class(tl_obj)
     de_obj.run()
+
