@@ -51,6 +51,11 @@ cfg = {  "path" : "./src/",
                     },
                     'NothingTask': {
                         'Config': None
+                    },
+                    'RawTextTask':{
+                        'Config': {
+                            'workingdir': './fakeWork/'
+                        }
                     }
                 }
             },

@@ -26,7 +26,7 @@ class PlanTaskTask(Task):
 
         super().__init__(config, context)
         self.name = 'PlanTaskTask'
-        self.logger.info(f"created {self.name}")
+        self._logger.info(f"created {self.name}")
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
@@ -81,9 +81,19 @@ class PlanTaskTask(Task):
                 #print(llm_output)    
 
                 task_obj = task_class(task_config, context,**llm_output)
-                self.add_to_parent_task_list(task_obj)
-                
+                # self.add_to_parent_task_list(task_obj)
                 self.add_to_parent_task_list(task_class(task_config, "Do nothing for a bit"))
+
+            #adds a RawTextTask
+            if key == 'RawTextTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
+
 
         print("finished work")
         
