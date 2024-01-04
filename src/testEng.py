@@ -79,9 +79,9 @@ class testEng(DecisionEngine.DecisionEngine):
             self._current_task = self._task_list[0]
         else:
             self._current_task = self._task_list[1]
-        self.logger.info(f"Decided on: {self._current_task.name}")
+        self.logger.info(f"Decided on: {self._current_task.Name}")
         self._memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
-        self.logger.info(f"Decided on: {self._current_task.name}")
+        self.logger.info(f"Decided on: {self._current_task.Name}")
 
   
     def execute_task(self):
@@ -96,7 +96,7 @@ class testEng(DecisionEngine.DecisionEngine):
         print(f"Executing task: {self._current_task.Name}")
         # Assuming the Task class has a method 'do_work' that handles task execution
         self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)
-        if (self._current_task.get_task_data()['percent_complete'] == 100):
+        if (self._current_task.PercentComplete == 100):
             self.Memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.WORK_DONE, f'Finish this task:{self._current_task.Name}'))
             self._task_list.remove_task(self._current_task)
             self._current_task = None

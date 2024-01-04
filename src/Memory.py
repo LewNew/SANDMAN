@@ -43,9 +43,9 @@ class Memory():
         """
         mem_str = ''
         for key, mem in self._memory_collection.items():
-            mem_str = mem_str + key+ ':\n' + str(mem) + '----------'
+            mem_str = mem_str + key+ ':\n' + str(mem) + '----------\n'
             
-        return f"All Memories:\n===========\n{mem_str}\n=========="
+        return f"All Memories:\n===========\n{mem_str}=========="
     
     def force_forget_by_count(self, count) -> None:
         '''

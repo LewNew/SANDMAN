@@ -183,7 +183,7 @@ if __name__ == "__main__":
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], cfg_data['CoreObjects']['TaskList']['path'])
     tl_obj = tl_class(cfg_data['TaskConfig'])
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], cfg_data['CoreObjects']['BootstrapTask']['path'])
-    bt_obj = bt_class()
+    bt_obj = bt_class(None, None)
     tl_obj.add_task(bt_obj)
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], cfg_data['CoreObjects']['DecisionEngine']['path'])
     de_obj = de_class(tl_obj)
