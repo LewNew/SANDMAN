@@ -11,18 +11,37 @@ import sys
 cfg = {  "path" : "./src/",
         'CoreObjects':
             {
-                "DecisionEngine":
-                    {"module": "testEng",
+                "DecisionEngine":{
+                    "module": "testEng",
                     "class": "testEng",
-                    'path': "./src/"},
+                    'path': "./src/",
+                    'config':{
+                        'persona':{
+                            "first_name": "Alice", 
+                            "last_name": "Boberta", 
+                            "personality_description": "I am, a vibrant woman, who radiates a contagious zest for life. I have an outgoing nature and magnetic energy effortlessly draw people in, making me the life of any gathering. I exude fun-loving charisma, infusing joy into every moment with my infectious enthusiasm.", 
+                            "job_role": "secretary", 
+                            "gender": "female", 
+                            "age": 25, 
+                            "traits": {
+                                "meticulous": "Exacting attention in details ensures flawless precision and thorough completion", 
+                                "efficient": "Smooth operations exemplify streamlined processes and productive, time-conscious workflows.", 
+                                "creative": " Innovative thinking manifests in original ideas and imaginative problem-solving approaches.", 
+                                "organized": "Efficiency in arrangements reflects systematic approaches, ensuring seamless task execution."
+                            }
+                        }
+                    }
+                },
                 "BootstrapTask":
                     {"module": "PlanTaskTask",
                     "class": "PlanTaskTask",
-                    'path': './src/tasks'},
+                    'path': './src/tasks',
+                    'config' : None},
                 "TaskList":
                     {"module":"TaskList",
                     "class": "TaskList",
-                    'path': "./src/"}
+                    'path': "./src/",
+                    'config' : None}
             },
         'TaskConfig': {
             'TaskClassPath': './src/tasks',
@@ -59,13 +78,13 @@ cfg = {  "path" : "./src/",
                     }
                 }
             },
-            'Log':{
+        'Log':{
                 'LogPath':'./log/',
                 'LogFileName':'log.log'
             },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
-        }
+        },
 }
 
 
@@ -188,9 +207,9 @@ if __name__ == "__main__":
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], cfg_data['CoreObjects']['TaskList']['path'])
     tl_obj = tl_class(cfg_data['TaskConfig'])
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], cfg_data['CoreObjects']['BootstrapTask']['path'])
-    bt_obj = bt_class(None, None)
+    bt_obj = bt_class(cfg_data['CoreObjects']['BootstrapTask']['config'], None)
     tl_obj.add_task(bt_obj)
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], cfg_data['CoreObjects']['DecisionEngine']['path'])
-    de_obj = de_class(tl_obj)
+    de_obj = de_class(tl_obj, cfg_data['CoreObjects']['DecisionEngine']['config'])
     de_obj.run()
 

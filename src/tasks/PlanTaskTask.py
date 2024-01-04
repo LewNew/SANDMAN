@@ -161,7 +161,23 @@ class PlanTaskTask(Task):
                     "duration": 900
                 }
                 ]
+        #Note ChatGPT does not always giv back the structure which is asked for all the time
+        #Make sure we do some proper checking of what gets spit out
+        activity_names = []
+        for activity in lm_plan_list:
+            if not set(['activityName','time','duration']).issubset(set(activity.keys())):
+                #the activity entry is not valid
+                print(activity)
+                
+            x = activity['activityName']
+            if x not in activity_names:
+                activity_names.append(x)
 
+        result = [item for item in activity_names if item not in self._task_list.task_classes.keys()]
+        if result:
+            #This means that there is some issue with the tasks returned as there are some we cant do.
+            pass
+        print(result)       
 
         #TODO very hard coded must be changed
         for key, class_data in self._task_list.task_classes.items():
