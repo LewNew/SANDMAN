@@ -161,7 +161,15 @@ class PlanTaskTask(Task):
                     "duration": 900
                 }
                 ]
+        
+        activity_names = []
+        for activity in lm_plan_list:
+            x = activity['activityName']
+            if x not in activity_names:
+                activity_names.append(x)
 
+        result = [item for item in activity_names if item not in self._task_list.task_classes.keys()]
+        print(result)       
 
         #TODO very hard coded must be changed
         for key, class_data in self._task_list.task_classes.items():
