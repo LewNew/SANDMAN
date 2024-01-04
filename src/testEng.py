@@ -3,6 +3,7 @@ from Memory import Memory
 from MemoryList import MemoryList, MemoryDataBlock
 from enum import Enum
 from Mood import Mood, MoodAspect
+from Persona import Persona
 
 class TestEngineMemoryBlockType(Enum):
     DECISION = 1
@@ -23,8 +24,8 @@ class testEng(DecisionEngine.DecisionEngine):
     
     memname = 'TestEngineMemory'
 
-    def __init__(self, task_list):
-        super().__init__(task_list)
+    def __init__(self, task_list, config=None):
+        super().__init__(task_list, config)
         self._memory = Memory()
         self._memory[testEng.memname] = MemoryList(20)
         #The decriptions should really be formed for use in an LLM
@@ -50,6 +51,7 @@ class testEng(DecisionEngine.DecisionEngine):
                         'Focused': None}
         self._mood.update_mood_aspects(mood_updates)
         print(self._mood.current_mood)
+        self._persona = Persona(**config['persona'])
 
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
