@@ -5,6 +5,10 @@ class MoodAspect():
     '''
         MoodAspect: a class to capture different aspects of the mood of the person at the current moment
     '''
+    @staticmethod
+    def CreateMoodAspectUpdate(value, context, delta=True) ->list:
+        return {'value':value, 'context': context, 'delta': delta}
+    
     @property
     def name(self)->str:
         return self._name
@@ -81,39 +85,64 @@ class MoodAspect():
 
 
 class Mood:
-    def __init__(self):
-        self.current_mood = "Fine"  # Default to "Fine" (Neutral)
-
     # Inspired by SIMS emotions (https://sims.fandom.com/wiki/Emotion).
     # Some have been removed (e.g. dazed) because they are irrelevant.
 
-    MOODS = [
-        "Angry",
-        "Energized",
-        "Happy",
-        "Bored",
-        "Fine",
-        "Focused",
-        "Confident",
-        "Inspired",
-        "Uncomfortable"
-    ]
+    @property
+    def mood_aspect_count(self) -> int:
+        return len(self._mood_aspects)
+    
+    @property
+    def current_mood(self) -> tuple:
+        ma_max = 0
+        cm_list = []
+        for key, ma in self._mood_aspects.items():
+            if ma_max < ma.value:
+                ma_max = ma.value
+                cm_list=[ma.name]
+            elif ma_max == ma.value:
+                cm_list.append(ma.name)
 
-    def update_mood(self, new_mood):
-        if new_mood in Mood.MOODS:
-            self.current_mood = new_mood
-        else:
-            print("Invalid mood.")
+        return (ma_max, tuple(cm_list))
 
-    def get_mood(self):
-        return self.current_mood
+        
+    def __init__(self, mood_aspect_list):
+        if not isinstance(mood_aspect_list, dict):
+            raise TypeError(f'mood_aspect_list is not a dict - type:{type(mood_aspect_list)}')
+        
+        self._mood_aspects = {}
 
-    def randomize_mood(self):
-        self.current_mood = random.choice(Mood.MOODS)
+        for key, description in mood_aspect_list.items():
+            if not isinstance(description, str):
+                raise TypeError(f'description for mood aspect(key) is not a string - type:{type(description)}')
 
-if __name__ == "__main__":
+            self._mood_aspects[str(key)] = MoodAspect(str(key), description, initial_value=10)
 
-    agent = Mood()
-    agent.randomize_mood()  # Randomly set the mood
-    task = "Writing"
-    print(f"{agent} is performing {task} task. Their current mood is {agent.get_mood()}.")
+    def update_mood_aspect(self, mood_aspect_name, value, context=None, delta=True)->None:
+        if not mood_aspect_name in self._mood_aspects:
+            raise KeyError(f'Mood Aspect {mood_aspect_name} not found in the list of mood aspects')
+        if not isinstance(value, int):
+            raise TypeError(f'New Mood value is not int, actual type:{type(value)}')
+        self._mood_aspects[mood_aspect_name].update_aspect(value, context, delta) 
+
+    def update_mood_aspects(self, update_dict)->None:
+        ignore_err = True
+        if not isinstance(update_dict, dict):
+            raise TypeError(f'update dictionary is not type dict, actually type{type(update_dict)}')
+        for key, update in update_dict.items():
+            update_ok = True
+            if not key in self._mood_aspects:
+                if not ignore_err:
+                    raise KeyError(f'Mood Aspect {key} not found in the list of mood aspects')
+                update_ok = False
+            elif not isinstance(update, dict):
+                if not ignore_err:
+                    raise TypeError(f'New Mood update is not dict, actual type:{type(update)}')
+                update_ok = False
+            elif not set(['value','context','delta']).issubset(set(update.keys())):
+                if not ignore_err:
+                    raise Exception(f'update does not have the right structure, keys are{update.keys()}')
+                update_ok = False
+            if update_ok:
+                self.update_mood_aspect(key, update['value'], update['context'], update['delta'])
+   

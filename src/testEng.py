@@ -2,6 +2,7 @@ import DecisionEngine
 from Memory import Memory
 from MemoryList import MemoryList, MemoryDataBlock
 from enum import Enum
+from Mood import Mood, MoodAspect
 
 class TestEngineMemoryBlockType(Enum):
     DECISION = 1
@@ -26,6 +27,30 @@ class testEng(DecisionEngine.DecisionEngine):
         super().__init__(task_list)
         self._memory = Memory()
         self._memory[testEng.memname] = MemoryList(20)
+        #The decriptions should really be formed for use in an LLM
+        mood_aspect_list = {
+            "Angry": 'the level of anger currently being felt',
+            "Energized": 'How energized the agent currently is',
+            "Happy": 'how happy i am',
+            "Bored": 'level of being bored',
+            "Fine": 'generally felling of being ok',
+            "Focused": 'the level of focus i have for working',
+            "Confident": 'Am i currently confident',
+            "Inspired": 'the level of inspriation',
+            "Uncomfortable": 'My level of being weirded out is'
+        }
+        self._mood = Mood(mood_aspect_list)
+        print(self._mood.current_mood)
+        self._mood.update_mood_aspect("Angry", 50, delta=False)
+        print(self._mood.current_mood)
+
+        mood_updates = {'Angry': MoodAspect.CreateMoodAspectUpdate(-20, 'happier'),
+                        'Confident': MoodAspect.CreateMoodAspectUpdate(30, 'More confident', False),
+                        'Inspired': MoodAspect.CreateMoodAspectUpdate(20, 'Inspired to be great'),
+                        'Focused': None}
+        self._mood.update_mood_aspects(mood_updates)
+        print(self._mood.current_mood)
+
         if not task_list.taskList or len(task_list.taskList) > 1:
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
