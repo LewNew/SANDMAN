@@ -1,4 +1,5 @@
 from MemoryList import MemoryList
+import logging
 
 class Memory():
     '''
