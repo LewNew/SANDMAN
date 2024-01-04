@@ -33,6 +33,135 @@ class PlanTaskTask(Task):
         if self._task_list == None:
             self.logger.warning(f'Parent TaskList not specified in {self.name}')
             raise Exception(f'Parent TaskList not specified in {self.name}')
+        
+        lm_plan_str = "i am planning my day and i can do the following things:"
+
+        count = 1
+        for key, class_data in self._task_list.task_classes.items():
+            lm_plan_str = f'{lm_plan_str}\n{count}) A task called "{key}" which is described as {class_data['metadata']['description']}.'
+            count +=1 
+        lm_plan_str = f'{lm_plan_str}\n Anything in the previous list in quote marks is an taskname.'
+        lm_plan_str = f'{lm_plan_str}\n Give me a plan for my day only using the set of tasks that have been described.'
+        lm_plan_str = f'{lm_plan_str}\n The plan should reflect what is typical of an ordinary working day from 09:00 to 05:00 with lunch somewhere between 12:00 - 13:00.'
+        lm_plan_str = f'{lm_plan_str}\n Be very specific and to the point, do not add too much description.'
+        lm_plan_str = f'{lm_plan_str}\n The plan should very easy to read and understand.'
+        lm_plan_str = f'{lm_plan_str}\n This is to support parsing.'
+        lm_plan_str = f'{lm_plan_str}\n Provide the output in JSON format.'
+        lm_plan_str = f'{lm_plan_str}\n The JSON format should be a collection of activities with activities made up of the following fields:'
+        lm_plan_str = f'{lm_plan_str}\n "activityName" which can only be from the set of tasknames defined previously,'
+        lm_plan_str = f'{lm_plan_str}\n "time" which is when the activity starts,'
+        lm_plan_str = f'{lm_plan_str}\n "duration" how long the activity should run for'
+        print(lm_plan_str)
+
+        #Do Call to LLM
+        lm_plan_list = [
+                {
+                    "activityName": "NothingTask",
+                    "time": "09:00",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "MailReadTask",
+                    "time": "09:30",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "NotepadTask",
+                    "time": "10:00",
+                    "duration": 900
+                },
+                {
+                    "activityName": "RawTextTask",
+                    "time": "10:15",
+                    "duration": 600
+                },
+                {
+                    "activityName": "MailSendTask",
+                    "time": "10:25",
+                    "duration": 1500
+                },
+                {
+                    "activityName": "NothingTask",
+                    "time": "10:50",
+                    "duration": 1500
+                },
+                {
+                    "activityName": "MailReadTask",
+                    "time": "11:15",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "NotepadTask",
+                    "time": "11:45",
+                    "duration": 900
+                },
+                {
+                    "activityName": "RawTextTask",
+                    "time": "12:00",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "MailSendTask",
+                    "time": "12:30",
+                    "duration": 1200
+                },
+                {
+                    "activityName": "Lunch",
+                    "time": "13:00",
+                    "duration": 3600
+                },
+                {
+                    "activityName": "NothingTask",
+                    "time": "14:00",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "NotepadTask",
+                    "time": "14:30",
+                    "duration": 900
+                },
+                {
+                    "activityName": "RawTextTask",
+                    "time": "14:45",
+                    "duration": 1200
+                },
+                {
+                    "activityName": "MailSendTask",
+                    "time": "15:00",
+                    "duration": 1200
+                },
+                {
+                    "activityName": "MailReadTask",
+                    "time": "15:15",
+                    "duration": 1800
+                },
+                {
+                    "activityName": "NothingTask",
+                    "time": "15:45",
+                    "duration": 1500
+                },
+                {
+                    "activityName": "NotepadTask",
+                    "time": "16:00",
+                    "duration": 900
+                },
+                {
+                    "activityName": "RawTextTask",
+                    "time": "16:15",
+                    "duration": 1200
+                },
+                {
+                    "activityName": "MailSendTask",
+                    "time": "16:30",
+                    "duration": 1200
+                },
+                {
+                    "activityName": "MailReadTask",
+                    "time": "16:45",
+                    "duration": 900
+                }
+                ]
+
 
         #TODO very hard coded must be changed
         for key, class_data in self._task_list.task_classes.items():
