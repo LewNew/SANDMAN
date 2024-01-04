@@ -1,14 +1,31 @@
 import DecisionEngine
 from Memory import Memory
+from MemoryList import MemoryList, MemoryDataBlock
+from enum import Enum
+
+class TestEngineMemoryBlockType(Enum):
+    DECISION = 1
+    WORK_DONE = 2
+    WORK_NEARLY_DONE = 3
+
+class TestEngineMemoryBlock(MemoryDataBlock):
+
+    def __init__(self, mem_type, data):
+        super().__init__()
+        self._data = data
+        self._type = mem_type
+    
+    def __str__(self):
+        return f'Created:{self._created}, type:data: {self._data}'
 
 class testEng(DecisionEngine.DecisionEngine):
+    
+    memname = 'TestEngineMemory'
 
     def __init__(self, task_list):
-        self._task_list = task_list
-        #print(self._task_list)
-        #self._task_list.add_task(PlanTaskTask("taskPlan","taskPlan",task_list=self._task_list))
-        #print(self._task_list)
+        super().__init__(task_list)
         self._memory = Memory()
+        self._memory[testEng.memname] = MemoryList(20)
         if not task_list.taskList or len(task_list.taskList) > 1:
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
@@ -33,6 +50,8 @@ class testEng(DecisionEngine.DecisionEngine):
             self._current_task = self._task_list[0]
         else:
             self._current_task = self._task_list[1]
+        
+        self._memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
 
   
     def execute_task(self):
@@ -45,10 +64,13 @@ class testEng(DecisionEngine.DecisionEngine):
         # TODO: Implement the logic to execute the task
         print(f"Executing task: {self._current_task.Name}")
         # Assuming the Task class has a method 'do_work' that handles task execution
-        self._current_task.do_work(persona=None,mood=None,memory=self.Memory)
+        self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)
         if (self._current_task.get_task_data()['percent_complete'] == 100):
+            self.Memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.WORK_DONE, f'Finish this task:{self._current_task.Name}'))
             self._task_list.remove_task(self._current_task)
             self._current_task = None
+        else:
+            self.Memory[testEng.memname].append(TestEngineMemoryBlock(TestEngineMemoryBlockType.WORK_NEARLY_DONE, f'I\'ve nearly finished this task:{self._current_task.Name}'))
 
     def run(self):
         '''
