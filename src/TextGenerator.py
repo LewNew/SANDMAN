@@ -28,7 +28,7 @@ class TextGenerator:
         except Exception as e:
             #should really have alogger here that prints critical message
             print(e)        
-            return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + str(e)
+            return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + "\n\nException:\n\n" + str(e)
         # Extracting and returning the generated text
         return response.choices[0].message.content
 

@@ -47,7 +47,7 @@ cfg = {  "path" : "./src/",
             'TaskClassPath': './src/tasks',
             'TaskClasses': 
                 {
-                    'NotepadTask': {
+                    'WriteDocumentNotepadTask': {
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
@@ -71,7 +71,7 @@ cfg = {  "path" : "./src/",
                     'NothingTask': {
                         'Config': None
                     },
-                    'RawTextTask':{
+                    'WriteDocumentRawTask':{
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
