@@ -4582,5 +4582,4 @@
 2024-01-05 17:18:46 - INFO    - logger.DecisionEngine  - testEng.py                 - make_decision        - Line:71   - Makeing decision                                  
 2024-01-05 17:18:46 - INFO    - logger.DecisionEngine  - testEng.py                 - make_decision        - Line:86   - Decided on: MeetingTask-34424                     
 2024-01-05 17:18:46 - INFO    - logger.DecisionEngine  - testEng.py                 - execute_task         - Line:96   - Executing task: MeetingTask-34424                 
-2024-01-05 17:18:46 - INFO    - logger.Task            - MeetingTask.py             - do_work              - Line:89
-  - MeetingTask-34424 doing workk
+2024-01-05 17:18:46 - INFO    - logger.Task            - MeetingTask.py             - do_work              - Line:89   - MeetingTask-34424 doing work
