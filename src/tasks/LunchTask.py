@@ -13,9 +13,9 @@ class LunchTaskMemoryBlock(MemoryDataBlock):
     def __str__(self):
         return f'Created:{self._created}, data: {self._data}'
 
-######################################################################################################
-##TODO THIS IS A PLACE HOLDER WORK IN PROGRES THASK THAT IS IDENTICAL TO DO NOTHING IN FUNCTIONALITY##
-######################################################################################################
+##########################################################################################################
+##TODO THIS IS A PLACE HOLDER WORK IN PROGRES THASK THAT IS IDENTICAL TO NothingTask.py IN FUNCTIONALITY##
+##########################################################################################################
 
 class LunchTask(Task):
 

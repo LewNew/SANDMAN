@@ -84,6 +84,9 @@ cfg = {  "path" : "./src/",
                     },
                     'LunchTask': {
                         'Config': None
+                    },
+                    'MeetingTask':{
+                        'Config': None
                     }
                 }
             },
@@ -129,7 +132,7 @@ def ConfigureLogger(cfg_data):
         #TODO allow for custom level to be selected based on config file
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S',
-        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
+        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-26s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
     )
 
     logger = logging.getLogger('logger.' + __name__)
