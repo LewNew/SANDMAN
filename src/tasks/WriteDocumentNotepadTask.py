@@ -10,7 +10,7 @@ from MemoryList import MemoryList, MemoryDataBlock
 import secrets
 import string
 
-class NotepadTaskMemoryBlock(MemoryDataBlock):
+class WriteDocumentNotepadTaskMemoryBlock(MemoryDataBlock):
     
     def __init__(self, data):
         super().__init__()
@@ -19,13 +19,13 @@ class NotepadTaskMemoryBlock(MemoryDataBlock):
     def __str__(self):
         return f'Created:{self._created}, data: {self._data}'
 
-class NotepadTask(Task):
+class WriteDocumentNotepadTask(Task):
 
     @classmethod
     def get_class_metadata(cls):
         _metadata = {
-            'name': 'NotepadTask',
-            'description': 'Interacts with a simple txt file document',
+            'name': 'WriteDocumentNotepadTask',
+            'description': 'Interacts with a simple txt file document useing notepad',
             'status':'valid'
         }
         return _metadata
@@ -33,9 +33,9 @@ class NotepadTask(Task):
     def __init__(self, config, context):
 
         super().__init__(config,context)
-        #set the name of the task to NotepadTask-{random numbers}
+        #set the name of the task to WriteDocumentNotepadTask-{random numbers}
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
-        self._name = "NotepadTask-"+self._name
+        self._name = "WriteDocumentNotepadTask-"+self._name
         #set the filename to random letters
         characters = string.ascii_letters + string.digits
         self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
@@ -66,11 +66,11 @@ class NotepadTask(Task):
 
 
         if not memory == None:
-            if not 'NotepadTask' in memory:
-                memory['NotepadTask'] = MemoryList(2)
+            if not 'WriteDocumentNotepadTask' in memory:
+                memory['WriteDocumentNotepadTask'] = MemoryList(2)
 
-            new_ntmb = NotepadTaskMemoryBlock(self._name)
-            memory['NotepadTask'].append(new_ntmb)
+            new_ntmb = WriteDocumentNotepadTaskMemoryBlock(self._name)
+            memory['WriteDocumentNotepadTask'].append(new_ntmb)
 
         #update task so that its finished
         self.finish_work()
@@ -89,7 +89,7 @@ class NotepadTask(Task):
 
 if __name__ == "__main__":
     
-    word_task_instance = NotepadTask(name="Example Task", task_type="Word",percent_complete=50,file_path = "H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork", file_name = "fakework.txt")
+    word_task_instance = WriteDocumentNotepadTask(name="Example Task", task_type="Word",percent_complete=50,file_path = "H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork", file_name = "fakework.txt")
     print(word_task_instance.do_work(word_task_instance,"persona"))
 
 

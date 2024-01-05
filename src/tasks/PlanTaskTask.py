@@ -2,7 +2,6 @@ from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
-from tasks.NotepadTask import NotepadTask
 
 class PlanTaskTask(Task):
     """
@@ -20,19 +19,19 @@ class PlanTaskTask(Task):
     
     @property
     def Name(self):
-        return self.name
+        return self._name
     
     def __init__(self, config, context):
 
         super().__init__(config, context)
-        self.name = 'PlanTaskTask'
-        self._logger.info(f"created {self.name}")
+        self._name = 'PlanTaskTask'
+        self._logger.info(f"created {self._name}")
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
         if self._task_list == None:
-            self.logger.warning(f'Parent TaskList not specified in {self.name}')
-            raise Exception(f'Parent TaskList not specified in {self.name}')
+            self.logger.warning(f'Parent TaskList not specified in {self._name}')
+            raise Exception(f'Parent TaskList not specified in {self._name}')
         
         lm_plan_str = "i am planning my day and i can do the following things:"
 
@@ -71,7 +70,7 @@ class PlanTaskTask(Task):
                     "duration": 900
                 },
                 {
-                    "activityName": "RawTextTask",
+                    "activityName": "WriteDocumentRawTask",
                     "time": "10:15",
                     "duration": 600
                 },
@@ -96,7 +95,7 @@ class PlanTaskTask(Task):
                     "duration": 900
                 },
                 {
-                    "activityName": "RawTextTask",
+                    "activityName": "WriteDocumentRawTask",
                     "time": "12:00",
                     "duration": 1800
                 },
@@ -121,7 +120,7 @@ class PlanTaskTask(Task):
                     "duration": 900
                 },
                 {
-                    "activityName": "RawTextTask",
+                    "activityName": "WriteDocumentRawTask",
                     "time": "14:45",
                     "duration": 1200
                 },
@@ -146,7 +145,7 @@ class PlanTaskTask(Task):
                     "duration": 900
                 },
                 {
-                    "activityName": "RawTextTask",
+                    "activityName": "WriteDocumentRawTask",
                     "time": "16:15",
                     "duration": 1200
                 },
@@ -226,11 +225,11 @@ class PlanTaskTask(Task):
                 #print(llm_output)    
 
                 task_obj = task_class(task_config, context,**llm_output)
-                # self.add_to_parent_task_list(task_obj)
+                self.add_to_parent_task_list(task_obj)
                 self.add_to_parent_task_list(task_class(task_config, "Do nothing for a bit"))
 
-            #adds a RawTextTask
-            if key == 'RawTextTask':
+            #adds a WriteDocumentRawTask
+            if key == 'WriteDocumentRawTask':
                 task_class = class_data['module_class']
                 task_config = None
                 if 'Config' in class_data:
@@ -239,8 +238,17 @@ class PlanTaskTask(Task):
                 task_obj = task_class(task_config,None)
                 self.add_to_parent_task_list(task_obj)
 
-            #adds a NotepadTask
-            if key == 'NotepadTask':
+            #adds a WriteDocumentNotepadTask
+            if key == 'WriteDocumentNotepadTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
+            
+            if key == 'BreakTask':
                 task_class = class_data['module_class']
                 task_config = None
                 if 'Config' in class_data:
@@ -249,6 +257,32 @@ class PlanTaskTask(Task):
                 task_obj = task_class(task_config,None)
                 self.add_to_parent_task_list(task_obj)
 
+            if key == 'EmailTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
+
+            if key == 'LunchTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
+
+            if key == 'MeetingTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
 
         print("finished work")
         

@@ -8,7 +8,7 @@ from MemoryList import MemoryList, MemoryDataBlock
 import secrets
 import string
 
-class RawTextTaskMemoryBlock(MemoryDataBlock):
+class WriteDocumentRawTaskMemoryBlock(MemoryDataBlock):
     
     def __init__(self, data):
         super().__init__()
@@ -17,12 +17,12 @@ class RawTextTaskMemoryBlock(MemoryDataBlock):
     def __str__(self):
         return f'Created:{self._created}, data: {self._data}'
 
-class RawTextTask(Task):
+class WriteDocumentRawTask(Task):
 
     @classmethod
     def get_class_metadata(cls):
         _metadata = {
-            'name': 'RawTextTask',
+            'name': 'WriteDocumentRawTask',
             'description': 'types text into a file (no GUI)',
             'status':'valid'
         }
@@ -30,9 +30,9 @@ class RawTextTask(Task):
     
     def __init__(self, config=None, context=None):
         super().__init__(config,context)
-        #set the name pf the task to RawTextTasl-{random numbers}
+        #set the name pf the task to WriteDocumentRawTask-{random numbers}
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
-        self._name = "RawTextTask-"+self._name
+        self._name = "WriteDocumentRawTask-"+self._name
         #set the filename to random letters
         characters = string.ascii_letters + string.digits
         self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
@@ -57,7 +57,7 @@ class RawTextTask(Task):
 
         #wait a few seconds just for padding
         #TODO probably want to remove this wait in future
-        for _ in range(0,3):
+        for _ in range(0,5):
             print('*', end='')
             time.sleep(1)
 
@@ -65,11 +65,11 @@ class RawTextTask(Task):
 
 
         if not memory == None:
-            if not 'RawTextTask' in memory:
-                memory['RawTextTask'] = MemoryList(2)
+            if not 'WriteDocumentRawTask' in memory:
+                memory['WriteDocumentRawTask'] = MemoryList(2)
 
-            new_rttmb = RawTextTaskMemoryBlock(self._name)
-            memory['RawTextTask'].append(new_rttmb)
+            new_rttmb = WriteDocumentRawTaskMemoryBlock(self._name)
+            memory['WriteDocumentRawTask'].append(new_rttmb)
 
 
 

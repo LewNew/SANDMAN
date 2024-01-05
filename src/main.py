@@ -47,34 +47,46 @@ cfg = {  "path" : "./src/",
             'TaskClassPath': './src/tasks',
             'TaskClasses': 
                 {
-                    'NotepadTask': {
+                    'WriteDocumentNotepadTask': {
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
                     },
-                    'MailSendTask': {
-                        'Config': {
-                            'client_path': './',
-                            'imap_server': '127.0.0.1',
-                            'email_account': 'test@testdomain.com',
-                            'password': 'testpassword1234'          #We need a better password storage solution
-                        }
-                    },
-                    'MailReadTask': {
-                        'Config': {
-                            'client_path': './',
-                            'imap_server': '127.0.0.1',
-                            'email_account': 'test@testdomain.com',
-                            'password': 'testpassword1234'          #We need a better password storage solution
-                        }
-                    },
+                    # 'MailSendTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage soluttion
+                    #     }
+                    # },
+                    # 'MailReadTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage solution
+                    #     }
+                    # },
                     'NothingTask': {
                         'Config': None
                     },
-                    'RawTextTask':{
+                    'WriteDocumentRawTask':{
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
+                    },
+                    'BreakTask': {
+                        'Config': None
+                    },
+                    'EmailTask': {
+                        'Config': None
+                    },
+                    'LunchTask': {
+                        'Config': None
+                    },
+                    'MeetingTask':{
+                        'Config': None
                     }
                 }
             },
@@ -120,7 +132,7 @@ def ConfigureLogger(cfg_data):
         #TODO allow for custom level to be selected based on config file
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S',
-        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-20s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
+        format='%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-26s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s',
     )
 
     logger = logging.getLogger('logger.' + __name__)
