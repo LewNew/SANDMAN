@@ -25,7 +25,7 @@ class WriteDocumentNotepadTask(Task):
     def get_class_metadata(cls):
         _metadata = {
             'name': 'WriteDocumentNotepadTask',
-            'description': 'Interacts with a simple txt file document',
+            'description': 'Interacts with a simple txt file document useing notepad',
             'status':'valid'
         }
         return _metadata

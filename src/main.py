@@ -52,22 +52,22 @@ cfg = {  "path" : "./src/",
                             'workingdir': './fakeWork/'
                         }
                     },
-                    'MailSendTask': {
-                        'Config': {
-                            'client_path': './',
-                            'imap_server': '127.0.0.1',
-                            'email_account': 'test@testdomain.com',
-                            'password': 'testpassword1234'          #We need a better password storage solution
-                        }
-                    },
-                    'MailReadTask': {
-                        'Config': {
-                            'client_path': './',
-                            'imap_server': '127.0.0.1',
-                            'email_account': 'test@testdomain.com',
-                            'password': 'testpassword1234'          #We need a better password storage solution
-                        }
-                    },
+                    # 'MailSendTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage soluttion
+                    #     }
+                    # },
+                    # 'MailReadTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage solution
+                    #     }
+                    # },
                     'NothingTask': {
                         'Config': None
                     },
@@ -75,6 +75,15 @@ cfg = {  "path" : "./src/",
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
+                    },
+                    'BreakTask': {
+                        'Config': None
+                    },
+                    'EmailTask': {
+                        'Config': None
+                    },
+                    'LunchTask': {
+                        'Config': None
                     }
                 }
             },

@@ -247,7 +247,33 @@ class PlanTaskTask(Task):
                 print(task_config)
                 task_obj = task_class(task_config,None)
                 self.add_to_parent_task_list(task_obj)
+            
+            if key == 'BreakTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
 
+            if key == 'EmailTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
+
+            if key == 'LunchTask':
+                task_class = class_data['module_class']
+                task_config = None
+                if 'Config' in class_data:
+                    task_config = class_data['Config']
+                print(task_config)
+                task_obj = task_class(task_config,None)
+                self.add_to_parent_task_list(task_obj)
 
         print("finished work")
         

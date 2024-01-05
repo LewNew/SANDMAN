@@ -57,7 +57,7 @@ class WriteDocumentRawTask(Task):
 
         #wait a few seconds just for padding
         #TODO probably want to remove this wait in future
-        for _ in range(0,3):
+        for _ in range(0,5):
             print('*', end='')
             time.sleep(1)
 
