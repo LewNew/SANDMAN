@@ -2,15 +2,18 @@ from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
+import json
 
-class PlanTaskTask(Task):
+
+
+class PlanScheduleTask(Task):
     """
     a task to add more tasks, currently very basic and must be changed
     """
     @classmethod
     def get_class_metadata(cls):
         _metadata = {
-            'name': 'PlanTaskTask',
+            'name': 'PlanScheduleTask',
             'description': 'This is a bootstrapping task for sandman status',
             'status':'valid',
             'args': None
@@ -24,121 +27,26 @@ class PlanTaskTask(Task):
     def __init__(self, config, context):
 
         super().__init__(config, context)
-        self._name = 'PlanTaskTask'
+        self._name = 'PlanScheduleTask'
         self._logger.info(f"created {self._name}")
+        self._generator = TextGenerator()
+
+        self._prompt = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks, BreakTask, EmailTask, LunchTask, MeetingTask, NothingTask, WebTask, WriteDocumentNotepadTask.can you also include detailed descriptors of what the tasks might be about (about 200 words), for example if it was a WriteDocumentNotepadTask could you say what specifically you are writing about. you can make up as much as you want, you are incentivized to be very creative with the descriptors. any task that requires communication to someone else should always be about you starting the conversation not you responding to something. can it be in JASON format where each entry has the time, type of work (e.g WriteDocumentNotepadTask) and descriptor."
+
         
     def do_work(self,persona=None,mood=None,memory=None):
         print("doing work")
-        if self._task_list == None:
-            self.logger.warning(f'Parent TaskList not specified in {self._name}')
-            raise Exception(f'Parent TaskList not specified in {self._name}')
         
-        
-        #TODO very hard coded must be changed
-        for key, class_data in self._task_list.task_classes.items():
-            print(key)
-            if key == 'NothingTask':
-                if Task.ValidateClassMetadata(class_data['metadata']):
-                    print (f'{key}\'s metadata is ok')
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                
-                #print(task_config)
-                lm_prompt_str = f'I am a {class_data['metadata']['name']} type of task. My task description is "{class_data['metadata']['description']}". '
-                arg_str1 = ''
-                f_str = 'field'
-                if not class_data['metadata']['args'] == None:
-                    f_str = 'fields'
-                    lm_prompt_str += 'My task configuration arguements are: {'
-                    for arg_key, arg_data in class_data['metadata']['args'].items():
-                        arg_str1 += f'{arg_key}, '
-                        lm_prompt_str += f'\'{arg_key}\' described as \'{arg_data}\','
-                    #arg_str1 = arg_str1[:-1]
-                    lm_prompt_str +='}.'
+        schedule = self._generator.generate_text(self,persona,mood)
 
-                lm_prompt_str += f'Provide me a json format string which must have the {f_str} description, {arg_str1} where the field description is a 50 word string which describes the context of my task and can be used by a large language module to infer lots of information about my task'
-                if arg_str1:
-                    lm_prompt_str += f' and {arg_str1}should be suitable values based on their descriptions'
-                
-                #print(lm_prompt_str)
+        print(schedule)
 
-                llm_output = {
-                    "description": "The NothingTask epitomizes the art of purposeful idleness, orchestrating seamless intervals of rest within defined timeframes. It harnesses the power of pause, randomly idling between specified seconds, fostering mental rejuvenation and allowing for spontaneous insights. lower_time sets the minimum duration, while upper_time sets the maximum.",
-                    "lower_time": 3,
-                    "upper_time": 15
-                    }
+        scheduleJSON = json.loads(schedule)
 
-                if not class_data['metadata']['args'] == None:
-                    output_lst = ['description']
-                    output_lst.extend(class_data['metadata']['args'].keys())
-                    arg_set = set(output_lst)
-                    if not arg_set.issubset(llm_output.keys()):
-                        raise Exception(f'oops')
-                context = llm_output['description']
-                del llm_output['description']
-                #print(llm_output)    
+        print(scheduleJSON)
 
-                task_obj = task_class(task_config, context,**llm_output)
-                self.add_to_parent_task_list(task_obj)
-                self.add_to_parent_task_list(task_class(task_config, "Do nothing for a bit"))
-
-            #adds a WriteDocumentRawTask
-            if key == 'WriteDocumentRawTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
-
-            #adds a WriteDocumentNotepadTask
-            if key == 'WriteDocumentNotepadTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
-            
-            if key == 'BreakTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
-
-            if key == 'EmailTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
-
-            if key == 'LunchTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
-
-            if key == 'MeetingTask':
-                task_class = class_data['module_class']
-                task_config = None
-                if 'Config' in class_data:
-                    task_config = class_data['Config']
-                print(task_config)
-                task_obj = task_class(task_config,None)
-                self.add_to_parent_task_list(task_obj)
+        for task in scheduleJSON:
+            print(task)
 
         print("finished work")
         
@@ -151,6 +59,7 @@ class PlanTaskTask(Task):
 
 if __name__ == "__main__":
     
+
     pass
 
 

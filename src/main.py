@@ -12,8 +12,8 @@ cfg = {  "path" : "./src/",
         'CoreObjects':
             {
                 "DecisionEngine":{
-                    "module": "testEng",
-                    "class": "testEng",
+                    "module": "ScheduleDecisionEngine",
+                    "class": "ScheduleDecisionEngine",
                     'path': "./src/",
                     'config':{
                         'persona':{
@@ -33,8 +33,8 @@ cfg = {  "path" : "./src/",
                     }
                 },
                 "BootstrapTask":
-                    {"module": "PlanTaskTask",
-                    "class": "PlanTaskTask",
+                    {"module": "PlanScheduleTask",
+                    "class": "PlanScheduleTask",
                     'path': './src/tasks',
                     'config' : None},
                 "TaskList":
