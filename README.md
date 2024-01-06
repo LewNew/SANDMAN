@@ -9,5 +9,5 @@ Once you have the API key (message Lewis) then you need to update your system en
 3. In the 'System variables' box click 'New...'
 4. Set Variable name as: OPENAI_API_KEY
 5. Set Variable value as: <INSERT API KEY HERE>
-6. You need to restart your IDE to fetch it using os.getenv when prompting
+6. Restart IDE so the path to the key is updated and can be used
 7. Test it works by running TextGenTest.py
