@@ -35,6 +35,8 @@ class TextGenerator:
         except:
             persona_summary = "Your name is Molly Davis you are fun your mood is happy, you are a Researcher at the University but manage and do lots of different work at the University , you are a female whos is age 48."
 
+        print(persona_summary)
+
         user_msg = task.prompt
 
         assistant_msg = f"no chat just work that is formal. follow instructions very closely do not say phrases like 'certainly' or 'yes i can do that' i just want an output"

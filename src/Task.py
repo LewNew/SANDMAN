@@ -23,7 +23,11 @@ class Task(ABC):
         if not isinstance(metadata,dict):
             raise TypeError(f'Metadata is not dictionary, actually type:{type(metadata)}')
         
+        #TODO should args be included???
         if not set(['name', 'description', 'status','args']).issubset(set(metadata.keys())):
+            print("\n\n")
+            print(metadata)
+            print(f'Metadata strcuture missing prie keys {metadata.keys()}')
             raise Exception(f'Metadata strcuture missing prie keys {metadata.keys()}')
         
         if not isinstance(metadata['name'], str) or not isinstance(metadata['description'], str):
@@ -102,7 +106,12 @@ class Task(ABC):
         self._inception_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self._channel = None
         self._config = config
-        self._context = context
+
+        if context == None:
+            self._context = ""
+        else:
+            self._context = context
+
         self._prompt = None
 
     def __str__(self):
