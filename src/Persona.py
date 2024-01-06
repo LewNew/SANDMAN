@@ -120,7 +120,7 @@ class Persona():
     def to_dict(self):
         return self._persona
 
-    def to_json(self, file_path='persona_config.json'):
+    def to_json(self, file_path='agent_attributes_config.json'):
         with open(file_path, 'w') as file:
             json.dump(self._persona, file, indent=4)
     
@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
     if action.strip().lower() == 'read':
         try:
-            with open('persona_config.json', 'r') as file:
+            with open('agent_attributes_config.json', 'r') as file:
                 json_string = file.read()
             persona = Persona.from_json(json_string)
             print("Agent Data:", json.dumps(persona.to_dict(), indent=4))
@@ -163,7 +163,7 @@ if __name__ == "__main__":
         persona = Persona()
         persona.input_attributes()
         persona.to_json()
-        print("New agent data has been saved to persona_config.json.")
+        print("New agent data has been saved to agent_attributes_config.json.")
     else:
         print("Invalid input. Please enter 'Read' or 'Add'.")
 

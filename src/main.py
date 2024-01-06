@@ -7,7 +7,7 @@ import time
 import random
 import sys
 
-persona_file = './src/persona_config.json'
+persona_file = './src/agent_attributes_config.json'
 
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)
@@ -90,7 +90,7 @@ cfg = {  "path" : "./src/",
         },
 }
 
-persona_file = './src/persona_config.json'
+persona_file = './src/agent_attributes_config.json'
 
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)
