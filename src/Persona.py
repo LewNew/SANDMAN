@@ -4,6 +4,12 @@ import json
 
 class Persona():
 
+    """
+    A class to represent a persona or character with various attributes.
+
+    Attributes:
+        _persona (dict): A dictionary to store all attributes of the persona.
+    """
     def __init__(self, first_name='', last_name='', personality_description ='', job_role='', organisation='',
                  gender='', age=0, traits ={}):
         self._persona = {}
@@ -87,11 +93,24 @@ class Persona():
         self._persona['age'] = age
 
     def AppendTrait(self, trait_name, trait_description):
+        """
+        Append a trait to the persona's trait dictionary.
+
+        Args:
+            trait_name (str): The name of the trait to add.
+            trait_description (str): The description of the trait.
+        """
         if not isinstance(trait_name, str) or not isinstance(trait_description, str):
             raise TypeError(f'string issue name:({type(trait_name)}) decription({type(trait_description)})')
         self._persona['traits'][trait_name] = trait_description
     
     def RemoveTrait(self, trait_name):
+        """
+        Remove a trait from the persona's trait dictionary.
+
+        Args:
+            trait_name (str): The name of the trait to remove.
+        """
         if not isinstance(trait_name, str):
             raise TypeError(f'string issue name:({type(trait_name)})')
         if trait_name in self._persona['traits']:
@@ -118,14 +137,32 @@ class Persona():
         return persona_str
 
     def to_dict(self):
+        """
+        Convert the persona to a dictionary.
+        """
         return self._persona
 
-    def to_json(self, file_path='persona_config.json'):
+    def to_json(self, file_path='agent_attributes_config.json'):
+        """
+        Save the persona to a JSON file.
+
+        Args:
+            file_path (str): The file path to save the JSON data to.
+        """
         with open(file_path, 'w') as file:
             json.dump(self._persona, file, indent=4)
     
     @classmethod
     def from_json(cls, json_string):
+        """
+        Create a Persona object from a JSON string.
+
+        Args:
+            json_string (str): The JSON string to convert to a Persona object.
+
+        Returns:
+            Persona: The created Persona object.
+        """
         persona = json.loads(json_string)
         #validate persona
         new_config = cls()
@@ -133,6 +170,9 @@ class Persona():
         return new_config
 
     def input_attributes(self):
+        """
+        Input attributes for the persona from the user via standard input.
+        """
         self.FirstName = input("Enter first name: ")
         self.LastName = input("Enter last name: ")
         self.PersonalityDescription = input("Enter personality description: ")
@@ -142,6 +182,12 @@ class Persona():
         self.Age = int(input("Enter age: "))
 
     def generate_persona_summary(self):
+        """
+        Generate a summary description of the persona which can be used to pass into LLM as a persona description.
+
+        Returns:
+            str: A summary of the persona.
+        """
         summary = f"{self.FirstName} {self.LastName}, a {self.Age}-year-old {self.Gender} working as a {self.JobRole} in a {self.Organisation}. " \
                   f"They are known to be {self.PersonalityDescription}."
         return summary
@@ -151,7 +197,7 @@ if __name__ == "__main__":
 
     if action.strip().lower() == 'read':
         try:
-            with open('persona_config.json', 'r') as file:
+            with open('agent_attributes_config.json', 'r') as file:
                 json_string = file.read()
             persona = Persona.from_json(json_string)
             print("Agent Data:", json.dumps(persona.to_dict(), indent=4))
@@ -163,7 +209,7 @@ if __name__ == "__main__":
         persona = Persona()
         persona.input_attributes()
         persona.to_json()
-        print("New agent data has been saved to persona_config.json.")
+        print("New agent data has been saved to agent_attributes_config.json.")
     else:
         print("Invalid input. Please enter 'Read' or 'Add'.")
 
