@@ -7,7 +7,7 @@ import time
 import random
 import sys
 
-persona_file = 'persona_config.json'
+persona_file = './src/persona_config.json'
 
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)
@@ -16,16 +16,16 @@ cfg = {  "path" : "./src/",
         'CoreObjects':
             {
                 "DecisionEngine":{
-                    "module": "testEng",
-                    "class": "testEng",
+                    "module": "ScheduleDecisionEngine",
+                    "class": "ScheduleDecisionEngine",
                     'path': "./src/",
                     'config':{
                         'persona': persona_config
                     }
                 },
                 "BootstrapTask":
-                    {"module": "PlanTaskTask",
-                    "class": "PlanTaskTask",
+                    {"module": "PlanScheduleTask",
+                    "class": "PlanScheduleTask",
                     'path': './src/tasks',
                     'config' : None},
                 "TaskList":
@@ -90,7 +90,7 @@ cfg = {  "path" : "./src/",
         },
 }
 
-persona_file = 'persona_config.json'
+persona_file = './src/persona_config.json'
 
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)

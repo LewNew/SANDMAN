@@ -53,6 +53,9 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         # print(self._mood.current_mood)
         # self._persona = Persona(**config['persona'])
 
+        self._mood = None #TODO
+        self._persona = None #TODO
+
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
