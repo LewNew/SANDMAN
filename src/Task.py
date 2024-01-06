@@ -51,6 +51,10 @@ class Task(ABC):
     @property
     def TaskList(self):
         return self.task_list
+
+    @property
+    def prompt(self):
+        return self._prompt
     
     @TaskList.setter
     def TaskList(self, newList):
@@ -99,6 +103,7 @@ class Task(ABC):
         self._channel = None
         self._config = config
         self._context = context
+        self._prompt = None
 
     def __str__(self):
         """

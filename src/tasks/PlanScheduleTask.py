@@ -30,7 +30,6 @@ class PlanScheduleTask(Task):
         self._name = 'PlanScheduleTask'
         self._logger.info(f"created {self._name}")
         self._generator = TextGenerator()
-
         self._prompt = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks, BreakTask, EmailTask, LunchTask, MeetingTask, NothingTask, WebTask, WriteDocumentNotepadTask.can you also include detailed descriptors of what the tasks might be about (about 200 words), for example if it was a WriteDocumentNotepadTask could you say what specifically you are writing about. you can make up as much as you want, you are incentivized to be very creative with the descriptors. any task that requires communication to someone else should always be about you starting the conversation not you responding to something. can it be in JASON format where each entry has the time, type of work (e.g WriteDocumentNotepadTask) and descriptor."
 
         
