@@ -1,9 +1,6 @@
 from openai import OpenAI
 import os
 
-# client = OpenAI(api_key="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")
-# # Hello
-
 class TextGenerator:
 
     def __init__(self):
@@ -11,24 +8,18 @@ class TextGenerator:
         self._client = OpenAI(api_key=self._api_key)
         print(self._api_key)
 
-    def generate_text(self, task, persona, mood):
-        # Setting up the prompt to be more dynamic
+    def generate_text(self, task, persona_obj, mood):
+        persona_summary = persona_obj.generate_persona_summary()
         system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
-                     f"is {persona} and their mood is {mood}. Context of the task is {task}."
+                     f"is {persona_summary} and their mood is {mood}. Context of the task is {task}."
         messages = [
             {"role": "system", "content": system_msg},
             {"role": "user", "content": f"Please perform the task based on the {task} context provided."}
-            # User's request can be more specific based on actual use case
         ]
-
-        # Making the API call
-        #simple try catch incase api call fails
-        #TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!
         try:
-            response = self._client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to
+            response = self._client.chat.completions.create(model="gpt-3.5-turbo",
             messages=messages)
         except Exception as e:
-            #should really have alogger here that prints critical message
             print(e)        
             return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + "\n\nException:\n\n" + str(e)
         # Extracting and returning the generated text
