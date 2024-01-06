@@ -1,9 +1,9 @@
-from abc import ABC, abstractmethod
-import logging
+from Channel import Channel
 
-class Channel(ABC):
+
+class NothingChannel(Channel):
     """
-    Abstract Base Class for Communication Channels
+    Abstract Base Class for reading RAW files
 
     Attributes:
     - None
@@ -17,18 +17,15 @@ class Channel(ABC):
 
     def __init__(self):
         """
-        Constructor for the Channel class.
-
-        Parameters:
-        - None
+        Constructor for the NothingChannel class
 
         Returns:
         - None
         """
-        self._logger = logging.getLogger('logger.'+__name__)
-        pass
+        super().__init__()
 
-    @abstractmethod
+
+
     def send(self, **kwargs):
         """
         Abstract method to send data through the channel.
@@ -39,9 +36,11 @@ class Channel(ABC):
         Returns:
         - None
         """
-        pass
+        text = kwargs["text"]
 
-    @abstractmethod
+        print(kwargs)
+
+
     def recv(self, **kwargs):
         """
         Abstract method to receive data through the channel.
@@ -52,9 +51,9 @@ class Channel(ABC):
         Returns:
         - None
         """
-        pass
+        print(f'i did nothing')
 
-    @abstractmethod
+
     def read(self, **kwargs):
         """
         Abstract method to read data through the channel.
@@ -65,11 +64,7 @@ class Channel(ABC):
         Returns:
         - None
         """
-        pass
+        print(kwargs)
+    
 
 
-if __name__ == "__main__":
-
-    new_channel = Channel()
-
-    pass

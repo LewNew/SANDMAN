@@ -1,9 +1,12 @@
 import datetime
 import os
 import random
-import openai
+from openai import OpenAI
 import json
-from ElementsDict import *
+from ..ElementsDict import *
+
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
 
 # This script does not currently take in any information relating to the agent as parameters. It's purely
 # for engineering prompts to pass in variables. For SANDMAN, a similar chat() function such as the one in here
@@ -18,7 +21,6 @@ from ElementsDict import *
 # Set OPEN_API_KEY as an environment variable in CMD prompt with setx OPEN_API_KEY "<KEY>" or do it manually
 # Get your own key ya slugs
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Ignore max_tokens. I couldn't get Tokenizer() from tiktoken to work
 # I wanted to print the token count that's all but it's not significant
@@ -36,10 +38,8 @@ def chat(system, user_assistant, max_tokens):
 
     messages = [system_msg] + user_assistant_msgs
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-    )
+    response = client.chat.completions.create(model="gpt-3.5-turbo",
+                                              messages=messages)
 
     status_code = response["choices"][0]["finish_reason"]
     assert status_code == "stop", f"The status code was {status_code}."
@@ -68,7 +68,6 @@ for i in range(highest_prompt_number + 1, highest_prompt_number + 1 + num_prompt
     organization = random.choice(organizations)
     topic = random.choice(topics)
     selected_style = random.choice(style)
-
 
     random_prompt = f'You are a {role} in a {organization} that is writing about {topic} in the style of {style}'
 
@@ -106,4 +105,5 @@ with open(output_file_path, 'w') as output_file:
 print(f"JSON saved to {output_file_path} with {num_prompts} prompts")
 
 for i, prompt_data in enumerate(output_data[-num_prompts:]):
-    print(f"Prompt {i + 1}: {prompt_data['Role']} - {prompt_data['Organization']} - {prompt_data['Topic']} - {prompt_data['Style']}")
+    print(
+        f"Prompt {i + 1}: {prompt_data['Role']} - {prompt_data['Organization']} - {prompt_data['Topic']} - {prompt_data['Style']}")

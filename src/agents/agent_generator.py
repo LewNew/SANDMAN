@@ -1,12 +1,7 @@
 import json
 import random
-from ElementsDict import *
 
-class Mood:
-    def __init__(self):
-        self.happiness = random.uniform(0, 1)
-        self.stress = random.uniform(0, 1)
-        self.energy = random.uniform(0, 1)
+from templates.attributes.attributes import *
 
 class Agent:
     def __init__(self):
@@ -18,14 +13,19 @@ class Agent:
         self.occupation = None
         self.gender = None
         self.innate = None
-        self.mood = Mood()
 
-# Read first names from first-names.txt and last names from last-names.txt
-with open('first-names.txt', 'r') as first_names_file:
-    first_names = first_names_file.read().splitlines()
+# Read first names and last names based on gender
+def read_names(gender):
+    first_names_file = f'src/agents/templates/names/first-names-{gender.lower()}.txt'
+    last_names_file = f'src/agents/templates/names/last-names-{gender.lower()}.txt'
 
-with open('last-names.txt', 'r') as last_names_file:
-    last_names = last_names_file.read().splitlines()
+    with open(first_names_file, 'r') as first_names_file:
+        first_names = first_names_file.read().splitlines()
+
+    with open(last_names_file, 'r') as last_names_file:
+        last_names = last_names_file.read().splitlines()
+
+    return first_names, last_names
 
 agent_metadata_list = []
 
@@ -33,26 +33,30 @@ agent_metadata_list = []
 agents = []
 for i in range(5):
     agent = Agent()
+    agent.gender = random.choice(["Male", "Female"])
+
+    # Read first and last names based on gender
+    first_names, last_names = read_names(agent.gender)
+
     agent.first_name = random.choice(first_names)
     agent.last_name = random.choice(last_names)
     agent.name = agent.first_name + " " + agent.last_name
     agent.age = random.randint(25, 65)
     agent.role = random.choice(roles)
     agent.occupation = "University"
-    agent.gender = random.choice(["Male", "Female"])
     agents.append(agent)
 
 # Print the metadata in the specified style
 for i, agent in enumerate(agents):
-    print(f"Agent {i+1} Metadata:")
+    print(f"Agent {i + 1} Metadata:")
     print(f"Name: {agent.name}")
     print(f"Age: {agent.age} years old")
     print(f"Role: {agent.role} at the University")
     print(f"Gender: {agent.gender}")
     print(f"Innate Interest: {agent.innate}")
-    print(f"Mood - Happiness: {agent.mood.happiness:.2f}")
-    print(f"Mood - Stress: {agent.mood.stress:.2f}")
-    print(f"Mood - Energy: {agent.mood.energy:.2f}")
+    #print(f"Mood - Happiness: {agent.mood.happiness:.2f}")
+    #print(f"Mood - Stress: {agent.mood.stress:.2f}")
+    #print(f"Mood - Energy: {agent.mood.energy:.2f}")
     print("\n")
 
 # Iterate through the agents and append their metadata to the list
@@ -64,11 +68,6 @@ for i, agent in enumerate(agents):
         "Role": agent.role,
         "Gender": agent.gender,
         "Innate Interest": agent.innate,
-        "Mood": {
-            "Happiness": agent.mood.happiness,
-            "Stress": agent.mood.stress,
-            "Energy": agent.mood.energy
-        }
     }
     agent_metadata_list.append(agent_metadata)
 

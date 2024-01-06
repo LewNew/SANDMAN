@@ -1,63 +1,62 @@
-import openai
-import requests
-from prompts import gpt_requests
-from Mood import Mood
+from openai import OpenAI
+import os
 
+# client = OpenAI(api_key="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")
+# # Hello
 
 class TextGenerator:
 
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self._api_key = os.getenv("OPENAI_API_KEY")
+        self._client = OpenAI(api_key=self._api_key)
+        print(self._api_key)
 
     def generate_text(self, task, persona, mood):
-        # Setting up the prompt
-        system_msg = f"You are a text generator. Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
+        # Setting up the prompt to be more dynamic
+        system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
+                     f"is {persona} and their mood is {mood}. Context of the task is {task}."
         messages = [
-            {"role": "system", "content": system_msg}
+            {"role": "system", "content": system_msg},
+            {"role": "user", "content": f"Please perform the task based on the {task} context provided."}
+            # User's request can be more specific based on actual use case
         ]
 
         # Making the API call
-        openai.api_key = self.api_key
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # or the most appropriate model you have access to
-            messages=messages,
-        )
-
+        #simple try catch incase api call fails
+        #TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!
+        try:
+            response = self._client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to
+            messages=messages)
+        except Exception as e:
+            #should really have alogger here that prints critical message
+            print(e)        
+            return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + "\n\nException:\n\n" + str(e)
         # Extracting and returning the generated text
         return response.choices[0].message.content
-
-    '''
-    def generate_text(self, task, persona, mood):
-        system_msg = f"You are {self.name}. "
-        user_prompt = f"Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
-        return gpt_requests.ChatGPT_request(user_prompt, system_msg)
-    '''
 
     def generate_file_name(self, task, persona):
         base_name = f"{persona}_{task}".replace(" ", "_")
         return f"{base_name}.txt"
 
-#TODO should this not be in a if __name__ == "__main__" ??
-
 if __name__ == "__main__":
 
-    # Initialize the Mood object (assuming you've already done so)
-    agent_mood = Mood()
-    agent_mood.randomize_mood()
-
     # Define the task and persona
-    task_description = "Write a report"
-    persona_description = "Research Analyst"
+    agent_name = "Bob Smith"
+    task_type = "Write an Email"
+    new_task_description = "Email to supervisor about research"
+    persona_description = "PhD Student"
+    #mood_description = "Angry"
 
-    # Retrieve the current mood of the agent
-    current_mood = agent_mood.get_mood()
+    # Initialize TextGenerator with an API key
+    text_generator = TextGenerator(api_key="")
 
-    # Initialize and use the TextGenerator
-    api_key = "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"
-    text_generator = TextGenerator(api_key=api_key)
-    generated_text = text_generator.generate_text(task_description, persona_description, current_mood)
-
-    # Output the results
-    print(f"Mood: {current_mood}")
+    # Generate text
+    generated_text = text_generator.generate_text(task_type, new_task_description, persona_description, mood_description)
     print(f"Generated Text: {generated_text}")
 
+    # Assuming a mood is set here for the sake of the example
+    #current_mood = mood_description
+
+    # Print out the updated prompt from the program itself
+    system_msg = f"You are a text generator purposed to write Emails"
+    print(f"System Message: {system_msg}")

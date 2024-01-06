@@ -3,7 +3,7 @@ import json
 
 def parse_line(line):
     # Splits the line into components based on the structure and returns a dict of parts
-    parts = line.split(" ", 3)
+    parts = line.split(" ", 3)  # Split into 4 parts, based on spaces
     if len(parts) < 4:  # Ensure that the line is valid
         return None
     return {
@@ -11,7 +11,6 @@ def parse_line(line):
         "Type": parts[0][1],  # Type is the second character in the line (after "(")
         "Activity": parts[3]  # The rest of the line is the activity description
     }
-
 
 def read_and_parse_plan(json_file_path):
     try:
@@ -21,6 +20,7 @@ def read_and_parse_plan(json_file_path):
             plan_raw = data["plan"]
 
         # Split the plan into individual entries based on newlines
+        # and parse each line into a dict
         lines = plan_raw.strip().split("\n")
         parsed_plan = [parse_line(line) for line in lines if parse_line(line)]
 
@@ -47,5 +47,5 @@ def read_and_parse_plan(json_file_path):
 
 
 # Replace with the actual path of your JSON file
-json_file_path = "plan_Dominic._Collinsworth.json"
+json_file_path = "plan_Marcelo_Mangroves.json"
 read_and_parse_plan(json_file_path)
