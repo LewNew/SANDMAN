@@ -43,7 +43,7 @@ class WriteDocumentRawTask(Task):
         #create the RawChannel and TextGenerator
         self._logger.info(f"created {self._name}")
         self._channel = RAWChannel(self._file_path,self._file_name)
-        self._generator = TextGenerator("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")
+        self._generator = TextGenerator()
 
         
         

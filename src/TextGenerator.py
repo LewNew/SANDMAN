@@ -1,13 +1,15 @@
 from openai import OpenAI
+import os
 
-client = OpenAI(api_key="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")
-# Hello
+# client = OpenAI(api_key="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")
+# # Hello
 
 class TextGenerator:
 
-    def __init__(self, api_key):
-        self.api_key = api_key
-        print(api_key)
+    def __init__(self):
+        self._api_key = os.getenv("OPENAI_API_KEY")
+        self._client = OpenAI(api_key=self._api_key)
+        print(self._api_key)
 
     def generate_text(self, task, persona, mood):
         # Setting up the prompt to be more dynamic
@@ -23,7 +25,7 @@ class TextGenerator:
         #simple try catch incase api call fails
         #TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!
         try:
-            response = client.chat.completions.create(model="gpt-3.5-turbo-instruct",  # or the most appropriate model you have access to
+            response = self._client.chat.completions.create(model="gpt-3.5-turbo",  # or the most appropriate model you have access to
             messages=messages)
         except Exception as e:
             #should really have alogger here that prints critical message
@@ -46,7 +48,7 @@ if __name__ == "__main__":
     #mood_description = "Angry"
 
     # Initialize TextGenerator with an API key
-    text_generator = TextGenerator(api_key="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")
+    text_generator = TextGenerator(api_key="")
 
     # Generate text
     generated_text = text_generator.generate_text(task_type, new_task_description, persona_description, mood_description)
