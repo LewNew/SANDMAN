@@ -8,31 +8,44 @@ class TextGenerator:
         self._client = OpenAI(api_key=self._api_key)
         print(self._api_key)
 
-<<<<<<< HEAD
-    def generate_text(self, task, persona, mood):
-        # Setting up the prompt to be more dynamic
+    # def generate_text(self, task, persona, mood):
+    #     # Setting up the prompt to be more dynamic
 
-        assistant_msg = f""
+    #     assistant_msg = f""
 
-        system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
-                     f"is {persona} and their mood is {mood}. Context of the task is {task}."
+    #     system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
+    #                  f"is {persona} and their mood is {mood}. Context of the task is {task}."
+
+    #     user_msg = task.prompt
+
+    #     messages = [
+    #         {"role": "system", "content": system_msg},
+    #         {"role": "user", "content": user_msg},
+    #         {"role": "assistant","content": assistant_msg}
+    #         # User's request can be more specific based on actual use case
+
+
+    def generate_text(self, task, persona_obj, mood):
+
+
+        print(task.prompt)
+
+        try:
+            persona_summary = persona_obj.generate_persona_summary()
+        except:
+            persona_summary = "Your name is Molly Davis you are fun your mood is happy, you are a Researcher at the University but manage and do lots of different work at the University , you are a female whos is age 48."
 
         user_msg = task.prompt
 
-        messages = [
-            {"role": "system", "content": system_msg},
-            {"role": "user", "content": user_msg},
-            {"role": "assistant","content": assistant_msg}
-            # User's request can be more specific based on actual use case
-=======
-    def generate_text(self, task, persona_obj, mood):
-        persona_summary = persona_obj.generate_persona_summary()
+        assistant_msg = f"no chat just work that is formal. follow instructions very closely do not say phrases like 'certainly' or 'yes i can do that' i just want an output"
+
         system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
                      f"is {persona_summary} and their mood is {mood}. Context of the task is {task}."
+
         messages = [
             {"role": "system", "content": system_msg},
-            {"role": "user", "content": f"Please perform the task based on the {task} context provided."}
->>>>>>> 23b064ee190ceacc53dc21f3d444ed5e9c4b75a4
+            {"role": "user", "content": task.prompt},
+            {"role": "assistant","content": assistant_msg}
         ]
         try:
             response = self._client.chat.completions.create(model="gpt-3.5-turbo",
