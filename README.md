@@ -1,5 +1,13 @@
 # SANDMAN: Sandbox Multi-Agent Network
 
-## OpenAI API Key: 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
+## OpenAI API Key Instructions
 
-This is Lewis' key (06/01/2024)
+Once you have the API key (message Lewis) then you need to update your system environment variables.
+
+1. Windows > Edit the system environment variables
+2. Click 'Environment Variables...'
+3. In the 'System variables' box click 'New...'
+4. Set Variable name as: OPENAI_API_KEY
+5. Set Variable value as: <INSERT API KEY HERE>
+6. You need to restart your IDE to fetch it using os.getenv when prompting
+7. Test it works by running TextGenTest.py
