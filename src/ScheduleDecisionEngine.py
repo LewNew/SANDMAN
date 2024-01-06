@@ -2,8 +2,12 @@ import DecisionEngine
 from Memory import Memory
 from MemoryList import MemoryList, MemoryDataBlock
 from enum import Enum
+from Task import Task
 from Mood import Mood, MoodAspect
 from Persona import Persona
+import json
+from src.TaskList import TaskList
+
 
 class ScheduleDecisionEngineMemoryBlockType(Enum):
     DECISION = 1
@@ -24,7 +28,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
     
     memname = 'ScheduleDecisionEngineMemory'
 
-    def __init__(self, task_list, persona=None, config=None):
+    def __init__(self, task_list, persona=None, config_path='agent_attributes_config.json', config=None):
         super().__init__(task_list, config)
         self._memory = Memory()
         self._memory[ScheduleDecisionEngine.memname] = MemoryList(20)
@@ -41,10 +45,13 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
              "Uncomfortable": 'My level of being weirded out is'
         }
 
-        if persona:
-            self._persona = persona
-        else:
-            self._persona = Persona(**config['persona']) if config and 'persona' in config else Persona()
+        try:
+            with open(config_path, 'r') as file:
+                config = json.load(file)
+            self._persona = Persona(**config)
+        except Exception as e:
+            self.logger.error(f"Failed to load persona from {config_path}: {e}")
+            self._persona = Persona()  # Use a default persona or handle the error as required.
 
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
