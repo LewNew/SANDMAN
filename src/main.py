@@ -7,6 +7,10 @@ import time
 import random
 import sys
 
+persona_file = 'persona_config.json'
+
+with open(persona_file, 'r') as file:
+    persona_config = json.load(file)
 
 cfg = {  "path" : "./src/",
         'CoreObjects':
@@ -16,20 +20,7 @@ cfg = {  "path" : "./src/",
                     "class": "ScheduleDecisionEngine",
                     'path': "./src/",
                     'config':{
-                        'persona':{
-                            "first_name": "Alice", 
-                            "last_name": "Boberta", 
-                            "personality_description": "I am, a vibrant woman, who radiates a contagious zest for life. I have an outgoing nature and magnetic energy effortlessly draw people in, making me the life of any gathering. I exude fun-loving charisma, infusing joy into every moment with my infectious enthusiasm.", 
-                            "job_role": "secretary", 
-                            "gender": "female", 
-                            "age": 25, 
-                            "traits": {
-                                "meticulous": "Exacting attention in details ensures flawless precision and thorough completion", 
-                                "efficient": "Smooth operations exemplify streamlined processes and productive, time-conscious workflows.", 
-                                "creative": " Innovative thinking manifests in original ideas and imaginative problem-solving approaches.", 
-                                "organized": "Efficiency in arrangements reflects systematic approaches, ensuring seamless task execution."
-                            }
-                        }
+                        'persona': persona_config
                     }
                 },
                 "BootstrapTask":
@@ -99,6 +90,10 @@ cfg = {  "path" : "./src/",
         },
 }
 
+persona_file = 'persona_config.json'
+
+with open(persona_file, 'r') as file:
+    persona_config = json.load(file)
 
 def ConfigureLogger(cfg_data):
     """
@@ -225,3 +220,97 @@ if __name__ == "__main__":
     de_obj = de_class(tl_obj, cfg_data['CoreObjects']['DecisionEngine']['config'])
     de_obj.run()
 
+
+# Old Config
+'''
+cfg = {  "path" : "./src/",
+        'CoreObjects':
+            {
+                "DecisionEngine":{
+                    "module": "testEng",
+                    "class": "testEng",
+                    'path': "./src/",
+                    'config':{
+                        'persona':{
+                            "first_name": "Alice", 
+                            "last_name": "Boberta", 
+                            "personality_description": "I am, a vibrant woman, who radiates a contagious zest for life. I have an outgoing nature and magnetic energy effortlessly draw people in, making me the life of any gathering. I exude fun-loving charisma, infusing joy into every moment with my infectious enthusiasm.", 
+                            "job_role": "secretary", 
+                            "gender": "female", 
+                            "age": 25, 
+                            "traits": {
+                                "meticulous": "Exacting attention in details ensures flawless precision and thorough completion", 
+                                "efficient": "Smooth operations exemplify streamlined processes and productive, time-conscious workflows.", 
+                                "creative": " Innovative thinking manifests in original ideas and imaginative problem-solving approaches.", 
+                                "organized": "Efficiency in arrangements reflects systematic approaches, ensuring seamless task execution."
+                            }
+                        }
+                    }
+                },
+                "BootstrapTask":
+                    {"module": "PlanTaskTask",
+                    "class": "PlanTaskTask",
+                    'path': './src/tasks',
+                    'config' : None},
+                "TaskList":
+                    {"module":"TaskList",
+                    "class": "TaskList",
+                    'path': "./src/",
+                    'config' : None}
+            },
+        'TaskConfig': {
+            'TaskClassPath': './src/tasks',
+            'TaskClasses': 
+                {
+                    'WriteDocumentNotepadTask': {
+                        'Config': {
+                            'workingdir': './fakeWork/'
+                        }
+                    },
+                    # 'MailSendTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage soluttion
+                    #     }
+                    # },
+                    # 'MailReadTask': {
+                    #     'Config': {
+                    #         'client_path': './',
+                    #         'imap_server': '127.0.0.1',
+                    #         'email_account': 'test@testdomain.com',
+                    #         'password': 'testpassword1234'          #We need a better password storage solution
+                    #     }
+                    # },
+                    'NothingTask': {
+                        'Config': None
+                    },
+                    'WriteDocumentRawTask':{
+                        'Config': {
+                            'workingdir': './fakeWork/'
+                        }
+                    },
+                    'BreakTask': {
+                        'Config': None
+                    },
+                    'EmailTask': {
+                        'Config': None
+                    },
+                    'LunchTask': {
+                        'Config': None
+                    },
+                    'MeetingTask':{
+                        'Config': None
+                    }
+                }
+            },
+        'Log':{
+                'LogPath':'./log/',
+                'LogFileName':'log.log'
+            },
+        'ChannelConfig': {
+            'ChannelClassPath': './src/channels',
+        },
+}
+'''
