@@ -1,7 +1,7 @@
 import json
 import random
 
-from src.agents.templates.attributes.attributes import *
+from templates.attributes.attributes import *
 
 class Agent:
     def __init__(self):
@@ -16,8 +16,8 @@ class Agent:
 
 # Read first names and last names based on gender
 def read_names(gender):
-    first_names_file = f'templates/names/first-names-{gender.lower()}.txt'
-    last_names_file = f'templates/names/last-names-{gender.lower()}.txt'
+    first_names_file = f'src/agents/templates/names/first-names-{gender.lower()}.txt'
+    last_names_file = f'src/agents/templates/names/last-names-{gender.lower()}.txt'
 
     with open(first_names_file, 'r') as first_names_file:
         first_names = first_names_file.read().splitlines()
