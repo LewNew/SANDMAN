@@ -1,6 +1,7 @@
 from Task import Task
 from MailChannel import MailChannel
 from MailSendTask import MailSendTask
+from MailGenerator import MailGenerator
 import imaplib
 import email
 
@@ -25,8 +26,9 @@ class MailReadTask(Task):
         do_work(task, persona, mood, Memory): Perform the task
 
     """
-    def __init__(self, name, task_type, client_path, imap_server, email_account, password, percent_complete=0, last_worked_on=None, inception_time=None):
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+    def __init__(self, name, task_type, client_path, imap_server, email_account, password, percent_complete=0, last_worked_on=None, inception_time=None, task_list = None):
+        a = task_list
+        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time, task_list=a)
         """
         Initializes a new Task object.
 
@@ -60,11 +62,21 @@ class MailReadTask(Task):
             sender = msg["from"]
             body = msg.get_payload(decode=True).decode()
 
-            reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, subject=subject, body=body, percent_complete=0, last_worked_on=None, inception_time=None)
+            letter = f"Email:\nFrom: {sender}\nSubject: {subject}\nBody: {body}"
 
-            self.add_to_parent_task_list(reply)
+            print(letter)
 
+            response = MailGenerator.generate_reply(task=task, persona=persona, mood=mood, email=letter, logic=None)
 
+            if response == "0": return True
+
+            else: reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, subject=subject, body=response, percent_complete=0, last_worked_on=None, inception_time=None)
+
+            # reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, subject=subject, body=body, percent_complete=0, last_worked_on=None, inception_time=None)
+
+            # self.add_to_parent_task_list(reply)
+
+            # Call GPT model, ask if the email needs a reply.
             
 
 

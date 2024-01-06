@@ -98,7 +98,7 @@ class MailChannel(Channel):
 
         subprocess.Popen([self.client_path])
         time.sleep(1)
-        for i in range(9): pyautogui.press('tab'); time.sleep(0.1)
+        for i in range(8): pyautogui.press('tab'); time.sleep(0.1)
         time.sleep(1)
         for email_id in unread_emails:
             pyautogui.press('space')

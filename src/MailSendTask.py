@@ -21,8 +21,9 @@ class MailSendTask(Task):
         do_work(task, persona, mood, Memory): Perform the task
 
     """
-    def __init__(self, name, task_type, client_path, recipients, subject, body, percent_complete=0, last_worked_on=None, inception_time=None):
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+    def __init__(self, name, task_type, client_path, recipients, subject, body, percent_complete=0, last_worked_on=None, inception_time=None, task_list=None):
+        a = task_list
+        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time, task_list=a)
         """
         Initializes a new Task object.
 
@@ -49,7 +50,21 @@ class MailSendTask(Task):
         #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
 
         # Hard coded for initial test
-        self.channel.send(sender="", recipients="SANDMAN_A1@outlook.com", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
+        # self.channel.send(sender="", recipients="SANDMAN_A1@outlook.com", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
+
+        if self.recipients == None:
+            print("Default Mail Task")
+            self.channel.send(sender="", recipients="SANDMAN_A1@outlook.com", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
+
+        else:
+            if self.body != None:
+                print("Reply Mail Task")
+                self.channel.send(sender="", recipients=self.recipients, date="", subject="RE: "+self.subject, body=self.body, attachments="")
+
+            else:
+                print("Custom Mail Task")
+                self.channel.send(sender="", recipients=self.recipients, date="", subject=self.subject, body=self.body, attachments="")
+
         print("finished work")
 
         #TODO do work should return some usefull value

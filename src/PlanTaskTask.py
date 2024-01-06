@@ -1,9 +1,9 @@
 from Task import Task
-from NotepadChannel import NotepadChannel
+#from NotepadChannel import NotepadChannel
 from MailChannel import MailChannel
-from TextGenerator import TextGenerator
+#from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
-from NotepadTask import NotepadTask
+#from NotepadTask import NotepadTask
 from MailSendTask import MailSendTask
 from MailReadTask import MailReadTask
 
@@ -27,8 +27,8 @@ class PlanTaskTask(Task):
         #task.add_to_parent_task_list(NotepadTask("q2Report","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework1.txt",task_list=self.task_list))
         #task.add_to_parent_task_list(NotepadTask("scriptForPresentation","typeing","H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork\\","fakework2.txt",task_list=self.task_list))
 
-        task.add_to_parent_task_list(MailSendTask(name="Example Task", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients="SANDMAN_A1@outlook.com", subject="Test Subject", body="Dear Agent,\nHello!"))
-        task.add_to_parent_task_list(MailReadTask(name="Example Task", task_type="mailRead", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", imap_server="imap-mail.outlook.com", email_account="SANDMAN_A1@outlook.com", password="$4NDM4N1"))
+        task.add_to_parent_task_list(MailSendTask(name="Example Task", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients="SANDMAN_A1@outlook.com", subject="Test Subject", body="Dear Agent,\nHello!",task_list=self.task_list))
+        task.add_to_parent_task_list(MailReadTask(name="Example Task", task_type="mailRead", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", imap_server="imap-mail.outlook.com", email_account="SANDMAN_A1@outlook.com", password="$4NDM4N1",task_list=self.task_list))
 
         print("finished work")
         
