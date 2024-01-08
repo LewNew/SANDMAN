@@ -32,9 +32,9 @@ class WriteDocumentNotepadTask(Task):
         }
         return _metadata
     
-    def __init__(self, config, context):
+    def __init__(self, config, context, **kwargs):
 
-        super().__init__(config,context)
+        super().__init__(config,context, **kwargs)
         #set the name of the task to WriteDocumentNotepadTask-{random numbers}
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = "WriteDocumentNotepadTask-"+self._name
@@ -65,7 +65,7 @@ class WriteDocumentNotepadTask(Task):
 
         self._channel = NotepadChannel(self._file_path,self._file_name)
 
-        self._prompt = "can you write a document that fits this criteria, you can make up as much as you want:" + self._context
+        self._prompt = "can you write a document that fits this criteria:" + self._context
 
         self._logger.info(f"INFO: created {self._name} with the file name: {self._file_name}")
         self._logger.debug(f"DEBUG: Additional debug information here.")

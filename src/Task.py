@@ -25,9 +25,9 @@ class Task(ABC):
         
         #TODO should args be included???
         if not set(['name', 'description', 'status','args']).issubset(set(metadata.keys())):
-            print("\n\n")
-            print(metadata)
-            print(f'Metadata strcuture missing prie keys {metadata.keys()}')
+            # print("\n\n")
+            # print(metadata)
+            # print(f'Metadata strcuture missing prie keys {metadata.keys()}')
             raise Exception(f'Metadata strcuture missing prie keys {metadata.keys()}')
         
         if not isinstance(metadata['name'], str) or not isinstance(metadata['description'], str):
@@ -84,7 +84,7 @@ class Task(ABC):
     def PercentComplete(self):
         return self._percent_complete
 
-    def __init__(self, config, context)->None:
+    def __init__(self, config, context, **kwargs)->None:
         """
         Initializes a new Task object.
 
@@ -97,6 +97,20 @@ class Task(ABC):
                   the task to make sure a lack of information is handled properly.
         """
 
+        #setting kwargs if any
+        #this is done so that additional tags can be added to tasks to use further up
+        #or down the pipeline dynamically, for eample the PlanSchedualTask appends times that
+        #it wants certan tasks doing. this means that the deng or task itself or the chennel can
+        #accsess this extra .time argument for decisions without needing to rewrite all the tasks.
+        #this also still allows for somthing like nothringTask to still have:
+        # 'lower_time': 'is the minimum amount of time to spend on the task',
+        # 'upper_time': 'is the maximum amount of time to spend on the task'
+        # and any extra args a developer may want to add.
+        for key, value in kwargs.items():
+            setattr(self, f"_{key}", value)
+            #TODO their must be a way to also set the getters, setter and property here IDK
+            
+    
         self._logger = logging.getLogger('logger.'+__name__)
         self._task_list = None
 
@@ -121,7 +135,7 @@ class Task(ABC):
         Returns:
             str: A formatted string representing the Task.
         """
-        #TODO Task does not print its parent task list otherwise printing a TaskList or task would cause an infinate recuresie look
+        #TODO Task does not print its parent task list otherwise printing a TaskList or task would cause an infinate recuresie loop
         # might want to change this
         obj_vars = vars(self)
         task_details_str = "\n".join(f"{key}: {value}" for key, value in vars(self).items() if key != '_task_list')

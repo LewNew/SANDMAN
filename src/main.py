@@ -29,6 +29,7 @@ cfg = {  "path" : "./src/",
                     'path': './src/tasks',
                     #config is a list of the taks you want the BootStrap to select form
                     'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","DUMMYWebTask","WriteDocumentNotepadTask"]},
+                    # 'config':["WebTask"]},
                 "TaskList":
                     {"module":"TaskList",
                     "class": "TaskList",
@@ -84,6 +85,10 @@ cfg = {  "path" : "./src/",
                     ##it is currently just and almost exact copy of do nothing
                     'DUMMYWebTask':{
                         'Config': None
+                    },
+                    #TODO not complete yet
+                    'WebTask':{
+                        'Config':None
                     }
                 }
             },
