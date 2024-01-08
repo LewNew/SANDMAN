@@ -9,6 +9,7 @@ import time
 import random
 import json
 import pyautogui
+from Channel import Channel
 
 # Adjacent QWERTY Keys
 adjacent_keys = {
@@ -51,8 +52,9 @@ adjacent_keys = {
 }
 
 
-class WebChannel:
+class WebChannel(Channel):
     def __init__(self):
+        super().__init__()
         self.driver = None
         self.firefox_binary_path = "C:\\Program Files\\Mozilla Firefox\\Firefox.exe"
         self.geckodriver_path = "C:\\Program Files\\Mozilla Firefox\\geckodriver.exe"
@@ -139,8 +141,24 @@ class WebChannel:
                 time.sleep(random.uniform(0.2, 1.5))  # Random pause between 0.2 to 1.5 sec
 
 
+    def send(self, **kwargs):
+        print("send")
+    
+    
+    def recv(self, **kwargs):
+        print("recv")
+        pass
+
+    
+    def read(self, **kwargs):
+        print("read")
+        pass
+
+
 if __name__ == "__main__":
-    web_channel = WebChannel()
+
+
+    # web_channel = WebChannel()
     web_channel.open_browser("https://www.google.com")
     time.sleep(5)  # Adjust time based on network speed and typical load times
     web_channel.accept_cookies()
