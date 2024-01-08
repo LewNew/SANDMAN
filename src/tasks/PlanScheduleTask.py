@@ -24,8 +24,8 @@ class PlanScheduleTask(Task):
     def Name(self):
         return self._name
     
-    def __init__(self, config, context):
-        super().__init__(config, context)
+    def __init__(self, config, context,**kwargs):
+        super().__init__(config, context,**kwargs)
         self._name = 'PlanScheduleTask'
         self._generator = TextGenerator()
 
@@ -54,17 +54,21 @@ class PlanScheduleTask(Task):
 
         lm_plan_list = self._generator.generate_text(self,persona,mood)
 
-        self._logger.info(f'sechdule returned from LLM: {lm_plan_list}')
+        self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
 
         print(lm_plan_list)
+
+        #TODO need to validate lm_plan_list and if it is not valid either fix or re-prompt the llm
 
         scheduleJSON = json.loads(lm_plan_list)
 
         print(scheduleJSON)
 
+        
+
 
         #TBH dont really know what the hell these 2 loops do
-        #they are almost an exact copy and past from planTaskTask
+        #they are almost an exact copy and paste from planTaskTask
         #that dan wrote, gona have to ask him what it does
         #also why does self._task_list.task_classes.items() work ???
         for key, class_data in self._task_list.task_classes.items():
@@ -90,12 +94,11 @@ class PlanScheduleTask(Task):
                 if 'Config' in corresponding_value:
                     task_config = corresponding_value['Config']
                 
-                task_obj = task_class(task_config, time + " " + scheduleJSON[time]["descriptor"])
+                task_obj = task_class(task_config,scheduleJSON[time]["descriptor"],time=time)
                 self.add_to_parent_task_list(task_obj)
                 
             else:
                 #task from llm is not one defined in the config so throw it out
-                #TODO add log here
                 self._logger.warning(f"LLM created {scheduleJSON[time]["type"]} task which does not exsist, not added to task list and moveing on")
 
                 print("\n\n")
