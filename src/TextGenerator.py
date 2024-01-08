@@ -27,13 +27,14 @@ class TextGenerator:
 
     def generate_text(self, task, persona_obj, mood):
 
-
         # print(task.prompt)
 
         try:
             persona_summary = persona_obj.generate_persona_summary()
         except:
-            persona_summary = "Your name is Molly Davis you are fun your mood is happy, you are a Researcher at the University but manage and do lots of different work at the University , you are a female whos is age 48."
+            persona_summary = ""
+
+        #Need a try catch for mood
 
         print(persona_summary)
 

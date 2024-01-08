@@ -27,7 +27,6 @@ class PlanScheduleTask(Task):
     def __init__(self, config, context):
         super().__init__(config, context)
         self._name = 'PlanScheduleTask'
-        self._logger.info(f"created {self._name}")
         self._generator = TextGenerator()
 
         start = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks"
@@ -38,6 +37,8 @@ class PlanScheduleTask(Task):
             start = start + x + ", "
 
         self._prompt = start + end
+
+        self._logger.info(f"created {self._name}")
         
 
 
@@ -52,6 +53,8 @@ class PlanScheduleTask(Task):
         print(self._prompt)
 
         lm_plan_list = self._generator.generate_text(self,persona,mood)
+
+        self._logger.info(f'sechdule returned from LLM: {lm_plan_list}')
 
         print(lm_plan_list)
 
@@ -93,6 +96,8 @@ class PlanScheduleTask(Task):
             else:
                 #task from llm is not one defined in the config so throw it out
                 #TODO add log here
+                self._logger.warning(f"LLM created {scheduleJSON[time]["type"]} task which does not exsist, not added to task list and moveing on")
+
                 print("\n\n")
                 print(scheduleJSON[time]["type"])
                 print(self._task_list.task_classes.keys())
