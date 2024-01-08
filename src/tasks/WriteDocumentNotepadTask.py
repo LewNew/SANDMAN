@@ -5,6 +5,7 @@ from NotepadChannel import NotepadChannel
 import time
 import random
 from MemoryList import MemoryList, MemoryDataBlock
+import os
 
 
 import secrets
@@ -37,19 +38,37 @@ class WriteDocumentNotepadTask(Task):
         #set the name of the task to WriteDocumentNotepadTask-{random numbers}
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = "WriteDocumentNotepadTask-"+self._name
+
         #set the filename to random letters
-        characters = string.ascii_letters + string.digits
-        self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
-        self._file_name = self._file_name + '.txt'
+        
         #load file path from config
+        
         self._file_path = config['workingdir']
 
-        #create the NotepadChannel and TextGenerator
-        self._logger.info(f"created {self._name}")
-        self._channel = NotepadChannel(self._file_path,self._file_name)
+        #create the TextGenerator
         self._generator = TextGenerator()
 
-        self._prompt = "can you write a bogus document that fits this criteria, you can make up as much as you want:" + self._context
+        #ceate the file name based on text generator
+        self._prompt = "can you create me a file name for a document that fits this criteria make sure to shorten it down so its not too big (do not include spaces ' ' and have it end in .txt):" + self._context
+        self._file_name = self._generator.generate_text(self,None,None)
+
+        #checking LLM file name output is corredt
+        if self.is_valid_filename(self._file_name):
+            print("File name is valid.")
+        else:
+            print("Invalid file name. Please choose a different name.")
+            self._file_name = ''
+            characters = string.ascii_letters + string.digits
+            self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
+            self._file_name = ''.join(secrets.choice(characters) for _ in range(16))
+            self._file_name = self._file_name + '.txt'
+
+        self._channel = NotepadChannel(self._file_path,self._file_name)
+
+        self._prompt = "can you write a document that fits this criteria, you can make up as much as you want:" + self._context
+
+        self._logger.info(f"created {self._name} with the file name: {self._file_name}")
+
         
         
     def do_work(self,persona=None,mood=None,memory=None):
@@ -88,11 +107,26 @@ class WriteDocumentNotepadTask(Task):
         work = self._channel.read()
         print("finished reading")
         return work
-
-
-if __name__ == "__main__":
     
-    word_task_instance = WriteDocumentNotepadTask(name="Example Task", task_type="Word",percent_complete=50,file_path = "H:\\PhD\\sandman\\project\\SANDMAN\\fakeWork", file_name = "fakework.txt")
-    print(word_task_instance.do_work(word_task_instance,"persona"))
 
+    #checks to see if the file name is valid
+    def is_valid_filename(self,filename):
+        invalid_chars = r'\/'  # Invalid characters
+        # Check length
+        if len(filename) > 255:
+            self._logger.warning(f"_file_name: {self._file_name} generated from LLM is invalid as it is too long so useing random numbers for file name instead")
+            return False
+
+        # Check for invalid characters
+        if any(char in invalid_chars for char in filename):
+            self._logger.warning(f"_file_name: {self._file_name} generated from LLM is invalid as it have invalid characters so useing random numbers for file name instead")
+            return False
+
+        # Check for reserved names on Windows
+        reserved_names = ["CON", "PRN", "AUX", "NUL", "COM1", "COM2", "LPT1"]
+        if os.name == 'nt' and filename.upper() in reserved_names:
+            self._logger.warning(f"_file_name: {self._file_name} generated from LLM is invalid as it uses a reserved name on Windows so useing random numbers for file name instead")
+            return False
+
+        return True
 
