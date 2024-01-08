@@ -28,8 +28,7 @@ cfg = {  "path" : "./src/",
                     "class": "PlanScheduleTask",
                     'path': './src/tasks',
                     #config is a list of the taks you want the BootStrap to select form
-                    'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","DUMMYWebTask","WriteDocumentRawTask","WriteDocumentNotepadTask"]},
-                    # 'config' : ["WriteDocumentRawTask"]},
+                    'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","DUMMYWebTask","WriteDocumentNotepadTask"]},
                 "TaskList":
                     {"module":"TaskList",
                     "class": "TaskList",
@@ -64,7 +63,7 @@ cfg = {  "path" : "./src/",
                     'NothingTask': {
                         'Config': None
                     },
-                    'WriteDocumentRawTask': {
+                    'WriteDocumentRawTask':{
                         'Config': {
                             'workingdir': './fakeWork/'
                         }
@@ -90,7 +89,7 @@ cfg = {  "path" : "./src/",
             },
         'Log':{
                 'LogPath':'./log/',
-                'LogFileName':'log.log'
+                'LogFileName':'info.log'
             },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
@@ -102,7 +101,7 @@ persona_file = './src/agent_attributes_config.json'
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)
 
-
+'''
 def ConfigureLogger(cfg_data):
     """
     ConfigureLogger: configures a logger with separate handlers for INFO and DEBUG
@@ -184,7 +183,7 @@ def ConfigureLogger(cfg_data):
     logger = logging.getLogger('logger.' + __name__)
     logger.info('Succsessfully configured logger')
     return logger
-'''
+
 
 def LoadConfig(path='./'):
     '''
