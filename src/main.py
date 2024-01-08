@@ -27,7 +27,8 @@ cfg = {  "path" : "./src/",
                     {"module": "PlanScheduleTask",
                     "class": "PlanScheduleTask",
                     'path': './src/tasks',
-                    'config' : None},
+                    #config is a list of the taks you want the BootStrap to select form
+                    'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","DUMMYWebTask","WriteDocumentNotepadTask"]},
                 "TaskList":
                     {"module":"TaskList",
                     "class": "TaskList",
@@ -77,6 +78,11 @@ cfg = {  "path" : "./src/",
                         'Config': None
                     },
                     'MeetingTask':{
+                        'Config': None
+                    },
+                    ##This is just a fake web task, this should eventialy be deleted and replaced with a better one
+                    ##it is currently just and almost exact copy of do nothing
+                    'DUMMYWebTask':{
                         'Config': None
                     }
                 }

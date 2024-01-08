@@ -6,7 +6,7 @@ from Task import Task
 from Mood import Mood, MoodAspect
 from Persona import Persona
 import json
-from src.TaskList import TaskList
+from TaskList import TaskList
 
 
 class ScheduleDecisionEngineMemoryBlockType(Enum):
@@ -28,30 +28,26 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
     
     memname = 'ScheduleDecisionEngineMemory'
 
-    def __init__(self, task_list, persona=None, config_path='agent_attributes_config.json', config=None):
+    def __init__(self, task_list, config):
         super().__init__(task_list, config)
         self._memory = Memory()
         self._memory[ScheduleDecisionEngine.memname] = MemoryList(20)
 
-        mood_aspect_list = {
-             "Angry": 'the level of anger currently being felt',
-             "Energized": 'How energized the agent currently is',
-             "Happy": 'how happy i am',
-             "Bored": 'level of being bored',
-             "Fine": 'generally felling of being ok',
-             "Focused": 'the level of focus i have for working',
-             "Confident": 'Am i currently confident',
-             "Inspired": 'the level of inspriation',
-             "Uncomfortable": 'My level of being weirded out is'
-        }
+        # print(self._config["persona"])
 
-        try:
-            with open(config_path, 'r') as file:
-                config = json.load(file)
-            self._persona = Persona(**config)
-        except Exception as e:
-            self.logger.error(f"Failed to load persona from {config_path}: {e}")
-            self._persona = Persona()  # Use a default persona or handle the error as required.
+        # mood_aspect_list = {
+        #      "Angry": 'the level of anger currently being felt',
+        #      "Energized": 'How energized the agent currently is',
+        #      "Happy": 'how happy i am',
+        #      "Bored": 'level of being bored',
+        #      "Fine": 'generally felling of being ok',
+        #      "Focused": 'the level of focus i have for working',
+        #      "Confident": 'Am i currently confident',
+        #      "Inspired": 'the level of inspriation',
+        #      "Uncomfortable": 'My level of being weirded out is'
+        # }
+
+        self._persona = Persona(self._config["persona"]["first_name"],self._config["persona"]["last_name"],self._config["persona"]["personality_description"],self._config["persona"]["job_role"],self._config["persona"]["organisation"],self._config["persona"]["gender"],self._config["persona"]["age"],self._config["persona"]["traits"])
 
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
@@ -60,31 +56,6 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         self._current_task = task_list[0]
         self.logger.info(f"Created {__name__}")
 
-    # Mood testing code
-    # The decriptions should really be formed for use in an LLM
-    # mood_aspect_list = {
-    #     "Angry": 'the level of anger currently being felt',
-    #     "Energized": 'How energized the agent currently is',
-    #     "Happy": 'how happy i am',
-    #     "Bored": 'level of being bored',
-    #     "Fine": 'generally felling of being ok',
-    #     "Focused": 'the level of focus i have for working',
-    #     "Confident": 'Am i currently confident',
-    #     "Inspired": 'the level of inspriation',
-    #     "Uncomfortable": 'My level of being weirded out is'
-    # }
-    # self._mood = Mood(mood_aspect_list)
-    # print(self._mood.current_mood)
-    # self._mood.update_mood_aspect("Angry", 50, delta=False)
-    # print(self._mood.current_mood)
-
-    # mood_updates = {'Angry': MoodAspect.CreateMoodAspectUpdate(-20, 'happier'),
-    #                 'Confident': MoodAspect.CreateMoodAspectUpdate(30, 'More confident', False),
-    #                 'Inspired': MoodAspect.CreateMoodAspectUpdate(20, 'Inspired to be great'),
-    #                 'Focused': None}
-    # self._mood.update_mood_aspects(mood_updates)
-    # print(self._mood.current_mood)
-    # self._persona = Persona(**config['persona'])
 
 
     def make_decision(self):
@@ -97,7 +68,8 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         self.logger.info(f"Making decision")
 
         job_role = self._persona.JobRole
-        current_mood = self._mood.current_mood
+        #TODO implement this
+        # current_mood = self._mood.current_mood
 
 
         print(self._task_list) 
@@ -125,10 +97,11 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             task (Task): The task to be executed.
         """
         # Assuming the Task class has a method 'do_work' that handles task execution
-        self._current_task.do_work(persona=self._persona, memory=self._memory)
+        # self._current_task.do_work(persona=self._persona, memory=self._memory)
 
-        self.logger.info(f"Executing task: {self._current_task.Name}")
+        self.logger.info(f"Executing task: {self._current_task.Name + self._current_task.Context}")
         print(f"Executing task: {self._current_task.Name}")
+        print(f"Executing task: {self._current_task.Context}")
 
         # Assuming the Task class has a method 'do_work' that handles task execution
         self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)

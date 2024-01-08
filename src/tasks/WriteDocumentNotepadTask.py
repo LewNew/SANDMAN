@@ -26,7 +26,8 @@ class WriteDocumentNotepadTask(Task):
         _metadata = {
             'name': 'WriteDocumentNotepadTask',
             'description': 'Interacts with a simple txt file document useing notepad',
-            'status':'valid'
+            'status':'valid',
+            'args':{}
         }
         return _metadata
     
@@ -47,6 +48,8 @@ class WriteDocumentNotepadTask(Task):
         self._logger.info(f"created {self._name}")
         self._channel = NotepadChannel(self._file_path,self._file_name)
         self._generator = TextGenerator()
+
+        self._prompt = "can you write a bogus document that fits this criteria, you can make up as much as you want:" + self._context
         
         
     def do_work(self,persona=None,mood=None,memory=None):

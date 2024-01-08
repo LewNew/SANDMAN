@@ -28,19 +28,20 @@ class TextGenerator:
     def generate_text(self, task, persona_obj, mood):
 
 
-        print(task.prompt)
+        # print(task.prompt)
 
         try:
             persona_summary = persona_obj.generate_persona_summary()
         except:
             persona_summary = "Your name is Molly Davis you are fun your mood is happy, you are a Researcher at the University but manage and do lots of different work at the University , you are a female whos is age 48."
 
+        print(persona_summary)
+
         user_msg = task.prompt
 
         assistant_msg = f"no chat just work that is formal. follow instructions very closely do not say phrases like 'certainly' or 'yes i can do that' i just want an output"
 
-        system_msg = f"You are a helpful virtual assistant tasked with completing tasks for an agent. Their persona " \
-                     f"is {persona_summary} and their mood is {mood}. Context of the task is {task}."
+        system_msg = persona_summary
 
         messages = [
             {"role": "system", "content": system_msg},

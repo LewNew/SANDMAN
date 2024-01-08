@@ -12,6 +12,7 @@ class DecisionEngine(ABC):
         self._memory = None
         self._persona = None
         self._mood = None
+        self._config = config
     
     @property
     def Memory(self):
