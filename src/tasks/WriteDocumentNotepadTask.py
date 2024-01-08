@@ -67,12 +67,19 @@ class WriteDocumentNotepadTask(Task):
 
         self._prompt = "can you write a document that fits this criteria, you can make up as much as you want:" + self._context
 
-        self._logger.info(f"created {self._name} with the file name: {self._file_name}")
+        self._logger.info(f"INFO: created {self._name} with the file name: {self._file_name}")
+        self._logger.debug(f"DEBUG: Additional debug information here.")
+
+        # self._logger.info(f"created {self._name} with the file name: {self._file_name}")
+
 
         
         
     def do_work(self,persona=None,mood=None,memory=None):
-        self._logger.info(f"{self._name} doing work")
+
+        # self._logger.info(f"{self._name} doing work")
+        self._logger.info(f"{self._name} doing work - Info Level")
+        self._logger.debug(f"{self._name} doing work - Debug Level")
         print("doing work")
         
         #sending the data to channel
