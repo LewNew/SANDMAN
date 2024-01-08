@@ -128,6 +128,7 @@ def ConfigureLogger(cfg_data):
     info_handler = logging.FileHandler(log_directory + 'info.log')
     info_handler.setLevel(logging.INFO)
     info_handler.setFormatter(log_format)
+    # Test
 
     # DEBUG Handler
     debug_handler = logging.FileHandler(log_directory + 'debug.log')
