@@ -89,7 +89,8 @@ cfg = {  "path" : "./src/",
             },
         'Log':{
                 'LogPath':'./log/',
-                'LogFileName':'info.log'
+                'InfoLogFileName':'info.log',
+                'DebugLogFileName':'debug.log'
             },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
@@ -101,7 +102,7 @@ persona_file = './src/agent_attributes_config.json'
 with open(persona_file, 'r') as file:
     persona_config = json.load(file)
 
-'''
+
 def ConfigureLogger(cfg_data):
     """
     ConfigureLogger: configures a logger with separate handlers for INFO and DEBUG
@@ -111,8 +112,9 @@ def ConfigureLogger(cfg_data):
         logger object
     """
 
-    # Define the base log directory from the configuration
     log_directory = cfg_data['Log']['LogPath']
+    info_file_name = cfg_data['Log']['InfoLogFileName']
+    debug_file_name = cfg_data['Log']['DebugLogFileName']
 
     # Create a logger object
     logger = logging.getLogger('logger.' + __name__)
@@ -183,7 +185,7 @@ def ConfigureLogger(cfg_data):
     logger = logging.getLogger('logger.' + __name__)
     logger.info('Succsessfully configured logger')
     return logger
-
+'''
 
 def LoadConfig(path='./'):
     '''
