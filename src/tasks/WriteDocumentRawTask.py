@@ -93,7 +93,8 @@ class WriteDocumentRawTask(Task):
             new_rttmb = WriteDocumentRawTaskMemoryBlock(self._name)
             memory['WriteDocumentRawTask'].append(new_rttmb)
 
-
+        self._logger.info(f"{self._name} doing work - Info Level")
+        self._logger.debug(f"{self._name} doing work - Debug Level")
 
         #update task so that its finished
         self.finish_work()

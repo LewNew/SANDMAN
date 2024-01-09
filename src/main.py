@@ -104,14 +104,6 @@ with open(persona_file, 'r') as file:
 
 
 def ConfigureLogger(cfg_data):
-    """
-    ConfigureLogger: configures a logger with separate handlers for INFO and DEBUG
-    args:config
-
-    returns:
-        logger object
-    """
-
     log_directory = cfg_data['Log']['LogPath']
     info_file_name = cfg_data['Log']['InfoLogFileName']
     debug_file_name = cfg_data['Log']['DebugLogFileName']
@@ -125,13 +117,12 @@ def ConfigureLogger(cfg_data):
         '%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-26s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s')
 
     # INFO Handler
-    info_handler = logging.FileHandler(log_directory + 'info.log')
+    info_handler = logging.FileHandler(os.path.join(log_directory, info_file_name))
     info_handler.setLevel(logging.INFO)
     info_handler.setFormatter(log_format)
-    # Test
 
     # DEBUG Handler
-    debug_handler = logging.FileHandler(log_directory + 'debug.log')
+    debug_handler = logging.FileHandler(os.path.join(log_directory, debug_file_name))
     debug_handler.setLevel(logging.DEBUG)
     debug_handler.setFormatter(log_format)
 
@@ -142,7 +133,6 @@ def ConfigureLogger(cfg_data):
     # Log the new run message
     current_time = time.strftime('%Y-%m-%d %H:%M:%S')
     logger.info(f'\n{current_time} - NEW RUN:\n')
-
     logger.info('Successfully configured logger')
 
     return logger
@@ -260,6 +250,7 @@ if __name__ == "__main__":
     # Configure the logger with separate handlers for INFO and DEBUG
     logger = ConfigureLogger(cfg_data)
     logger.info('Start of main')
+    logger.debug('Debugging main')
 
     # Append necessary paths to the system path
     src_path = cfg_data['path']
