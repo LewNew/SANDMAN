@@ -1,9 +1,11 @@
 from Task import Task
+from ClassLoaderHelpers import LoadClasses
+import random
+import logging
 
 class TaskList:    
     """
-
-    this class overwrites __str__, __iter__ and __getitem__ so it unctions as as list
+    this class overwrites __str__, __iter__ and __getitem__ so it functions as as list
     allowing of getting elements by doing TaskList[0] and iterateing over tasks
     in a loop e.g. for Task in TaskList
 
@@ -15,14 +17,33 @@ class TaskList:
         remove_task(Task)
     """
     
-
-    def __init__(self):
+    def __init__(self, cfg_data):
         """
         Initializes a new TaskList object with an empty list of tasks.
+        args:
+            cfg_data: a dictionary which contains all the task classes, their configs and where to find them
         """
+        #createing logger object for dbuging
+        self.logger = logging.getLogger('logger.'+__name__)
+        self.logger.info(f'Created {__name__}')
+
+        
         #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
+        self._task_classes = LoadClasses(cfg_data['TaskClasses'].keys(), cfg_data['TaskClassPath'])
+        print('===================\nLoaded Task Classes')
+        for key, value in self._task_classes.items():
+            print(cfg_data['TaskClasses'][key]['Config'])
+            self._task_classes[key]['Config'] = cfg_data['TaskClasses'][key]['Config']
+            print(key)
+            print(value['metadata'])
+        
+        print('\n\n')   
 
         self.taskList = []
+
+    @property
+    def task_classes(self):
+        return self._task_classes
 
     #TODO removed this becase now that Tasks has the Task list
     def __str__(self):
@@ -67,12 +88,14 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be added.
         """
+        self.logger.info(f'Adding {task.Name} to taskList')
 
         #makes sure that a Task object was passed into the method
         if not isinstance(task, Task):
             raise TypeError(f"Expected a Task object, but received {type(task)}")
 
         self.taskList.append(task)
+        task.TaskList = self
 
     def remove_task(self, task):
         """
@@ -81,6 +104,7 @@ class TaskList:
         Parameters:
             task (Task): The Task object to be removed.
         """
+        self.logger.info(f'Removeing {task.Name} Fron taskList')
 
         #makes sure that a Task object was passed into the method
         if not isinstance(task, Task):

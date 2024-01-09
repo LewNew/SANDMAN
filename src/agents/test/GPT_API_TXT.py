@@ -2,15 +2,14 @@ import datetime
 import os
 import random
 from openai import OpenAI
+from ..ElementsDict import *
 
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-from ElementsDict import *
+
 
 # Trying to avoid generating too many API keys because I'm not tracking them.
 # Set OPEN_API_KEY as an environment variable in CMD prompt with setx OPEN_API_KEY "<KEY>" or do it manually
 # Get your own key ya slugs
-
-
 
 
 def chat(system, user_assistant, max_tokens):
@@ -27,7 +26,7 @@ def chat(system, user_assistant, max_tokens):
     messages = [system_msg] + user_assistant_msgs
 
     response = client.chat.completions.create(model="gpt-3.5-turbo",
-    messages=messages)
+                                              messages=messages)
 
     status_code = response["choices"][0]["finish_reason"]
     assert status_code == "stop", f"The status code was {status_code}."
@@ -49,8 +48,9 @@ with open(output_file_path, 'w') as output_file:
 
         # We can plug in literally anything here to give the prompt context
         # Update ElementsDict lists
-        random_prompt = f'You are a {{}} in a {{}} that is writing about {{}} in the style of {{}}'.format(role, organization, topic, style)
-
+        random_prompt = f'You are a {{}} in a {{}} that is writing about {{}} in the style of {{}}'.format(role,
+                                                                                                           organization,
+                                                                                                           topic, style)
 
         initiation_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         try:

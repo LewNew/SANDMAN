@@ -4,6 +4,7 @@ from prompts import gpt_requests
 from Mood import Mood
 
 DEFAULT_REPLY_TASK = "You will be provided with a single email, decide whether the email requires a reply based on the sentiment of the email. If the email requires a reply then you will write a single email. If the email does not require a reply based on sentiment then you will write the number 0 and nothing else."
+DEFAULT_TASK_EMAIL = ""
 
 class MailGenerator:
 
@@ -52,12 +53,6 @@ class MailGenerator:
         user_prompt = f"Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
         return gpt_requests.ChatGPT_request(user_prompt, system_msg)
     '''
-
-    def generate_file_name(self, task, persona):
-        base_name = f"{persona}_{task}".replace(" ", "_")
-        return f"{base_name}.txt"
-
-#TODO should this not be in a if __name__ == "__main__" ??
 
 if __name__ == "__main__":
 
