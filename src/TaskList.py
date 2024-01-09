@@ -112,6 +112,40 @@ class TaskList:
 
         self.taskList.remove(task)
 
+    def create_prompt(self):
+        """
+        creates a prompt containing all available tasks
+        
+        """
+
+        prompt = "Can you decide on what task you want me to do next here is a list of the tasks available and data surrounting them, i just want your output to be the task and its ID in fthe format of TASKNAME-ID. \n\n"
+
+        if len(self.taskList) == 0:
+            #task list is completely empty
+            pass
+
+        if len(self.taskList) == 1:
+            #no tasks, only bootstrap is avilable
+            pass
+
+        #loop though all tasks apart from the boot strap
+        for index in range(1,len(self.taskList)):
+            # print("\n\n",self.taskList[index])
+            # print(self.taskList[index].get_class_metadata())
+
+            taskMetaData = self.taskList[index].get_class_metadata()
+
+            task = self.taskList[index]
+
+            # print(task.Name)
+
+            # print(self.taskList[index].get_class_metadata()["name"])
+
+            prompt = prompt + task.Name + ": " + "description = " + taskMetaData["description"] + ". context = " + task.Context + "\n\n"
+
+        return prompt
+
+
 
 
 # Example usage:

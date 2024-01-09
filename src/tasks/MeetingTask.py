@@ -75,9 +75,9 @@ class MeetingTask(Task):
         }
         return _metadata
     
-    def __init__(self, config, context, lower_time=5, upper_time=10):
+    def __init__(self, config, context, lower_time=5, upper_time=10, **kwargs):
 
-        super().__init__(config, context)
+        super().__init__(config, context, **kwargs)
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = "MeetingTask-"+self._name
         self._channel = NothingChannel()

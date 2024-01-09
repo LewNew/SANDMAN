@@ -4,7 +4,7 @@ import time
 import random
 from MemoryList import MemoryList, MemoryDataBlock
 
-class EmailTaskMemoryBlock(MemoryDataBlock):
+class DUMMYWebTaskMemoryBlock(MemoryDataBlock):
     
     def __init__(self, data):
         super().__init__()
@@ -13,17 +13,12 @@ class EmailTaskMemoryBlock(MemoryDataBlock):
     def __str__(self):
         return f'Created:{self._created}, data: {self._data}'
 
-
-##########################################################################################################
-##TODO THIS IS A PLACE HOLDER WORK IN PROGRES THASK THAT IS IDENTICAL TO NothingTask.py IN FUNCTIONALITY##
-##########################################################################################################
-
-class EmailTask(Task):
+class DUMMYWebTask(Task):
 
     @classmethod
     def get_class_metadata(cls):
         _metadata = {
-            'name': 'EmailTask',
+            'name': 'DUMMYWebTask',
             'description': 'A simple task which just idles for between a defined min and max values randomly in seconds',
             'status':'valid',
             'args' :{
@@ -37,7 +32,7 @@ class EmailTask(Task):
 
         super().__init__(config, context, **kwargs)
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
-        self._name = "EmailTask-"+self._name
+        self._name = "DUMMYWebTask-"+self._name
         self._channel = NothingChannel()
         self._lower_time = lower_time
         self._upper_time = upper_time
@@ -55,11 +50,11 @@ class EmailTask(Task):
         print("\nfinished work")
 
         if not memory == None:
-            if not 'EmailTask' in memory:
-                memory['EmailTask'] = MemoryList(2)
+            if not 'DUMMYWebTask' in memory:
+                memory['DUMMYWebTask'] = MemoryList(2)
 
-            new_ntmb = EmailTaskMemoryBlock(self._name)
-            memory['EmailTask'].append(new_ntmb)
+            new_ntmb = DUMMYWebTaskMemoryBlock(self._name)
+            memory['DUMMYWebTask'].append(new_ntmb)
 
         #TODO maybe dont do self.finish_work() as a do nothing isnt something you can complete, its just do nothing, still probably need to update the last_worked_on var tho
         #update task so that its finished
