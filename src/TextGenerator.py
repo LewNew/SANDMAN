@@ -6,7 +6,7 @@ class TextGenerator:
     def __init__(self):
         self._api_key = os.getenv("OPENAI_API_KEY")
         self._client = OpenAI(api_key=self._api_key)
-        print(self._api_key)
+        #print(self._api_key)
 
     # def generate_text(self, task, persona, mood):
     #     # Setting up the prompt to be more dynamic
