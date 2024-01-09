@@ -1,7 +1,24 @@
+#these 3 comments are for if you want to test without running main
+# import sys
+# sys.path.append('./src/')
+# sys.path.append('./src/channels')
+
 from Task import Task
 from WebChannel import WebChannel
 from TextGenerator import TextGenerator
 
+import time
+import random
+from MemoryList import MemoryList, MemoryDataBlock
+
+class WebTaskMemoryBlock(MemoryDataBlock):
+    
+    def __init__(self, data):
+        super().__init__()
+        self._data = data
+    
+    def __str__(self):
+        return f'Created:{self._created}, data: {self._data}'
 
 class WebTask(Task):
 
@@ -9,36 +26,60 @@ class WebTask(Task):
     def get_class_metadata(cls):
         _metadata = {
             'name': 'WebTask',
-            'description': 'This is a bootstrapping task for sandman status',
-            'status':'valid'
+            'description': 'simple task to brows the web',
+            'status':'valid',
+            'args':{}
         }
         return _metadata
 
-    def __init__(self,config):
-
-        super(WebTask, self).__init__(config)
-        self.name = 'WebTask'
-        self.url = config['url']
+    def __init__(self,config,context,**kwargs):
+        super().__init__(config,context,**kwargs)
+        self._name = 'WebTask'
+        # self.url = config['url']
 
         # Initialize a WebChannel or similar class for managing web interactions
-        self.channel = WebChannel(self.url)
+        # self.channel = WebChannel(self.url)
+        self._channel = WebChannel()
 
-    def browse(self):
-        print("Starting to browse:", self.url)
-        # Simulate browsing activity, for example, by retrieving and displaying web content
-        browsing_result = self.channel.retrieve(self.url)
-        print("Finished browsing")
-        return browsing_result
+    def do_work(self,persona=None,mood=None,memory=None):
+        print("doing work")
 
-    def read_browsing_history(self):
-        print("Reading browsing history")
-        history = self.channel.read_history()
-        print("Finished reading history")
-        return history
+        self._channel.send()
 
+        for _ in range(0, 5):
+            print('*', end='')
+            time.sleep(1)
+            
+        print("\nfinished work")
 
-# Example usage
+        if not memory == None:
+            if not 'WebTask' in memory:
+                memory['WebTask'] = MemoryList(2)
+
+            new_ntmb = WebTaskMemoryBlock(self._name)
+            memory['WebTask'].append(new_ntmb)
+
+        self.finish_work()
+
+    def read_work(self,**kwargs):
+        print("reading work")
+
+    # def browse(self):
+    #     print("Starting to browse:", self.url)
+    #     # Simulate browsing activity, for example, by retrieving and displaying web content
+    #     browsing_result = self.channel.retrieve(self.url)
+    #     print("Finished browsing")
+    #     return browsing_result
+
+    # def read_browsing_history(self):
+    #     print("Reading browsing history")
+    #     history = self.channel.read_history()
+    #     print("Finished reading history")
+    #     return history
+
 if __name__ == "__main__":
-    web_task_instance = WebTask(name="Example Web Task", task_type="Web", url="https://example.com",
-                                percent_complete=50)
+
+    web_task_instance = WebTask(None,None)
+    web_task_instance.do_work()
+
     print(web_task_instance.browse())
