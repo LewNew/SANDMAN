@@ -4,15 +4,22 @@ import json
 
 class Persona():
 
-    def __init__(self, first_name='', last_name='', personality_description ='', job_role='', gender='', age=0, traits ={}):
+    """
+    A class to represent a persona or character with various attributes.
+
+    Attributes:
+        _persona (dict): A dictionary to store all attributes of the persona.
+    """
+    def __init__(self, first_name='', last_name='', personality_description ='', job_role='', organisation='',
+                 gender='', age=0, traits ={}):
         self._persona = {}
-        # TODO: need some input falidation
         self._persona['first_name'] = first_name
         self._persona['last_name'] = last_name
         self._persona['personality_description'] = personality_description
         self._persona['job_role'] = job_role
         self._persona['gender'] = gender
         self._persona['age'] = age
+        self._persona['organisation'] = organisation
         self._persona['traits'] = traits
 
     @property
@@ -56,6 +63,16 @@ class Persona():
         self._persona['job_role'] = role
 
     @property
+    def Organisation(self):
+        return self._persona['organisation']
+
+    @Organisation.setter
+    def Organisation(self, organisation):
+        if not isinstance(organisation, str):
+            raise TypeError(f'organisation not string actually type:{type(organisation)}')
+        self._persona['organisation'] = organisation
+
+    @property
     def Gender(self):
         return self._persona['gender']
     
@@ -76,11 +93,24 @@ class Persona():
         self._persona['age'] = age
 
     def AppendTrait(self, trait_name, trait_description):
+        """
+        Append a trait to the persona's trait dictionary.
+
+        Args:
+            trait_name (str): The name of the trait to add.
+            trait_description (str): The description of the trait.
+        """
         if not isinstance(trait_name, str) or not isinstance(trait_description, str):
             raise TypeError(f'string issue name:({type(trait_name)}) decription({type(trait_description)})')
         self._persona['traits'][trait_name] = trait_description
     
     def RemoveTrait(self, trait_name):
+        """
+        Remove a trait from the persona's trait dictionary.
+
+        Args:
+            trait_name (str): The name of the trait to remove.
+        """
         if not isinstance(trait_name, str):
             raise TypeError(f'string issue name:({type(trait_name)})')
         if trait_name in self._persona['traits']:
@@ -93,7 +123,8 @@ class Persona():
         Returns:
             str: A formatted string representing the Persona.
         """
-        persona_str =  f"Name: {self.FirstName} {self.LastName}, Role: {self.JobRole}, "
+        persona_str =  (f"Name: {self.FirstName} {self.LastName}, Role: {self.JobRole},"
+                        f"Organisation: {self.Organisation},")
         persona_str += f"Age: {self.Age}, Gender: {self.Gender},"
         persona_str += f"Description: {self.PersonalityDescription}"
         traits_str = ''
@@ -104,20 +135,87 @@ class Persona():
             traits_str = f', traits: {{ {traits_str[:-1]} }}'
         persona_str += traits_str
         return persona_str
-            
 
-    
-    def to_json(self) ->str:
-        return json.dumps(self._persona)
+    def to_dict(self):
+        """
+        Convert the persona to a dictionary.
+        """
+        return self._persona
+
+    def to_json(self, file_path='agent_attributes_config.json'):
+        """
+        Save the persona to a JSON file.
+
+        Args:
+            file_path (str): The file path to save the JSON data to.
+        """
+        with open(file_path, 'w') as file:
+            json.dump(self._persona, file, indent=4)
     
     @classmethod
     def from_json(cls, json_string):
+        """
+        Create a Persona object from a JSON string.
+
+        Args:
+            json_string (str): The JSON string to convert to a Persona object.
+
+        Returns:
+            Persona: The created Persona object.
+        """
         persona = json.loads(json_string)
         #validate persona
         new_config = cls()
         new_config._persona = persona
         return new_config
 
+    def input_attributes(self):
+        """
+        Input attributes for the persona from the user via standard input.
+        """
+        self.FirstName = input("Enter first name: ")
+        self.LastName = input("Enter last name: ")
+        self.PersonalityDescription = input("Enter personality description: ")
+        self.JobRole = input("Enter job role: ")
+        self.Organisation = input("Enter organisation: ")
+        self.Gender = input("Enter gender: ")
+        self.Age = int(input("Enter age: "))
+
+    def generate_persona_summary(self):
+        """
+        Generate a summary description of the persona which can be used to pass into LLM as a persona description.
+
+        Returns:
+            str: A summary of the persona.
+        """
+        summary = f"{self.FirstName} {self.LastName}, a {self.Age}-year-old {self.Gender} working as a {self.JobRole} in a {self.Organisation}. " \
+                  f"They are known to be {self.PersonalityDescription}."
+        return summary
+
+if __name__ == "__main__":
+    action = input("Enter 'Read' to read existing agent data. 'Add' to create new agent data: ")
+
+    if action.strip().lower() == 'read':
+        try:
+            with open('agent_attributes_config.json', 'r') as file:
+                json_string = file.read()
+            persona = Persona.from_json(json_string)
+            print("Agent Data:", json.dumps(persona.to_dict(), indent=4))
+        except FileNotFoundError:
+            print("No existing agent data found. Please add a new agent first.")
+        except json.JSONDecodeError:
+            print("Error reading the agent data. The JSON file may be corrupted.")
+    elif action.strip().lower() == 'add':
+        persona = Persona()
+        persona.input_attributes()
+        persona.to_json()
+        print("New agent data has been saved to agent_attributes_config.json.")
+    else:
+        print("Invalid input. Please enter 'Read' or 'Add'.")
+
+
+
+'''
 if __name__ == "__main__":
     description = 'I am, a vibrant woman, who radiates a contagious zest for life. I have an outgoing nature and magnetic energy effortlessly draw people in, making me the life of any gathering. I exude fun-loving charisma, infusing joy into every moment with my infectious enthusiasm.'
     traits = {
@@ -129,66 +227,4 @@ if __name__ == "__main__":
     tst_persona = Persona('Alice', 'Boberta', description, 'secretary', 'female', 25, traits)
     print(tst_persona)
     print(tst_persona.to_json())
-    
-
-
-class Personax:
-
-    PERSONALITY_TRAITS = {
-        "meticulous": 0,
-        "efficient": 0,
-        "creative": 0,
-        "organized": 0,
-        # Extend as needed
-    }
-
-    def __init__(self, name, first_name, last_name, role, age, gender, personality_traits, type_speed, occupation,
-                 hierarchy_level):
-        """
-        Initialize a new Persona object with various characteristics and hierarchy level.
-
-        Parameters:
-            name (str): The name of the agent.
-            role (str): The role or function of the agent.
-            age (int): The age of the agent (should be a positive integer).
-            gender (str): The gender of the agent.
-            personality_traits (dict): Personality traits of the agent.
-            type_speed (int): The typing speed of the agent (should be a positive integer).
-            occupation (str): The specific occupation of the agent.
-            hierarchy_level (int): The hierarchy level of the agent (1 for Employee, 2 for Manager, etc.).
-        """
-
-        self.name = None
-        self.first_name = None
-        self.last_name = None
-        self.age = None
-        self.role = None
-        self.occupation = None
-        self.gender = None
-        self.innate = None
-
-        self.personality_traits = personality_traits
-
-    def update_personality(self, trait, value):
-        """
-        Update a personality trait of the agent.
-
-        Parameters:
-            trait (str): The personality trait to update.
-            value (various): The new value of the trait.
-        """
-        if trait in self.PERSONALITY_TRAITS:
-            self.personality_traits[trait] = value
-        else:
-            raise ValueError("Invalid personality trait.")
-
-    def __str__(self):
-        """
-        Return a string representation of the Persona.
-
-        Returns:
-            str: A formatted string representing the Persona.
-        """
-        return f"Name: {self.name}, Role: {self.role}, Occupation: {self.occupation}, " \
-               f"Type Speed: {self.type_speed} wpm, Hierarchy Level: {self.get_hierarchy_level()}," \
-               f" Personality Traits: {self.personality_traits}"
+'''

@@ -7,36 +7,30 @@ import time
 import random
 import sys
 
+persona_file = './src/agent_attributes_config.json'
+
+with open(persona_file, 'r') as file:
+    persona_config = json.load(file)
 
 cfg = {  "path" : "./src/",
         'CoreObjects':
             {
                 "DecisionEngine":{
-                    "module": "testEng",
-                    "class": "testEng",
+                    "module": "ScheduleDecisionEngine",
+                    "class": "ScheduleDecisionEngine",
                     'path': "./src/",
                     'config':{
-                        'persona':{
-                            "first_name": "Alice", 
-                            "last_name": "Boberta", 
-                            "personality_description": "I am, a vibrant woman, who radiates a contagious zest for life. I have an outgoing nature and magnetic energy effortlessly draw people in, making me the life of any gathering. I exude fun-loving charisma, infusing joy into every moment with my infectious enthusiasm.", 
-                            "job_role": "secretary", 
-                            "gender": "female", 
-                            "age": 25, 
-                            "traits": {
-                                "meticulous": "Exacting attention in details ensures flawless precision and thorough completion", 
-                                "efficient": "Smooth operations exemplify streamlined processes and productive, time-conscious workflows.", 
-                                "creative": " Innovative thinking manifests in original ideas and imaginative problem-solving approaches.", 
-                                "organized": "Efficiency in arrangements reflects systematic approaches, ensuring seamless task execution."
-                            }
-                        }
+                        'persona': persona_config
                     }
                 },
                 "BootstrapTask":
-                    {"module": "PlanTaskTask",
-                    "class": "PlanTaskTask",
+                    {"module": "PlanScheduleTask",
+                    "class": "PlanScheduleTask",
                     'path': './src/tasks',
-                    'config' : None},
+                    #config is a list of the taks you want the BootStrap to select form
+                    # 'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","WebTask","WriteDocumentNotepadTask"]},
+                    'config' : ["BreakTask","EmailTask","LunchTask","MeetingTask","NothingTask","WebTask","WriteDocumentRawTask"]},
+                    # 'config':["WebTask"]},
                 "TaskList":
                     {"module":"TaskList",
                     "class": "TaskList",
@@ -87,19 +81,76 @@ cfg = {  "path" : "./src/",
                     },
                     'MeetingTask':{
                         'Config': None
+                    },
+                    ##This is just a fake web task, this should eventialy be deleted and replaced with a better one
+                    ##it is currently just and almost exact copy of do nothing
+                    'DUMMYWebTask':{
+                        'Config': None
+                    },
+                    #TODO not complete yet
+                    'WebTask':{
+                        'Config':None
                     }
                 }
             },
         'Log':{
                 'LogPath':'./log/',
-                'LogFileName':'log.log'
+                'LogFileName':'info.log'
             },
         'ChannelConfig': {
             'ChannelClassPath': './src/channels',
         },
 }
 
+persona_file = './src/agent_attributes_config.json'
 
+with open(persona_file, 'r') as file:
+    persona_config = json.load(file)
+
+'''
+def ConfigureLogger(cfg_data):
+    """
+    ConfigureLogger: configures a logger with separate handlers for INFO and DEBUG
+    args:config
+
+    returns:
+        logger object
+    """
+
+    # Define the base log directory from the configuration
+    log_directory = cfg_data['Log']['LogPath']
+
+    # Create a logger object
+    logger = logging.getLogger('logger.' + __name__)
+    logger.setLevel(logging.DEBUG)  # Set logger to the lowest level (DEBUG)
+
+    # Define a format for the log messages
+    log_format = logging.Formatter(
+        '%(asctime)-19s - %(levelname)-7s - %(name)-22s - %(filename)-26s - %(funcName)-20s - Line:%(lineno)-4d - %(message)-50s')
+
+    # INFO Handler
+    info_handler = logging.FileHandler(log_directory + 'info.log')
+    info_handler.setLevel(logging.INFO)
+    info_handler.setFormatter(log_format)
+
+    # DEBUG Handler
+    debug_handler = logging.FileHandler(log_directory + 'debug.log')
+    debug_handler.setLevel(logging.DEBUG)
+    debug_handler.setFormatter(log_format)
+
+    # Add handlers to the logger
+    logger.addHandler(info_handler)
+    logger.addHandler(debug_handler)
+
+    # Log the new run message
+    current_time = time.strftime('%Y-%m-%d %H:%M:%S')
+    logger.info(f'\n{current_time} - NEW RUN:\n')
+
+    logger.info('Successfully configured logger')
+
+    return logger
+
+'''
 def ConfigureLogger(cfg_data):
     """
     ConfigureLogger: configures a logger
@@ -138,7 +189,7 @@ def ConfigureLogger(cfg_data):
     logger = logging.getLogger('logger.' + __name__)
     logger.info('Succsessfully configured logger')
     return logger
-        
+
 
 def LoadConfig(path='./'):
     '''
@@ -206,22 +257,32 @@ def LoadClass(class_name, module_name, path="./src/"):
     return mod_class
 
 if __name__ == "__main__":
-    #Load the config
+    # Load the config
     cfg_data = LoadConfig()
 
+    # Configure the logger with separate handlers for INFO and DEBUG
     logger = ConfigureLogger(cfg_data)
     logger.info('Start of main')
 
+    # Append necessary paths to the system path
     src_path = cfg_data['path']
     sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
     sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])
     print(sys.path)
+
+    # Load and initialize Task List
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], cfg_data['CoreObjects']['TaskList']['path'])
     tl_obj = tl_class(cfg_data['TaskConfig'])
+
+    # Load and initialize Bootstrap Task
     bt_class = LoadClass(cfg_data['CoreObjects']['BootstrapTask']['class'], cfg_data['CoreObjects']['BootstrapTask']['module'], cfg_data['CoreObjects']['BootstrapTask']['path'])
     bt_obj = bt_class(cfg_data['CoreObjects']['BootstrapTask']['config'], None)
     tl_obj.add_task(bt_obj)
+
+    # Load and initialize Decision Engine
     de_class = LoadClass(cfg_data['CoreObjects']['DecisionEngine']['class'], cfg_data['CoreObjects']['DecisionEngine']['module'], cfg_data['CoreObjects']['DecisionEngine']['path'])
     de_obj = de_class(tl_obj, cfg_data['CoreObjects']['DecisionEngine']['config'])
+
+    # Run the Decision Engine
     de_obj.run()
 

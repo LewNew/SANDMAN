@@ -2,8 +2,14 @@ import DecisionEngine
 from Memory import Memory
 from MemoryList import MemoryList, MemoryDataBlock
 from enum import Enum
+from Task import Task
 from Mood import Mood, MoodAspect
 from Persona import Persona
+import json
+from TaskList import TaskList
+
+from TextGenerator import TextGenerator
+
 
 class ScheduleDecisionEngineMemoryBlockType(Enum):
     DECISION = 1
@@ -24,41 +30,37 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
     
     memname = 'ScheduleDecisionEngineMemory'
 
-    def __init__(self, task_list, config=None):
+    def __init__(self, task_list, config):
         super().__init__(task_list, config)
         self._memory = Memory()
         self._memory[ScheduleDecisionEngine.memname] = MemoryList(20)
-        #The decriptions should really be formed for use in an LLM
-        # mood_aspect_list = {
-        #     "Angry": 'the level of anger currently being felt',
-        #     "Energized": 'How energized the agent currently is',
-        #     "Happy": 'how happy i am',
-        #     "Bored": 'level of being bored',
-        #     "Fine": 'generally felling of being ok',
-        #     "Focused": 'the level of focus i have for working',
-        #     "Confident": 'Am i currently confident',
-        #     "Inspired": 'the level of inspriation',
-        #     "Uncomfortable": 'My level of being weirded out is'
-        # }
-        # self._mood = Mood(mood_aspect_list)
-        # print(self._mood.current_mood)
-        # self._mood.update_mood_aspect("Angry", 50, delta=False)
-        # print(self._mood.current_mood)
 
-        # mood_updates = {'Angry': MoodAspect.CreateMoodAspectUpdate(-20, 'happier'),
-        #                 'Confident': MoodAspect.CreateMoodAspectUpdate(30, 'More confident', False),
-        #                 'Inspired': MoodAspect.CreateMoodAspectUpdate(20, 'Inspired to be great'),
-        #                 'Focused': None}
-        # self._mood.update_mood_aspects(mood_updates)
-        # print(self._mood.current_mood)
-        # self._persona = Persona(**config['persona'])
+        # print(self._config["persona"])
+
+        # mood_aspect_list = {
+        #      "Angry": 'the level of anger currently being felt',
+        #      "Energized": 'How energized the agent currently is',
+        #      "Happy": 'how happy i am',
+        #      "Bored": 'level of being bored',
+        #      "Fine": 'generally felling of being ok',
+        #      "Focused": 'the level of focus i have for working',
+        #      "Confident": 'Am i currently confident',
+        #      "Inspired": 'the level of inspriation',
+        #      "Uncomfortable": 'My level of being weirded out is'
+        # }
+
+        self._persona = Persona(self._config["persona"]["first_name"],self._config["persona"]["last_name"],self._config["persona"]["personality_description"],self._config["persona"]["job_role"],self._config["persona"]["organisation"],self._config["persona"]["gender"],self._config["persona"]["age"],self._config["persona"]["traits"])
 
         if not task_list.taskList or len(task_list.taskList) > 1:
             self.logger.warning(f"No Bootstrap task in the task list, {task_list}")
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
         self._current_task = task_list[0]
+
+        self._generator = TextGenerator()
+
         self.logger.info(f"Created {__name__}")
+
 
 
     def make_decision(self):
@@ -68,7 +70,9 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         Returns:
             Task: The next task to be executed.
         """
-        self.logger.info(f"Makeing decision")
+        self.logger.info(f"Making decision")
+
+
         print(self._task_list) 
         if not self._task_list.taskList:
             self.logger.warning(f"TaskList is empty opps - no bootstrap task")
@@ -80,7 +84,42 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                 raise Exception(f'Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}')
             self._current_task = self._task_list[0]
         else:
-            self._current_task = self._task_list[1]
+            # self._current_task = self._task_list[1]
+
+            #create promopt for LLM to decide on task
+            prompt = self._task_list.create_prompt()
+            print("\n\n"+prompt)
+
+            #pass that prompt into a generator to 
+            decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
+            print("\n\nLLM Decision: "+decision)
+
+            ##TODO Need to validate decision!!!!!!!!!!!
+
+            match = False
+
+            #saerch though tasks in task list and matches the llm decision with a task
+            for task in self._task_list:
+                #this if statement works for now but probably need to be better in the future
+                if task.Name in decision:
+                    print("MATCH: " + task.Name + " - " + decision)
+                    match = True
+                    self._current_task = task
+                    break
+            
+            #if no match has been made due to incorrect output from llm just pick the first task
+            if match == False:
+                print("NO MATCH: " + decision)
+                print("Picking task at index 1")
+                self._current_task = self._task_list[1]
+                self.logger.warning(f"decision '{decision}' does not exist in the task list, selecting task at index 1")
+
+
+
+            pass
+
+            
+
 
         self._memory[ScheduleDecisionEngine.memname].append(ScheduleDecisionEngineMemoryBlock(ScheduleDecisionEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
         self.logger.info(f"Decided on: {self._current_task.Name}")
@@ -93,9 +132,24 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         Parameters:
             task (Task): The task to be executed.
         """
-        self.logger.info(f"Executing task: {self._current_task.Name}")
-        # TODO: Implement the logic to execute the task
+        # Assuming the Task class has a method 'do_work' that handles task execution
+        # self._current_task.do_work(persona=self._persona, memory=self._memory)
+
+        self.logger.info(f"Executing task: {self._current_task.Name + self._current_task.Context}")
         print(f"Executing task: {self._current_task.Name}")
+        print(f"Executing task: {self._current_task.Context}")
+
+        try:
+            #bootstrap task does not have _current_task._time property
+            #but all other tasks do, im just printing here to prove it works
+            #this value (._time) is only generated by PlanScheduleTask, it is not
+            #natural to Task. this means that addidional tags can be added to
+            #tasks and used further up or down the pipeline
+            print(f"Executing task time property: {self._current_task._time}")
+            pass
+        except:
+            pass
+
         # Assuming the Task class has a method 'do_work' that handles task execution
         self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)
         if (self._current_task.PercentComplete == 100):

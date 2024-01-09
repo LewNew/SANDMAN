@@ -5,6 +5,14 @@ from Persona import Persona
 import logging
 
 class DecisionEngine(ABC):
+
+    def __init__ (self, task_list, config=None):
+        self.logger = logging.getLogger('logger.'+__name__)
+        self._task_list = task_list
+        self._memory = None
+        self._persona = None
+        self._mood = None
+        self._config = config
     
     @property
     def Memory(self):
@@ -40,12 +48,6 @@ class DecisionEngine(ABC):
     def EgoAndId(self):
         return [self._persona, self._memory, self._mood]
 
-    def __init__ (self, task_list, config=None):
-        self.logger = logging.getLogger('logger.'+__name__)
-        self._task_list = task_list
-        self._memory = None
-        self._persona = None
-        self._mood = None
 
     @property
     def task_list(self):
