@@ -59,10 +59,10 @@ class MailChannel(Channel):
         - bool: True if the operation is successful.
         """
         #text = kwargs["text"]
+        sender = kwargs["sender"]
         smtp_server = kwargs["smtp_server"]
         email_account = kwargs["email_account"]
         password = kwargs["password"]
-        sender = kwargs["sender"]
         recipients = kwargs["recipients"]
         date = kwargs["date"]
         subject = kwargs["subject"]
@@ -70,7 +70,7 @@ class MailChannel(Channel):
         attachments = kwargs["attachments"] # Not implemented yet
 
         # assume client is installed, attempt to compose using mail client
-        self.compose(sender, recipients, date, subject, body, attachments)
+        self.compose(smtp_server, email_account, password, sender, recipients, date, subject, body, attachments)
 
         return True
 
@@ -104,7 +104,7 @@ class MailChannel(Channel):
         client_found = True
         
         # Try to open Mail client. If unsuccessful, run in clientless mode.
-        try: subprocess.Popen([self.client_path])
+        try:  MC = subprocess.Popen([self.client_path])
         except: print("Mail client not found."); client_found = False
         time.sleep(1)
 
@@ -127,14 +127,17 @@ class MailChannel(Channel):
             status, data = mail.fetch(email_id, '(RFC822)')
             raw_email = data[0][1]
             msg = email.message_from_bytes(raw_email)
-
             unread_messages.append(msg)
 
         mail.logout()
         time.sleep(2)
 
         # Email navigation through client - closing Mail client.
-        if client_found: pyautogui.hotkey('ctrl', 'w'); pyautogui.hotkey('alt', 'f4')
+        if client_found: 
+            #pyautogui.hotkey('ctrl', 'w')#; pyautogui.hotkey('alt', 'f4')
+            while MC.poll() == None:
+                pyautogui.hotkey('ctrl', 'w')
+                time.sleep(1)
 
         return unread_messages
 
@@ -172,7 +175,7 @@ class MailChannel(Channel):
 
 
 
-    def transmit(self, client_found):
+    def transmit(self):
         """
         Send an email.
 
@@ -189,7 +192,7 @@ class MailChannel(Channel):
         pyautogui.hotkey('ctrl', 'enter')
         time.sleep(1)
         pyautogui.hotkey('ctrl', 'enter')
-        time.sleep(5)
+        time.sleep(10)
         pyautogui.hotkey('alt', 'f4')
         pass
 

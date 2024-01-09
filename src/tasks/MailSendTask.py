@@ -1,5 +1,5 @@
 from Task import Task
-from MailChannel import MailChannel
+from channels.MailChannel import MailChannel
 
 class MailSendTask(Task):
     """
@@ -30,8 +30,9 @@ class MailSendTask(Task):
         }
         return _metadata
     
-    def __init__(self, name, task_type, client_path, smtp_server, email_account, password, recipients, subject, body, percent_complete=0, last_worked_on=None, inception_time=None):
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+    def __init__(self, name, task_type, client_path, smtp_server, email_account, password, recipients, subject, body, config="", context="", **kwargs):
+        #super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+        super().__init__(config,context, **kwargs)
         """
         Initializes a new Task object.
 
@@ -82,16 +83,22 @@ class MailSendTask(Task):
 
         if self.taskname == "Reply":
             print("Reply Mail Task")
-            self.channel.send(sender=self.email_account, smtp_server=self.smtp_server, email_account = self.email_account, password = self.password, recipients=self.recipients, date="", subject=self.subject, body=self.body, attachments="")
+            self.channel.send(sender=self.email_account, smtp_server=self.smtp_server, email_account=self.email_account, password=self.password, recipients=self.recipients, date="", subject=self.subject, body=self.body, attachments="")
 
         else:
-            print(f"Email sent for task {self.taskname}")
-            self.channel.send()
+            print(f"Email sent for task {self.taskname}") # Hard coded for now
+            self.channel.send(sender=self.email_account, smtp_server=self.smtp_server, email_account=self.email_account, password=self.password, recipients=self.recipients, date="", subject=self.subject, body=self.body, attachments="")
 
         print("finished work")
 
         #TODO do work should return some usefull value
         return True
+
+    def read_work(self,**kwargs):
+        print("reading work")
+        work = self._channel.read()
+        print("finished reading")
+        return work
 
 if __name__ == "__main__":
     

@@ -1,6 +1,6 @@
 from Task import Task
-from MailChannel import MailChannel
-from MailSendTask import MailSendTask
+from channels.MailChannel import MailChannel
+from tasks.MailSendTask import MailSendTask
 from MailGenerator import MailGenerator
 import imaplib
 import email
@@ -35,8 +35,9 @@ class MailReadTask(Task):
         }
         return _metadata
     
-    def __init__(self, name, task_type, client_path, imap_server, email_account, password, percent_complete=0, last_worked_on=None, inception_time=None):
-        super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+    def __init__(self, name, task_type, client_path, imap_server, smtp_server, email_account, password, config="", context="", **kwargs):
+        #super().__init__(name, task_type, percent_complete, last_worked_on, inception_time)
+        super().__init__(config,context, **kwargs)
         """
         Initializes a new Task object.
 
@@ -52,6 +53,7 @@ class MailReadTask(Task):
         """
         self.client_path = client_path
         self.imap_server = imap_server
+        self.smtp_server = smtp_server
         self.email_account = email_account
         self.password = password
 
@@ -64,23 +66,32 @@ class MailReadTask(Task):
 
         unread_messages = self.channel.recv(imap_server=self.imap_server, email_account=self.email_account, password=self.password)
 
-        for msg in unread_messages:
-            # Extracting subject, sender, and body
-            subject = msg["subject"]
-            sender = msg["from"]
-            body = msg.get_payload(decode=True).decode()
+        if len(unread_messages) > 0:
 
-            letter = f"Email:\nFrom: {sender}\nSubject: {subject}\nBody: {body}"
+            for msg in unread_messages:
+                # Extracting subject, sender, and body
+                print(msg)
+                subject = msg["subject"]
+                sender = msg["from"]
+                body = msg.get_payload(decode=True)#.decode()
+                print(body)
 
-            print(letter)
+                letter = f"Email:\nFrom: {sender}\nSubject: {subject}\nBody: {body}"
 
-            response = MailGenerator.generate_reply(task=task, persona=persona, mood=mood, email=letter, logic=None)
+                print(letter)
 
-            if response == "0": return True
+                generator = MailGenerator()
 
-            else: reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, subject=subject, body=response, percent_complete=0, last_worked_on=None, inception_time=None)
+                response = generator.generate_reply(task=task, persona=persona, mood=mood, email=letter, logic=None)
 
-            self.add_to_parent_task_list(reply)
+                if response == "0": return True
+
+                else: reply = MailSendTask(name="Reply", task_type="mailSend", client_path = "C:\\Program Files\\Mozilla Thunderbird\\Thunderbird.exe", recipients=sender, smtp_server=self.smtp_server, email_account=self.email_account, password=self.password, subject=subject, body=response)#percent_complete=0, last_worked_on=None, inception_time=None
+
+                self.add_to_parent_task_list(reply)
+
+        else:
+            print("No new messages...")
 
         print("finished work")
 
@@ -89,6 +100,12 @@ class MailReadTask(Task):
 
 
         return True
+    
+    def read_work(self,**kwargs):
+        print("reading work")
+        work = self._channel.read()
+        print("finished reading")
+        return work
 
 if __name__ == "__main__":
     

@@ -1,26 +1,31 @@
-import openai
+from openai import OpenAI
 import requests
 from prompts import gpt_requests
 from Mood import Mood
+import os
 
 DEFAULT_REPLY_TASK = "You will be provided with a single email, decide whether the email requires a reply based on the sentiment of the email. If the email requires a reply then you will write a single email. If the email does not require a reply based on sentiment then you will write the number 0 and nothing else."
 DEFAULT_TASK_EMAIL = ""
 
 class MailGenerator:
 
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self.api_key = os.environ.get('OPENAI_API_KEY')
+        self._client = OpenAI(api_key=self.api_key)
+        print(self.api_key)
 
-    def generate_send(self, task, persona, mood):
+    def generate_send(self, task, persona, mood, logic):
+        # Setting up the prompt
+        if logic == "": logic = DEFAULT_TASK_EMAIL
 
-        system_msg = f"You are an email generator. Your task is {task}. Your persona is {persona}, and your current mood is {mood}."
+        system_msg = f"You are an email generator. Your task is {task}. {logic} Your persona is {persona}, and your current mood is {mood}."
         messages = [
             {"role": "system", "content": system_msg}
         ]
 
         # Making the API call
-        openai.api_key = self.api_key
-        response = openai.ChatCompletion.create(
+        
+        response = self._client.chat.completions.create(
             model="gpt-3.5-turbo",  # or the most appropriate model you have access to
             messages=messages,
         )
@@ -38,8 +43,8 @@ class MailGenerator:
         ]
 
         # Making the API call
-        openai.api_key = self.api_key
-        response = openai.ChatCompletion.create(
+        
+        response = self._client.chat.completions.create(
             model="gpt-3.5-turbo",  # or the most appropriate model you have access to
             messages=messages,
         )
