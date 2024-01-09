@@ -98,6 +98,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
             match = False
 
+            #saerch though tasks in task list and matches the llm decision with a task
             for task in self._task_list:
                 #this if statement works for now but probably need to be better in the future
                 if task.Name in decision:
@@ -105,7 +106,8 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                     match = True
                     self._current_task = task
                     break
-
+            
+            #if no match has been made due to incorrect output from llm just pick the first task
             if match == False:
                 print("NO MATCH: " + decision)
                 print("Picking task at index 1")
