@@ -1,5 +1,6 @@
 import time
 import logging
+import datetime
 
 class MemoryDataBlock():
     '''
@@ -15,7 +16,7 @@ class MemoryDataBlock():
         return self._data
     
     def __init__(self) -> None:
-        self._created = time.time()
+        self._created = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self._data = None
 
 
