@@ -80,7 +80,13 @@ class WriteDocumentNotepadTask(Task):
         # self._logger.info(f"{self._name} doing work")
         self._logger.info(f"{self._name} doing work - Info Level")
         self._logger.debug(f"{self._name} doing work - Debug Level")
-        print("doing work")
+        #print("doing work")
+
+
+        first_name = persona._persona.get('first_name', '')
+        last_name = persona._persona.get('last_name', '')
+        self._logger.info(f"{first_name} {last_name} ({self.Name}) doing work")
+        print(f"{first_name} {last_name} doing work")
         
         #sending the data to channel
         self._channel.send(text = self._generator.generate_text(self,persona,mood))
