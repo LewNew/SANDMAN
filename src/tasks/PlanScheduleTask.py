@@ -60,6 +60,13 @@ class PlanScheduleTask(Task):
 
         #TODO need to validate lm_plan_list and if it is not valid either fix or re-prompt the llm!!!!!!!!!!!!!!!!!!
 
+        #if validation fails continualy reprompt the LLM
+        while self.validate_LLM_output(lm_plan_list) == False:
+            self._logger.warning(f're-prompting LLM: \n{lm_plan_list}')
+            lm_plan_list = self._generator.generate_text(self,persona,mood)
+            self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
+            
+
         scheduleJSON = json.loads(lm_plan_list)
 
         print(scheduleJSON)
@@ -113,6 +120,29 @@ class PlanScheduleTask(Task):
     def read_work(self,**kwargs):
         
         return None
+
+
+    def validate_LLM_output(self,LLMoutput):
+        
+        #makes sure its in JSON format
+        #TODO probably a better way of doing this
+        try:
+            scheduleJSON = json.loads(LLMoutput)
+        except:
+            self._logger.critical("PlanSchedualTask LLM output is not in JSON format")
+            return False
+
+        try:
+            for time in scheduleJSON:
+                a = scheduleJSON[time]["type"]
+                b = scheduleJSON[time]["descriptor"]
+        except:
+            self._logger.critical("PlanSchedualTask LLM output is in JSON format but does not follow time:{type:None, descriptor:None}")
+            return False
+
+        self._logger.info("PlanSchedualTask LLM output succsessfully validated")
+
+        return True
 
 
 if __name__ == "__main__":
