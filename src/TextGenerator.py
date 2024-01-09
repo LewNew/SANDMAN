@@ -34,7 +34,7 @@ class TextGenerator:
         except:
             persona_summary = ""
 
-        #Need a try catch for mood
+        #TODO Need a try catch for mood
 
         print(persona_summary)
 
@@ -46,7 +46,7 @@ class TextGenerator:
 
         messages = [
             {"role": "system", "content": system_msg},
-            {"role": "user", "content": task.prompt},
+            {"role": "user", "content": user_msg},
             {"role": "assistant","content": assistant_msg}
         ]
         try:
@@ -58,9 +58,67 @@ class TextGenerator:
         # Extracting and returning the generated text
         return response.choices[0].message.content
 
+    #this function is not used but could potentialy use somthing simmilar
     def generate_file_name(self, task, persona):
         base_name = f"{persona}_{task}".replace(" ", "_")
         return f"{base_name}.txt"
+
+
+
+
+
+
+
+
+
+
+
+    def general_generate_text(self,prompt,persona_obj, mood):
+        """
+        this method is for when you want to call generate_text() method but do not have a task to pull the prompt and data from
+        instead you can just pass in a prompt that is a string to prompt the llm
+        
+        Parameters:
+            prompt (String): main LLM prompt.
+            persona_obj (Persona), persona object to get generate_persona_summary().
+            mood (mood).
+
+        """
+
+        try:
+            persona_summary = persona_obj.generate_persona_summary()
+        except:
+            persona_summary = ""
+
+        #TODO Need a try catch for mood
+
+        print(persona_summary)
+
+        user_msg = prompt
+
+        assistant_msg = f"no chat just work that is formal. follow instructions very closely do not say phrases like 'certainly' or 'yes i can do that', do not discuss your thought process or phrases like 'based on my thought process' i just want an output in the format specified"
+
+        system_msg = persona_summary
+
+        messages = [
+            {"role": "system", "content": system_msg},
+            {"role": "user", "content": user_msg},
+            {"role": "assistant","content": assistant_msg}
+        ]
+        try:
+            response = self._client.chat.completions.create(model="gpt-3.5-turbo",
+            messages=messages)
+        except Exception as e:
+            print(e)        
+            return "ERROR in TextGenerator response = client.chat.completions.create(model='gpt-3.5-turbo-instruct',messages=messages):" + "\n\nException:\n\n" + str(e)
+        # Extracting and returning the generated text
+        return response.choices[0].message.content
+
+        pass
+
+
+
+
 
 if __name__ == "__main__":
 

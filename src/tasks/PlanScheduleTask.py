@@ -58,7 +58,7 @@ class PlanScheduleTask(Task):
 
         print(lm_plan_list)
 
-        #TODO need to validate lm_plan_list and if it is not valid either fix or re-prompt the llm
+        #TODO need to validate lm_plan_list and if it is not valid either fix or re-prompt the llm!!!!!!!!!!!!!!!!!!
 
         scheduleJSON = json.loads(lm_plan_list)
 

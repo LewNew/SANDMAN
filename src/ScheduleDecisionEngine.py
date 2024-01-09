@@ -8,6 +8,8 @@ from Persona import Persona
 import json
 from TaskList import TaskList
 
+from TextGenerator import TextGenerator
+
 
 class ScheduleDecisionEngineMemoryBlockType(Enum):
     DECISION = 1
@@ -54,6 +56,9 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             raise Exception(f'No Bootstrap task in the task list, {task_list}')
         self._bootstrap_task = task_list[0] # Make sure the boot strapper does not go missing
         self._current_task = task_list[0]
+
+        self._generator = TextGenerator()
+
         self.logger.info(f"Created {__name__}")
 
 
@@ -67,10 +72,6 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         """
         self.logger.info(f"Making decision")
 
-        #TODO implement this
-        # job_role = self._persona.JobRole
-        # current_mood = self._mood.current_mood
-
 
         print(self._task_list) 
         if not self._task_list.taskList:
@@ -83,7 +84,42 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                 raise Exception(f'Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}')
             self._current_task = self._task_list[0]
         else:
-            self._current_task = self._task_list[1]
+            # self._current_task = self._task_list[1]
+
+            #create promopt for LLM to decide on task
+            prompt = self._task_list.create_prompt()
+            print("\n\n"+prompt)
+
+            #pass that prompt into a generator to 
+            decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
+            print("\n\nLLM Decision: "+decision)
+
+            ##TODO Need to validate decision!!!!!!!!!!!
+
+            match = False
+
+            #saerch though tasks in task list and matches the llm decision with a task
+            for task in self._task_list:
+                #this if statement works for now but probably need to be better in the future
+                if task.Name in decision:
+                    print("MATCH: " + task.Name + " - " + decision)
+                    match = True
+                    self._current_task = task
+                    break
+            
+            #if no match has been made due to incorrect output from llm just pick the first task
+            if match == False:
+                print("NO MATCH: " + decision)
+                print("Picking task at index 1")
+                self._current_task = self._task_list[1]
+                self.logger.warning(f"decision '{decision}' does not exist in the task list, selecting task at index 1")
+
+
+
+            pass
+
+            
+
 
         self._memory[ScheduleDecisionEngine.memname].append(ScheduleDecisionEngineMemoryBlock(ScheduleDecisionEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
         self.logger.info(f"Decided on: {self._current_task.Name}")

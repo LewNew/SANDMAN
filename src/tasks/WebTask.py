@@ -34,7 +34,9 @@ class WebTask(Task):
 
     def __init__(self,config,context,**kwargs):
         super().__init__(config,context,**kwargs)
-        self._name = 'WebTask'
+
+        self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
+        self._name = 'WebTask-' + self._name
         # self.url = config['url']
 
         # Initialize a WebChannel or similar class for managing web interactions
