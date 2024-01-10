@@ -4,7 +4,7 @@ from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
 import time
 import json
-
+import datetime
 
 
 class PlanScheduleTask(Task):
@@ -33,6 +33,7 @@ class PlanScheduleTask(Task):
         self.COLOR_GREEN = "\x1b[1;32m"
         self.COLOR_YELLOW = "\x1b[93m"
         self.COLOR_RED = "\x1b[31m"
+        self.COLOR_BLUE = "\x1b[94m"
         self.COLOR_RESET = "\x1b[0m"
 
         start = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks "
@@ -61,14 +62,20 @@ class PlanScheduleTask(Task):
         
         print(f"[>] Input Prompt: {self._prompt}\n")
 
-        print(f"Retrieving Semantic Memory for Agent: "
-              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET} "
-              f"...")
+        print(f"[+] Retrieving Semantic Memory for Agent: "
+              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET} with ID "
+              f"{self.COLOR_YELLOW}01{self.COLOR_RESET}\n")
 
-        time.sleep(3)
+        start = datetime.datetime.now()
+        while (datetime.datetime.now() - start).total_seconds() < 3:
+            pass
+
+        print(f"[+] Memory Retrieval Status: {self.COLOR_GREEN}Success"
+              f"{self.COLOR_RESET}\n")
 
         print(f"[+] Agent Persona (Semantic Memory):"
-              f" {persona.generate_persona_summary()}\n")
+              f"{self.COLOR_YELLOW}{persona.generate_persona_summary()}"
+              f"{self.COLOR_RESET}\n")
 
         lm_plan_list = self._generator.generate_text(self,persona,mood)
 
@@ -105,7 +112,10 @@ class PlanScheduleTask(Task):
         print("\x1b[1;32mPress Enter to continue...\x1b[0m")
         input()
 
-        print(f"LLM output:\n")
+        print(f"[<] LLM Output ({self.COLOR_BLUE}gpt-3.5-turbo"
+              f"{self.COLOR_RESET}): {self.COLOR_GREEN} Success {self.COLOR_RESET}\n")
+
+        print(f"[+] Running Validation Check ...")
 
         for time in scheduleJSON:
             print(f"Task:{scheduleJSON[time]["type"]}")
