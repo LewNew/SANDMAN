@@ -35,6 +35,13 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         self._memory = Memory()
         self._memory[ScheduleDecisionEngine.memname] = MemoryList(20)
 
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
+
+
         # print(self._config["persona"])
 
         # mood_aspect_list = {
@@ -123,7 +130,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             
             #if no match has been made due to incorrect output from llm just pick the first task
             if match == False:
-                print("NO MATCH: " + decision)
+                print(f"{self.COLOR_RED}NO MATCH: " + decision, {self.COLOR_RESET})
                 print("Picking task at index 1")
                 self._current_task = self._task_list[1]
                 self.logger.warning(f"decision: '{decision}' does not exist in the task list, selecting task at index 1")

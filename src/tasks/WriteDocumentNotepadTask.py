@@ -88,18 +88,28 @@ class WriteDocumentNotepadTask(Task):
         # self._logger.info(f"{self._name} doing work")
         self._logger.info(f"{self._name} doing work - Info Level")
         self._logger.debug(f"{self._name} doing work - Debug Level")
+
+        print(f"Prompt:\n{self._prompt}\n")
+
+        print(f"persona: {persona.generate_persona_summary()}")
+
+        print("\n\x1b[1;32mPress Enter to continue...\x1b[0m")
+        input()
+
         print("doing work")
         
+        text = self._generator.generate_text(self,persona,mood)
+
         #sending the data to channel
-        self._channel.send(text = self._generator.generate_text(self,persona,mood))
+        self._channel.send(text=text)
 
         #wait a few seconds just for padding
         #TODO probably want to remove this wait in future
-        for _ in range(0,3):
-            print('*', end='')
-            time.sleep(1)
+        # for _ in range(0,3):
+        #     print('*', end='')
+        #     time.sleep(1)
 
-        print("finished work")
+        print("\nfinished work")
 
 
         if not memory == None:
@@ -149,7 +159,7 @@ class WriteDocumentNotepadTask(Task):
 if __name__ == "__main__":
 
     config = {"workingdir":'./fakeWork/'}
-    context = "Start drafting a scientific paper on the topic of sustainable agriculture, highlighting the potential benefits of implementing precision farming techniques to optimize resource utilization and reduce environmental impact."
+    context = "Draft an outline for your upcoming conference paper. Begin by summarizing the research objectives, methodology, and anticipated outcomes. Provide a compelling introduction to captivate the scientific community."
 
     persona_file = './src/agent_attributes_config.json'
 
@@ -168,7 +178,7 @@ if __name__ == "__main__":
 
     print("Decision engine decided on:\n")
 
-    print(f"Name: {notepadTaskTest.Name}")
-    print(f"Context: {notepadTaskTest.Context}")
+    print(f"Name: {notepadTaskTest.Name}\n")
+    print(f"Context:\n{notepadTaskTest.Context}\n")
 
     notepadTaskTest.do_work(persona)
