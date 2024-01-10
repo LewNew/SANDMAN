@@ -48,7 +48,7 @@ class WebTask(Task):
 
         self._channel.send()
 
-        for _ in range(0, 5):
+        for _ in range(0, 3):
             print('*', end='')
             time.sleep(1)
             

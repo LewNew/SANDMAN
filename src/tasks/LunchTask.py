@@ -48,7 +48,7 @@ class LunchTask(Task):
         #TODO wait_time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
         #or from the task name or something.
 
-        for _ in range(0, random.randint(self._lower_time,self._upper_time)):
+        for _ in range(0, 3):
             print('*', end='')
             time.sleep(1)
         print("\nfinished work")
