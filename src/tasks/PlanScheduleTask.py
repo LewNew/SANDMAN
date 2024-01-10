@@ -115,7 +115,7 @@ class PlanScheduleTask(Task):
         print(f"[<] LLM Output ({self.COLOR_BLUE}gpt-3.5-turbo"
               f"{self.COLOR_RESET}): {self.COLOR_GREEN} Success {self.COLOR_RESET}\n")
 
-        print(f"[+] Running Validation Check ...")
+        print(f"[+] Running Validation Check ..")
 
         for time in scheduleJSON:
             print(f"Task:{scheduleJSON[time]["type"]}")
