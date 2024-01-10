@@ -32,10 +32,10 @@ class TaskList:
         self._task_classes = LoadClasses(cfg_data['TaskClasses'].keys(), cfg_data['TaskClassPath'])
         print('===================\nLoaded Task Classes')
         for key, value in self._task_classes.items():
-            print(cfg_data['TaskClasses'][key]['Config'])
+            # print(cfg_data['TaskClasses'][key]['Config'])
             self._task_classes[key]['Config'] = cfg_data['TaskClasses'][key]['Config']
-            print(key)
-            print(value['metadata'])
+            # print(key)
+            # print(value['metadata'])
         
         print('\n\n')   
 
@@ -111,6 +111,27 @@ class TaskList:
             raise TypeError(f"Expected a Task object, but received {type(task)}")
 
         self.taskList.remove(task)
+
+    def small_data(self):
+
+        data = ""
+
+        #task list is completely empty
+
+        for index in range(0,len(self.taskList)):
+                
+            self.taskList[index]
+            taskMetaData = self.taskList[index].get_class_metadata()
+            task = self.taskList[index]
+
+            data = data + "Task:" + str(index) + "\n" + "name = " + task.Name + "\n" + "description = " + taskMetaData["description"] + "\n" + "context = " + task.Context + "\n"
+
+            data = data + "=======\n"
+
+
+        return data
+
+            
 
     def create_prompt(self):
         """

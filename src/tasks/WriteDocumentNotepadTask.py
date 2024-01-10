@@ -118,7 +118,7 @@ class WriteDocumentNotepadTask(Task):
 
     #checks to see if the file name is valid
     def is_valid_filename(self,filename):
-        invalid_chars = r'\/'  # Invalid characters
+        invalid_chars = r'\/#%&{}<>*?$!":@+` |='  # Invalid characters
         # Check length
         if len(filename) > 255:
             self._logger.warning(f"_file_name: {self._file_name} generated from LLM is invalid as it is too long so useing random numbers for file name instead")

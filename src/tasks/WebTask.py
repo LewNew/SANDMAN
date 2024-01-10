@@ -26,7 +26,7 @@ class WebTask(Task):
     def get_class_metadata(cls):
         _metadata = {
             'name': 'WebTask',
-            'description': 'simple task to brows the web',
+            'description': 'simple task to browse the web',
             'status':'valid',
             'args':{}
         }

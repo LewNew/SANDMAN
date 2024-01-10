@@ -1,4 +1,4 @@
-##DEMO BRANCH
+##DEMO BRANCH##
 '''Main programme to load and run SANDMAN based on the config file'''
 import importlib.util
 import os
@@ -269,7 +269,7 @@ if __name__ == "__main__":
     src_path = cfg_data['path']
     sys.path.append(cfg_data['TaskConfig']['TaskClassPath'])
     sys.path.append(cfg_data['ChannelConfig']['ChannelClassPath'])
-    print(sys.path)
+    # print(sys.path)
 
     # Load and initialize Task List
     tl_class = LoadClass(cfg_data['CoreObjects']['TaskList']['class'], cfg_data['CoreObjects']['TaskList']['module'], cfg_data['CoreObjects']['TaskList']['path'])

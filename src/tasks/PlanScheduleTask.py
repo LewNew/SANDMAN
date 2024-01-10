@@ -44,32 +44,34 @@ class PlanScheduleTask(Task):
 
         
     def do_work(self,persona=None,mood=None,memory=None):
-        print("doing work")
+        print("doing work:\n")
 
         if self._task_list == None:
             self.logger.warning(f'Parent TaskList not specified in {self._name}')
             raise Exception(f'Parent TaskList not specified in {self._name}')
         
-        print(self._prompt)
+        print(f"prompt: {self._prompt}\n")
 
         lm_plan_list = self._generator.generate_text(self,persona,mood)
 
         self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
 
-        print(lm_plan_list)
+        # print(lm_plan_list)
 
         #TODO need to validate lm_plan_list and if it is not valid either fix or re-prompt the llm!!!!!!!!!!!!!!!!!!
 
         #if validation fails continualy reprompt the LLM
         while self.validate_LLM_output(lm_plan_list) == False:
-            self._logger.warning(f're-prompting LLM: \n{lm_plan_list}')
+            self._logger.warning(f're-prompting LLM because of bad validation')
             lm_plan_list = self._generator.generate_text(self,persona,mood)
-            self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
-            
+            self._logger.info(f'New sechdule returned from LLM: \n{lm_plan_list}')
+        
+
+        # print(f"LLM output:\n{lm_plan_list}\n")
 
         scheduleJSON = json.loads(lm_plan_list)
 
-        print(scheduleJSON)
+        # print(scheduleJSON)
 
         
 
@@ -78,24 +80,28 @@ class PlanScheduleTask(Task):
         #they are almost an exact copy and paste from planTaskTask
         #that dan wrote, gona have to ask him what it does
         #also why does self._task_list.task_classes.items() work ???
-        for key, class_data in self._task_list.task_classes.items():
-            print(key)
-            print(class_data)
+        # for key, class_data in self._task_list.task_classes.items():
+        #     print(key)
+        #     print(class_data)
+
+        print(f"LLM output:\n")
 
         for time in scheduleJSON:
-            print(scheduleJSON[time]["type"])
-            print(scheduleJSON[time]["descriptor"])
+            print(f"Task:{scheduleJSON[time]["type"]}")
+            print(f"Context:{scheduleJSON[time]["descriptor"]}")
             print('---------------')
 
             if scheduleJSON[time]["type"] in self._task_list.task_classes.keys():
                 matching_type = scheduleJSON[time]["type"]
                 corresponding_value = self._task_list.task_classes[matching_type]
 
-                print(corresponding_value)
+                # print(corresponding_value)
 
                 if Task.ValidateClassMetadata(corresponding_value['metadata']):
-                    print (f'{matching_type}\'s metadata is ok')
+                    # print (f'{matching_type}\'s metadata is ok')
+                    pass
 
+                #TODO uncomment these lines to test functionality
                 task_class = corresponding_value['module_class']
                 task_config = None
                 if 'Config' in corresponding_value:
@@ -108,12 +114,12 @@ class PlanScheduleTask(Task):
                 #task from llm is not one defined in the config so throw it out
                 self._logger.warning(f"LLM created {scheduleJSON[time]["type"]} task which does not exsist, not added to task list and moveing on")
 
-                print("\n\n")
-                print(scheduleJSON[time]["type"])
-                print(self._task_list.task_classes.keys())
+                # print("\n\n")
+                # print(scheduleJSON[time]["type"])
+                # print(self._task_list.task_classes.keys())
                 pass
 
-        print("finished work")
+        print("\nfinished work\nGoing back to Decision Engine\n")
         
         return True
 
