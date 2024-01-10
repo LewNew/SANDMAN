@@ -1,6 +1,8 @@
 import sys
 sys.path.append('./src/')
 sys.path.append('./src/channels')
+import json
+from Persona import Persona
 
 from Task import Task
 from NotepadChannel import NotepadChannel
@@ -10,6 +12,7 @@ import time
 import random
 from MemoryList import MemoryList, MemoryDataBlock
 import os
+
 
 
 import secrets
@@ -142,3 +145,30 @@ class WriteDocumentNotepadTask(Task):
 
         return True
 
+
+if __name__ == "__main__":
+
+    config = {"workingdir":'./fakeWork/'}
+    context = "Start drafting a scientific paper on the topic of sustainable agriculture, highlighting the potential benefits of implementing precision farming techniques to optimize resource utilization and reduce environmental impact."
+
+    persona_file = './src/agent_attributes_config.json'
+
+    with open(persona_file, 'r') as file:
+        persona_config = json.load(file)
+
+    persona = Persona(persona_config["first_name"],persona_config["last_name"],persona_config["personality_description"],persona_config["job_role"],persona_config["organisation"],persona_config["gender"],persona_config["age"],persona_config["traits"])
+
+    notepadTaskTest = WriteDocumentNotepadTask(config,context)
+
+    print("\n")
+
+
+
+    # print(f"persona: {persona.generate_persona_summary()}\n")
+
+    print("Decision engine decided on:\n")
+
+    print(f"Name: {notepadTaskTest.Name}")
+    print(f"Context: {notepadTaskTest.Context}")
+
+    notepadTaskTest.do_work(persona)

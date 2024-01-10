@@ -127,7 +127,7 @@ class NotepadChannel(Channel):
         pyautogui.hotkey('ctrl', 's')
         time.sleep(2)
         #uses full path
-        pyautogui.typewrite(self.full_path + "\\" + self.file_name,interval=0.02)
+        pyautogui.typewrite(self.full_path + "\\" + self.file_name,interval=0.05)
         time.sleep(2)
         pyautogui.press('enter')
         time.sleep(2)
@@ -156,7 +156,7 @@ class NotepadChannel(Channel):
         """
         subprocess.Popen(['notepad.exe'])
         time.sleep(2)
-        pyautogui.typewrite(text, interval=0.02)
+        pyautogui.typewrite(text, interval=0.05)
         time.sleep(2)
         self.save_new_file()
         pyautogui.hotkey('alt', 'f4')
@@ -175,7 +175,7 @@ class NotepadChannel(Channel):
         subprocess.Popen(['notepad.exe', self.full_path + "\\" + self.file_name])
         time.sleep(2)
         pyautogui.hotkey('ctrl', 'end')
-        pyautogui.typewrite(text, interval=0.02)
+        pyautogui.typewrite(text, interval=0.05)
         time.sleep(2)
         pyautogui.hotkey('ctrl', 's')
         pyautogui.hotkey('alt', 'f4')
