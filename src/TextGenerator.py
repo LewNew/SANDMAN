@@ -31,7 +31,7 @@ class TextGenerator:
 
         try:
             persona_summary = persona_obj.generate_persona_summary()
-            print(f"persona: {persona_summary}\n")
+            # print(f"persona: {persona_summary}\n")
         except:
             persona_summary = ""
 
@@ -88,12 +88,13 @@ class TextGenerator:
 
         try:
             persona_summary = persona_obj.generate_persona_summary()
+            # print(f"Persona: {persona_summary}")
         except:
             persona_summary = ""
 
         #TODO Need a try catch for mood
 
-        print(persona_summary)
+        
 
         user_msg = prompt
 

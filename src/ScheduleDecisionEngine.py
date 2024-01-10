@@ -75,6 +75,8 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         print("Making decision...\nLooking at TaskList\n")
         print("TaskList:\n------")
         print(self._task_list.small_data())
+        # input("Press Enter to continue...\n")
+
         pass
 
         if not self._task_list.taskList:
@@ -86,16 +88,19 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                 self.logger.warning(f"Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}")
                 raise Exception(f'Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}')
             self._current_task = self._task_list[0]
-            print("decided on BootStrapTask\n")
+            print("decided on PlanScheduleTask\n")
+            
         else:
             # self._current_task = self._task_list[1]
 
+            print("\x1b[1;32mPress Enter to continue...\x1b[0m")
+            input()
             print("decideing on task...\n")
-
 
             #create promopt for LLM to decide on task
             prompt = self._task_list.create_prompt()
             print("\nPrompt:\n"+prompt)
+            print(f"Persona: {self.Persona.generate_persona_summary()}")
 
             #pass that prompt into a generator to 
             decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
@@ -111,7 +116,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             for task in self._task_list:
                 #this if statement works for now but probably need to be better in the future
                 if task.Name in decision:
-                    print("MATCH: " + task.Name + " - " + decision)
+                    print("MATCH: " + task.Name + " - " + decision + "\n")
                     match = True
                     self._current_task = task
                     break
@@ -128,7 +133,9 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
             print(f"Decided on: {self._current_task.Name}\n")
 
-            
+        print("\x1b[1;32mPress Enter to continue...\x1b[0m")
+        input()
+
         self._memory[ScheduleDecisionEngine.memname].append(ScheduleDecisionEngineMemoryBlock(ScheduleDecisionEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
         self.logger.info(f"Decided on: {self._current_task.Name}")
 
@@ -160,6 +167,10 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
         # Assuming the Task class has a method 'do_work' that handles task execution
         self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)
+        print(f"\nGoing back to Decision Engine\n")
+        print("\n\x1b[1;32mPress Enter to continue...\x1b[0m")
+        input()
+
         if (self._current_task.PercentComplete == 100):
             self.Memory[ScheduleDecisionEngine.memname].append(ScheduleDecisionEngineMemoryBlock(ScheduleDecisionEngineMemoryBlockType.WORK_DONE, f'Finish this task:{self._current_task.Name}'))
             self._task_list.remove_task(self._current_task)

@@ -1,3 +1,7 @@
+import sys
+sys.path.append('./src/')
+sys.path.append('./src/channels')
+
 from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
@@ -54,7 +58,8 @@ class WriteDocumentNotepadTask(Task):
 
         #checking LLM file name output is corredt
         if self.is_valid_filename(self._file_name):
-            print("File name is valid.")
+            # print("File name is valid.")
+            pass
         else:
             print("Invalid file name. Please choose a different name.")
             self._file_name = ''

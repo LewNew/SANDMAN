@@ -52,6 +52,8 @@ class PlanScheduleTask(Task):
         
         print(f"prompt: {self._prompt}\n")
 
+        print(f"persona: {persona.generate_persona_summary()}\n")
+
         lm_plan_list = self._generator.generate_text(self,persona,mood)
 
         self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
@@ -83,6 +85,9 @@ class PlanScheduleTask(Task):
         # for key, class_data in self._task_list.task_classes.items():
         #     print(key)
         #     print(class_data)
+        
+        print("\x1b[1;32mPress Enter to continue...\x1b[0m")
+        input()
 
         print(f"LLM output:\n")
 
@@ -119,7 +124,8 @@ class PlanScheduleTask(Task):
                 # print(self._task_list.task_classes.keys())
                 pass
 
-        print("\nfinished work\nGoing back to Decision Engine\n")
+        print("\nfinished work")
+        
         
         return True
 
