@@ -139,7 +139,7 @@ class TaskList:
         
         """
 
-        prompt = "Can you decide on what task you want me to do next here is a list of the tasks available and data surrounting them, i just want your output to be the task and its ID in fthe format of TASKNAME-ID. \n\n"
+        prompt = "Can you decide on what task you want me to do next here is a list of the tasks available and data surrounting them, i just want your output to be the task and its ID in the format of TASKNAME-ID. \n\n"
 
         if len(self.taskList) == 0:
             #task list is completely empty

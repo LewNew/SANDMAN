@@ -75,16 +75,20 @@ class WriteDocumentRawTask(Task):
         
     def do_work(self,persona=None,mood=None,memory=None):
         self._logger.info(f"{self._name} doing work")
-        print("doing work")
+        print("doing work\n")
+
+        print(f"prompt: {self._prompt}\n")
         
+        print(f"persona: {persona.generate_persona_summary()}\n")
+
         #sending the data to channel
         self._channel.send(text = self._generator.generate_text(self,persona,mood))
 
         #wait a few seconds just for padding
         #TODO probably want to remove this wait in future
-        for _ in range(0,5):
-            print('*', end='')
-            time.sleep(1)
+        # for _ in range(0,5):
+        #     print('*', end='')
+        #     time.sleep(1)
 
         print("finished work")
 

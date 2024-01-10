@@ -106,7 +106,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
             #create promopt for LLM to decide on task
             prompt = self._task_list.create_prompt()
-            print("\nPrompt:\n"+prompt)
+            print("Prompt:\n"+prompt)
             print(f"Persona: {self.Persona.generate_persona_summary()}")
 
             #pass that prompt into a generator to 
