@@ -36,10 +36,11 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         self._memory[ScheduleDecisionEngine.memname] = MemoryList(20)
 
         self.COLOR_RED = "\x1b[31m"
-        self.COLOR_GREEN = "\x1b[32m"
+        self.COLOR_GREEN = "\x1b[1;32m"
         self.COLOR_RESET = "\x1b[0m"
         self.COLOR_BLUE = "\x1b[94m"
         self.COLOR_YELLOW = "\x1b[93m"
+
 
 
         # print(self._config["persona"])
@@ -79,7 +80,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         """
         self.logger.info(f"Making decision")
 
-        print("Making decision...\nLooking at TaskList\n")
+        print("[+] Making decision ...\n[+] Looking at TaskList\n")
         print("TaskList:\n------")
         print(self._task_list.small_data())
         # input("Press Enter to continue...\n")
@@ -95,27 +96,31 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                 self.logger.warning(f"Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}")
                 raise Exception(f'Task at 0 is not bootstrap task, task list corrupt. Task at 0 is {self._task_list[0].Name}')
             self._current_task = self._task_list[0]
-            print("decided on PlanScheduleTask\n")
+            print(f"[+] Decided on: {self.COLOR_YELLOW}PlanScheduleTask"
+                  f"{self.COLOR_RESET}\n")
             
         else:
             # self._current_task = self._task_list[1]
 
-            print("\x1b[1;32mPress Enter to continue...\x1b[0m")
+            print(f"{self.COLOR_GREEN}Press Enter to continue .."
+                  f".{self.COLOR_RESET}")
             input()
-            print("decideing on task...\n")
+            print("[+} Deciding on task ...\n")
 
             #create promopt for LLM to decide on task
             prompt = self._task_list.create_prompt()
-            print("Prompt:\n"+prompt)
-            print(f"Persona: {self.Persona.generate_persona_summary()}")
+            print("[+] Prompt:\n"+prompt)
+            print(f"[+] Persona: {self.Persona.generate_persona_summary()}")
 
             #pass that prompt into a generator to 
             decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
-            print("\nLLM Decision: "+decision)
+            print(f"\n[+] LLM Decision: {self.COLOR_BLUE}" + decision,
+                  f"{self.COLOR_RESET}")
 
             ##TODO Need to validate decision!!!!!!!!!!!
 
-            self.logger.info(f"LLM decision output: {decision}")
+            self.logger.info(f"[+] LLM Decision Output: "
+                             f"{self.COLOR_BLUE}{decision}{self.COLOR_RESET}")
 
             match = False
 
@@ -123,24 +128,29 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             for task in self._task_list:
                 #this if statement works for now but probably need to be better in the future
                 if task.Name in decision:
-                    print("MATCH: " + task.Name + " - " + decision + "\n")
+                    print(f"[+] MATCH: {self.COLOR_GREEN}" +
+                          task.Name + " - " + decision + f"{self.COLOR_RESET}\n")
                     match = True
                     self._current_task = task
                     break
             
             #if no match has been made due to incorrect output from llm just pick the first task
             if match == False:
-                print(f"{self.COLOR_RED}NO MATCH: " + decision, {self.COLOR_RESET})
-                print("Picking task at index 1")
+                print(f"{self.COLOR_RED}[X] NO MATCH: " + decision,
+                      {self.COLOR_RESET})
+                print("[+] Picking task at index 1")
                 self._current_task = self._task_list[1]
-                self.logger.warning(f"decision: '{decision}' does not exist in the task list, selecting task at index 1")
+                self.logger.warning(f"Decision: '{decision}' does not exist in "
+                                    f"the task list. Defaulting to task at "
+                                    f"index 1.")
 
             
 
 
-            print(f"Decided on: {self._current_task.Name}\n")
+            print(f"[+] Decided on: "
+                  f"{self.COLOR_YELLOW}{self._current_task.Name}{self.COLOR_RESET}\n")
 
-        print("\x1b[1;32mPress Enter to continue...\x1b[0m")
+        print(f"{self.COLOR_GREEN}Press Enter to continue ...{self.COLOR_RESET}")
         input()
 
         self._memory[ScheduleDecisionEngine.memname].append(ScheduleDecisionEngineMemoryBlock(ScheduleDecisionEngineMemoryBlockType.DECISION, f'Decided to run:{self._current_task.Name}'))
@@ -158,7 +168,9 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         # self._current_task.do_work(persona=self._persona, memory=self._memory)
 
         self.logger.info(f"Executing task: {self._current_task.Name + " " + self._current_task.Context}")
-        print(f"Executing task: {self._current_task.Name}  {self._current_task.Context}")
+        print(f"[+] Executing task: {self.COLOR_YELLOW}{self._current_task.Name}"
+              f"{self.COLOR_RESET} "
+              f" {self._current_task.Context}")
         # print(f"Executing task: {self._current_task.Context}")
 
         # try:
@@ -174,8 +186,8 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
         # Assuming the Task class has a method 'do_work' that handles task execution
         self._current_task.do_work(persona=self.Persona,mood=self.Mood,memory=self.Memory)
-        print(f"\nGoing back to Decision Engine\n")
-        print("\n\x1b[1;32mPress Enter to continue...\x1b[0m")
+        print(f"\n[+] Returning to {self.COLOR_RED}Decision Engine{self.COLOR_RESET}\n")
+        print(f"{self.COLOR_GREEN}Press Enter to continue ...{self.COLOR_RESET}")
         input()
 
         if (self._current_task.PercentComplete == 100):

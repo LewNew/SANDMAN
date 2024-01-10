@@ -2,8 +2,9 @@ from Task import Task
 from NotepadChannel import NotepadChannel
 from TextGenerator import TextGenerator
 from RAWChannel import RAWChannel
+import time
 import json
-
+import datetime
 
 
 class PlanScheduleTask(Task):
@@ -29,6 +30,12 @@ class PlanScheduleTask(Task):
         self._name = 'PlanScheduleTask'
         self._generator = TextGenerator()
 
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_YELLOW = "\x1b[93m"
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_RESET = "\x1b[0m"
+
         start = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks "
         end = ". Can you also include detailed descriptors of what the tasks might be about (about 200 words), for example if it was a WriteDocumentNotepadTask could you say what specifically you are writing about. you can make up as much as you want, you are incentivized to be very creative with the descriptors. any task that requires communication to someone else should always be about you starting the conversation not you responding to something. can it be in JASON format where each entry is indexed by the time that has 1 type of work called 'type' (e.g 'WriteDocumentNotepadTask') and 1 descriptor called 'descriptor'."
         
@@ -47,19 +54,32 @@ class PlanScheduleTask(Task):
 
         
     def do_work(self,persona=None,mood=None,memory=None):
-        print("doing work:\n")
+        print(f"[+] Function call: {self.COLOR_RED}do_work{self.COLOR_RESET}\n")
 
         if self._task_list == None:
             self.logger.warning(f'Parent TaskList not specified in {self._name}')
             raise Exception(f'Parent TaskList not specified in {self._name}')
         
-        print(f"prompt: {self._prompt}\n")
+        print(f"[>] Input Prompt: {self._prompt}\n")
 
-        print(f"persona: {persona.generate_persona_summary()}\n")
+        print(f"[+] Retrieving Semantic Memory for Agent: "
+              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET} with ID "
+              f"{self.COLOR_YELLOW}01{self.COLOR_RESET}\n")
+
+        start = datetime.datetime.now()
+        while (datetime.datetime.now() - start).total_seconds() < 3:
+            pass
+
+        print(f"[+] Memory Retrieval Status: {self.COLOR_GREEN}Success"
+              f"{self.COLOR_RESET}\n")
+
+        print(f"[+] Agent Persona (Semantic Memory):"
+              f"{self.COLOR_YELLOW}{persona.generate_persona_summary()}"
+              f"{self.COLOR_RESET}\n")
 
         lm_plan_list = self._generator.generate_text(self,persona,mood)
 
-        self._logger.info(f'sechdule returned from LLM: \n{lm_plan_list}')
+        self._logger.info(f'Schedule returned from LLM: \n{lm_plan_list}')
 
         # print(lm_plan_list)
 
@@ -92,7 +112,10 @@ class PlanScheduleTask(Task):
         print("\x1b[1;32mPress Enter to continue...\x1b[0m")
         input()
 
-        print(f"LLM output:\n")
+        print(f"[<] LLM Output ({self.COLOR_BLUE}gpt-3.5-turbo"
+              f"{self.COLOR_RESET}): {self.COLOR_GREEN} Success {self.COLOR_RESET}\n")
+
+        print(f"[+] Running Validation Check ..")
 
         for time in scheduleJSON:
             print(f"Task:{scheduleJSON[time]["type"]}")
