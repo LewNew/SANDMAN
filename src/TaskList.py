@@ -2,6 +2,7 @@ from Task import Task
 from ClassLoaderHelpers import LoadClasses
 import random
 import logging
+import datetime
 
 class TaskList:    
     """
@@ -26,6 +27,12 @@ class TaskList:
         #createing logger object for dbuging
         self.logger = logging.getLogger('logger.'+__name__)
         self.logger.info(f'Created {__name__}')
+
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
 
         
         #TODO probably load tasks from a json file as default tasks??? maybe that should be created by the D-engine???
@@ -139,7 +146,10 @@ class TaskList:
         
         """
 
-        prompt = "Can you decide on what task you want me to do next here is a list of the tasks available and data surrounting them, i just want your output to be the task and its ID in the format of TASKNAME-ID. \n\n"
+        prompt = f"{self.COLOR_BLUE}Can you decide on what task you want me to do next here is a list of the tasks available and data surrounting them, i just want your output to be the task and its ID in the format of TASKNAME-ID.{self.COLOR_RESET} \n\n"
+
+        print(f"[+] Function call:{self.COLOR_RED} create_prompt"
+              f"{self.COLOR_RESET}\n")
 
         if len(self.taskList) == 0:
             #task list is completely empty
@@ -162,7 +172,7 @@ class TaskList:
 
             # print(self.taskList[index].get_class_metadata()["name"])
 
-            prompt = prompt + task.Name + ": " + "description = " + taskMetaData["description"] + ". context = " + task.Context + "\n\n"
+            prompt = prompt + "Task Name: " + f"{self.COLOR_YELLOW}" + task.Name + f"{self.COLOR_RESET}\n" + "Task Description: " + f"{self.COLOR_YELLOW}" + taskMetaData["description"] + f"{self.COLOR_RESET}\n" + "Task Context: " + f"{self.COLOR_BLUE}" + task.Context + f"{self.COLOR_RESET}" "\n\n"
 
         return prompt
 

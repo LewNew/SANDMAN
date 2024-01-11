@@ -37,6 +37,11 @@ class WriteDocumentRawTask(Task):
         #set the name of the task to WriteDocumentNotepadTask-{random numbers}
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = "WriteDocumentRawTask-"+self._name
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
 
         #set the filename to random letters
         
@@ -75,11 +80,11 @@ class WriteDocumentRawTask(Task):
         
     def do_work(self,persona=None,mood=None,memory=None):
         self._logger.info(f"{self._name} doing work")
-        print("doing work\n")
 
-        print(f"prompt: {self._prompt}\n")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
+        print(f"[+] LLM Input Prompt: {self.COLOR_BLUE}{self._prompt}{self.COLOR_RESET}\n")
         
-        print(f"persona: {persona.generate_persona_summary()}\n")
+        #print(f"persona: {persona.generate_persona_summary()}\n")
 
         #sending the data to channel
         self._channel.send(text = self._generator.generate_text(self,persona,mood))
@@ -90,7 +95,7 @@ class WriteDocumentRawTask(Task):
         #     print('*', end='')
         #     time.sleep(1)
 
-        print("finished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
 
         if not memory == None:

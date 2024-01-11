@@ -52,12 +52,12 @@ class MailSendTask(Task):
         
         
     def do_work(self,task=None,persona=None,mood=None,Memory=None):
-        print("doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         #TODO  is currenetly hard coded, persoan and mood should be from what is passed into the do_work function
 
         # Hard coded for initial test
         self.channel.send(sender="", recipients="b.fowley@lancaster.ac.uk", date="", subject="Test Subject", body="Dear World,\nHello!", attachments="")
-        print("finished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         #TODO do work should return some usefull value
         return True

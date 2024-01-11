@@ -37,6 +37,11 @@ class WebTask(Task):
 
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = 'WebTask-' + self._name
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
         # self.url = config['url']
 
         # Initialize a WebChannel or similar class for managing web interactions
@@ -44,7 +49,7 @@ class WebTask(Task):
         self._channel = WebChannel()
 
     def do_work(self,persona=None,mood=None,memory=None):
-        print("doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         self._channel.send()
 
@@ -52,7 +57,7 @@ class WebTask(Task):
             print('*', end='')
             time.sleep(1)
             
-        print("\nfinished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         if not memory == None:
             if not 'WebTask' in memory:

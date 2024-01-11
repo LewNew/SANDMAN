@@ -80,8 +80,16 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         """
         self.logger.info(f"Making decision")
 
-        print("[+] Making decision ...\n[+] Looking at TaskList\n")
-        print("TaskList:\n------")
+        print(f"[+] Function call:{self.COLOR_RED} make_decision"
+              f"{self.COLOR_RESET}")
+        print(f"[+] Retrieving Working Memory for Agent: "
+              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET}")
+
+        print(f"[+] Memory Retrieval Status: {self.COLOR_GREEN}Success{self.COLOR_RESET}")
+
+        print(f"[+] Browsing {self.COLOR_RED}Task List{self.COLOR_RESET}")
+
+        print(f"[+] Retrieving {self.COLOR_RED}Task List{self.COLOR_RESET}:\n------")
         print(self._task_list.small_data())
         # input("Press Enter to continue...\n")
 
@@ -105,12 +113,15 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             print(f"{self.COLOR_GREEN}Press Enter to continue .."
                   f".{self.COLOR_RESET}")
             input()
-            print("[+} Deciding on task ...\n")
+            print(f"[+] Deciding on {self.COLOR_RED}Task{self.COLOR_RESET} ...\n")
 
             #create promopt for LLM to decide on task
             prompt = self._task_list.create_prompt()
-            print("[+] Prompt:\n"+prompt)
-            print(f"[+] Persona: {self.Persona.generate_persona_summary()}")
+
+            # Change this
+            print(f"[>] LLM Input Prompt: {self.COLOR_BLUE}" + prompt, {self.COLOR_RESET})
+            #print(f"[+] Persona: {self.COLOR_YELLOW}{self.Persona.generate_persona_summary()}{self.COLOR_RESET}")
+            #print(prompt)
 
             #pass that prompt into a generator to 
             decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
@@ -129,7 +140,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
                 #this if statement works for now but probably need to be better in the future
                 if task.Name in decision:
                     print(f"[+] MATCH: {self.COLOR_GREEN}" +
-                          task.Name + " - " + decision + f"{self.COLOR_RESET}\n")
+                          task.Name + f"{self.COLOR_RESET} is in {self.COLOR_RED}Task List {self.COLOR_RESET}as {self.COLOR_YELLOW}" + decision + f"{self.COLOR_RESET}")
                     match = True
                     self._current_task = task
                     break
@@ -169,8 +180,8 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
 
         self.logger.info(f"Executing task: {self._current_task.Name + " " + self._current_task.Context}")
         print(f"[+] Executing task: {self.COLOR_YELLOW}{self._current_task.Name}"
-              f"{self.COLOR_RESET} "
-              f" {self._current_task.Context}")
+              f"{self.COLOR_RESET}. Task context: {self.COLOR_BLUE}{self._current_task.Context}{self.COLOR_RESET}")
+
         # print(f"Executing task: {self._current_task.Context}")
 
         # try:

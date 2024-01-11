@@ -5,11 +5,11 @@ import random
 from MemoryList import MemoryList, MemoryDataBlock
 
 class LunchTaskMemoryBlock(MemoryDataBlock):
-    
+
     def __init__(self, data):
         super().__init__()
         self._data = data
-    
+
     def __str__(self):
         return f'Created:{self._created}, data: {self._data}'
 
@@ -31,7 +31,7 @@ class LunchTask(Task):
             }
         }
         return _metadata
-    
+
     def __init__(self, config, context, lower_time=5, upper_time=10, **kwargs):
 
         super().__init__(config, context, **kwargs)
@@ -41,17 +41,23 @@ class LunchTask(Task):
         self._lower_time = lower_time
         self._upper_time = upper_time
         self._logger.info(f"created {self._name}")
-        
+
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
+
     def do_work(self,persona=None,mood=None,memory=None):
         self._logger.info(f"{self.Name} doing work")
-        print("doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         #TODO wait_time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
         #or from the task name or something.
 
         for _ in range(0, random.randint(self._lower_time,self._upper_time)):
             print('*', end='')
             time.sleep(1)
-        print("\nfinished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         if not memory == None:
             if not 'LunchTask' in memory:

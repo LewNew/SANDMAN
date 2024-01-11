@@ -57,7 +57,7 @@ class MailReadTask(Task):
         
     def do_work(self):
         
-        print("Doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         unread_messages = self.channel.recv(self.imap_server, self.email_account, self.password)
 
@@ -85,7 +85,7 @@ class MailReadTask(Task):
 
             # else if notepad/word create new np/word task with ap. info
 
-        print("finished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
 
 

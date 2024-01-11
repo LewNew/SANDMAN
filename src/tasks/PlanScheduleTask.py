@@ -63,8 +63,7 @@ class PlanScheduleTask(Task):
         print(f"[>] Input Prompt: {self._prompt}\n")
 
         print(f"[+] Retrieving Semantic Memory for Agent: "
-              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET} with ID "
-              f"{self.COLOR_YELLOW}01{self.COLOR_RESET}\n")
+              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET}\n")
 
         start = datetime.datetime.now()
         while (datetime.datetime.now() - start).total_seconds() < 3:
@@ -73,7 +72,7 @@ class PlanScheduleTask(Task):
         print(f"[+] Memory Retrieval Status: {self.COLOR_GREEN}Success"
               f"{self.COLOR_RESET}\n")
 
-        print(f"[+] Agent Persona (Semantic Memory):"
+        print(f"[+] Agent Persona (Semantic Memory): "
               f"{self.COLOR_YELLOW}{persona.generate_persona_summary()}"
               f"{self.COLOR_RESET}\n")
 
@@ -113,13 +112,26 @@ class PlanScheduleTask(Task):
         input()
 
         print(f"[<] LLM Output ({self.COLOR_BLUE}gpt-3.5-turbo"
-              f"{self.COLOR_RESET}): {self.COLOR_GREEN} Success {self.COLOR_RESET}\n")
+              f"{self.COLOR_RESET}):{self.COLOR_GREEN} Success {self.COLOR_RESET}\n")
 
-        print(f"[+] Running Validation Check ..")
+        print(f"[+] Running Validation Check on LLM Output ...")
+
+        start = datetime.datetime.now()
+        while (datetime.datetime.now() - start).total_seconds() < 3:
+            pass
+
+        print(f"[+] Validation Status: {self.COLOR_GREEN}Success{self.COLOR_RESET}")
+        print(f"[+] Printing Available Tasks from {self.COLOR_RED}Task List"
+              f"{self.COLOR_RESET} for Agent "
+              f"{self.COLOR_YELLOW}Ryan{self.COLOR_RESET}\n")
+
 
         for time in scheduleJSON:
-            print(f"Task:{scheduleJSON[time]["type"]}")
-            print(f"Context:{scheduleJSON[time]["descriptor"]}")
+            print(f"Task: {self.COLOR_YELLOW}{scheduleJSON[time]['type']}"
+                  f"{self.COLOR_RESET}")
+            print(f"Context: "
+                  f"{self.COLOR_BLUE}{scheduleJSON[time]['descriptor']}"
+                  f"{self.COLOR_RESET}")
             print('---------------')
 
             if scheduleJSON[time]["type"] in self._task_list.task_classes.keys():
@@ -150,7 +162,7 @@ class PlanScheduleTask(Task):
                 # print(self._task_list.task_classes.keys())
                 pass
 
-        print("\nfinished work")
+        print("\n[+] Finished Schedule Parsing ...")
         
         
         return True

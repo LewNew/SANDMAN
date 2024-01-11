@@ -46,6 +46,12 @@ class WriteDocumentNotepadTask(Task):
         self._name = ''.join(str(random.randint(0,9)) for _ in range(5))
         self._name = "WriteDocumentNotepadTask-"+self._name
 
+        self.COLOR_RED = "\x1b[31m"
+        self.COLOR_GREEN = "\x1b[1;32m"
+        self.COLOR_RESET = "\x1b[0m"
+        self.COLOR_BLUE = "\x1b[94m"
+        self.COLOR_YELLOW = "\x1b[93m"
+
         #set the filename to random letters
         
         #load file path from config
@@ -91,12 +97,12 @@ class WriteDocumentNotepadTask(Task):
 
         print(f"Prompt:\n{self._prompt}\n")
 
-        print(f"persona: {persona.generate_persona_summary()}")
+        #print(f"persona: {persona.generate_persona_summary()}")
 
         print("\n\x1b[1;32mPress Enter to continue...\x1b[0m")
         input()
 
-        print("doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         
         text = self._generator.generate_text(self,persona,mood)
 
@@ -109,7 +115,7 @@ class WriteDocumentNotepadTask(Task):
         #     print('*', end='')
         #     time.sleep(1)
 
-        print("\nfinished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
 
         if not memory == None:

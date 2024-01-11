@@ -28,7 +28,7 @@ class PlanTaskTask(Task):
         self._logger.info(f"created {self._name}")
         
     def do_work(self,persona=None,mood=None,memory=None):
-        print("doing work")
+        print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         if self._task_list == None:
             self.logger.warning(f'Parent TaskList not specified in {self._name}')
             raise Exception(f'Parent TaskList not specified in {self._name}')
@@ -284,7 +284,7 @@ class PlanTaskTask(Task):
                 task_obj = task_class(task_config,None)
                 self.add_to_parent_task_list(task_obj)
 
-        print("finished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         
         return True
 

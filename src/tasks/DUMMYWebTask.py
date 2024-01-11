@@ -46,14 +46,14 @@ class DUMMYWebTask(Task):
         self._logger.info(f"{first_name} {last_name} ({self.Name}) doing work")
         print(f"{first_name} {last_name} doing work")
 
-        #print("doing work")
+        #print(f"[+] Working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
         #TODO wait_time is currently hard coded, this might want to be changed by generating  number some how, could be random or could be from LLM or persona or something.
         #or from the task name or something.
 
         for _ in range(0, random.randint(self._lower_time,self._upper_time)):
             print('*', end='')
             time.sleep(1)
-        print("\nfinished work")
+        print(f"\n[+] Finished working on {self.COLOR_YELLOW}{self._name}{self.COLOR_RESET}")
 
         if not memory == None:
             if not 'DUMMYWebTask' in memory:
