@@ -131,7 +131,7 @@ class TaskList:
             taskMetaData = self.taskList[index].get_class_metadata()
             task = self.taskList[index]
 
-            data = data + "Task:" + str(index) + "\n" + "name = " + task.Name + "\n" + "description = " + taskMetaData["description"] + "\n" + "context = " + task.Context + "\n"
+            data = data + "Task: " + str(index) + "\n" + "Name: " + f"{self.COLOR_YELLOW}" + task.Name + f"{self.COLOR_RESET}\n" + "Description: " + f"{self.COLOR_YELLOW}" + taskMetaData["description"] + f"{self.COLOR_RESET}" + "\n" + "Context: " + f"{self.COLOR_BLUE}" + task.Context + f"{self.COLOR_RESET}\n"
 
             data = data + "=======\n"
 

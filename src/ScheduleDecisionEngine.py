@@ -118,14 +118,13 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
             #create promopt for LLM to decide on task
             prompt = self._task_list.create_prompt()
 
-            # Change this
-            print(f"[>] LLM Input Prompt: {self.COLOR_BLUE}" + prompt, {self.COLOR_RESET})
+            print(f"[>] LLM Input Prompt: " + prompt)
             #print(f"[+] Persona: {self.COLOR_YELLOW}{self.Persona.generate_persona_summary()}{self.COLOR_RESET}")
             #print(prompt)
 
             #pass that prompt into a generator to 
             decision = self._generator.general_generate_text(prompt,self.Persona,self.Mood)
-            print(f"\n[+] LLM Decision: {self.COLOR_BLUE}" + decision,
+            print(f"[+] LLM Decision: {self.COLOR_BLUE}" + decision,
                   f"{self.COLOR_RESET}")
 
             ##TODO Need to validate decision!!!!!!!!!!!
@@ -178,7 +177,7 @@ class ScheduleDecisionEngine(DecisionEngine.DecisionEngine):
         # Assuming the Task class has a method 'do_work' that handles task execution
         # self._current_task.do_work(persona=self._persona, memory=self._memory)
 
-        self.logger.info(f"Executing task: {self._current_task.Name + " " + self._current_task.Context}")
+        self.logger.info(f"Executing task: {self._current_task.Name} + " " + self._current_task.Context}")
         print(f"[+] Executing task: {self.COLOR_YELLOW}{self._current_task.Name}"
               f"{self.COLOR_RESET}. Task context: {self.COLOR_BLUE}{self._current_task.Context}{self.COLOR_RESET}")
 
