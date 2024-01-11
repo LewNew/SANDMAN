@@ -165,7 +165,7 @@ class WriteDocumentNotepadTask(Task):
 if __name__ == "__main__":
 
     config = {"workingdir":'./fakeWork/'}
-    context = "Draft an outline for your upcoming conference paper on AI. Begin by summarizing the research objectives, methodology, and anticipated outcomes. Provide a compelling introduction to captivate the scientific community."
+    context = "Draft an outline for your upcoming conference paper. Begin by summarizing the research objectives, methodology, and anticipated outcomes. Provide a compelling introduction to captivate the scientific community."
 
     persona_file = './src/agent_attributes_config.json'
 
