@@ -23,7 +23,7 @@ WriteDocumentTask
 ResearchTask
 DataAnalysisTask
 
-Their must be a logical selection of tasks and each task must also have a description to provide more context. The output must be in JASON format
+Their must be a logical selection of tasks and each task must also have a description to provide more context. The output must be in JSON format
 
 
 
@@ -43,7 +43,7 @@ WriteDocumentTask: Work involving Writeing Document
 ResearchTask: Work involving Researching
 DataAnalysisTask: Work involving Analysing Data
 
-The output must be in JASON format: {"schedule": [{"time": time, "task": task}]}
+The output must be in JSON format: {"schedule": [{"time": time, "task": task}]}
 
 
 
