@@ -75,10 +75,30 @@ corporation
 
 #code
 organisation = {
-    'Bank': ['Trader', 'Risk manager', 'Investment analyst', 'Financial advisor', 'Sales consultant', 'Manager', 'Advisor'],
-    'University': ['Researcher', 'Professor', 'Student'],
-    'Post Office': ['Manager', 'Clerk', 'Administrator'],
-    'Corporation': ['Accountant', 'Manager', 'Researcher']
+    'Bank': {
+        'Trader': 'desc',
+        'Risk manager': 'desc',
+        'Investment analyst': 'desc',
+        'Financial advisor': 'desc',
+        'Sales consultant': 'desc',
+        'Manager': 'desc',
+        'Advisor': 'desc'
+    },
+    'University': {
+        'Researcher': 'desc',
+        'Professor': 'desc',
+        'Student': 'desc'
+    },
+    'Post Office': {
+        'Manager': 'desc',
+        'Clerk': 'desc',
+        'Administrator': 'desc'
+    },
+    'Corporation': {
+        'Accountant': 'desc',
+        'Manager': 'desc',
+        'Researcher': 'desc'
+    }
 }
 
 
