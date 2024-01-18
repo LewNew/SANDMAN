@@ -1,0 +1,37 @@
+import random
+import datetime
+import json
+
+tasks = ['BreakTask', 'EmailTask', 'LunchTask', 'MeetingTask', 'NothingTask', 'WebTask', 'WriteDocumentSpreadsheetTask', 'WriteDocumentPresentationTask', 'WriteCodeTask', 'WriteDocumentTask', 'ResearchTask', 'DataAnalysisTask']
+
+# Function to generate a random daily routine
+def generate_daily_routine():
+    schedule = []
+    
+    # Start time for the daily routine
+    start_time = datetime.datetime(year=2022, month=1, day=1, hour=8, minute=0)
+    
+    # Generate tasks for the daily routine
+    for i in range(6):
+        # Randomly select a task from the list
+        task = random.choice(tasks)
+        
+        # Determine the duration of the task
+        duration = random.randint(15, 120)  # Duration is in minutes
+        
+        # Calculate the end time for the task
+        end_time = start_time + datetime.timedelta(minutes=duration)
+        
+        # Add the task to the schedule
+        schedule.append({'time': start_time.strftime("%H:%M"), 'task': task})
+        
+        # Update the start time for the next task
+        start_time = end_time
+    
+    # Generate the JSON output
+    output = {'schedule': schedule}
+    
+    return json.dumps(output, indent=4)
+
+# Generate a random daily routine and print the output
+print(generate_daily_routine())

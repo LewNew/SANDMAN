@@ -1,0 +1,22 @@
+To create a daily routine based on the given tasks, the schedule will be filled with random tasks from the list. Here's an example of a daily routine in JSON format:
+
+```json
+{
+  "schedule": [
+    {"time": "08:00 AM", "task": "BreakTask"},
+    {"time": "08:30 AM", "task": "EmailTask"},
+    {"time": "09:00 AM", "task": "WriteDocumentPresentationTask"},
+    {"time": "10:00 AM", "task": "MeetingTask"},
+    {"time": "11:00 AM", "task": "WebTask"},
+    {"time": "12:00 PM", "task": "LunchTask"},
+    {"time": "01:00 PM", "task": "WriteDocumentSpreadsheetTask"},
+    {"time": "02:00 PM", "task": "WriteCodeTask"},
+    {"time": "03:00 PM", "task": "NothingTask"},
+    {"time": "04:00 PM", "task": "ResearchTask"},
+    {"time": "05:00 PM", "task": "DataAnalysisTask"},
+    {"time": "06:00 PM", "task": "WriteDocumentTask"}
+  ]
+}
+```
+
+Please note that this is just a random example, and the actual daily routine may vary based on specific preferences and time available for each task.

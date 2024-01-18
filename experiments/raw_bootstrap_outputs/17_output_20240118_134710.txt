@@ -1,0 +1,58 @@
+One possible daily routine in JSON format using the given list of tasks:
+
+```
+{
+   "schedule":[
+      {
+         "time":"08:00 AM",
+         "task":"BreakTask"
+      },
+      {
+         "time":"09:00 AM",
+         "task":"EmailTask"
+      },
+      {
+         "time":"10:00 AM",
+         "task":"MeetingTask"
+      },
+      {
+         "time":"12:00 PM",
+         "task":"LunchTask"
+      },
+      {
+         "time":"01:00 PM",
+         "task":"WriteDocumentSpreadsheetTask"
+      },
+      {
+         "time":"03:00 PM",
+         "task":"WebTask"
+      },
+      {
+         "time":"04:00 PM",
+         "task":"WriteCodeTask"
+      },
+      {
+         "time":"05:00 PM",
+         "task":"WriteDocumentPresentationTask"
+      },
+      {
+         "time":"06:00 PM",
+         "task":"ResearchTask"
+      },
+      {
+         "time":"07:00 PM",
+         "task":"DataAnalysisTask"
+      },
+      {
+         "time":"08:00 PM",
+         "task":"WriteDocumentTask"
+      },
+      {
+         "time":"09:00 PM",
+         "task":"NothingTask"
+      }
+   ]
+}
+```
+
+Note: The above routine is just an example. You can customize the tasks and their respective time as per your requirements.

@@ -1,0 +1,52 @@
+{
+    "schedule": [
+        {
+            "time": "08:00 AM",
+            "task": "WriteCodeTask"
+        },
+        {
+            "time": "09:30 AM",
+            "task": "MeetingTask"
+        },
+        {
+            "time": "11:00 AM",
+            "task": "BreakTask"
+        },
+        {
+            "time": "12:00 PM",
+            "task": "LunchTask"
+        },
+        {
+            "time": "01:30 PM",
+            "task": "ResearchTask"
+        },
+        {
+            "time": "03:00 PM",
+            "task": "DataAnalysisTask"
+        },
+        {
+            "time": "04:30 PM",
+            "task": "WriteDocumentTask"
+        },
+        {
+            "time": "06:00 PM",
+            "task": "EmailTask"
+        },
+        {
+            "time": "07:30 PM",
+            "task": "NothingTask"
+        },
+        {
+            "time": "08:00 PM",
+            "task": "WebTask"
+        },
+        {
+            "time": "09:30 PM",
+            "task": "WriteDocumentSpreadsheetTask"
+        },
+        {
+            "time": "11:00 PM",
+            "task": "WriteDocumentPresentationTask"
+        }
+    ]
+}

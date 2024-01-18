@@ -1,0 +1,54 @@
+Here is an example of a daily routine, with random time allocations for each task:
+
+{
+  "schedule": [
+    {
+      "time": "8:00 AM",
+      "task": "BreakTask"
+    },
+    {
+      "time": "8:30 AM",
+      "task": "EmailTask"
+    },
+    {
+      "time": "9:00 AM",
+      "task": "WriteDocumentTask"
+    },
+    {
+      "time": "10:00 AM",
+      "task": "MeetingTask"
+    },
+    {
+      "time": "11:00 AM",
+      "task": "WebTask"
+    },
+    {
+      "time": "12:00 PM",
+      "task": "LunchTask"
+    },
+    {
+      "time": "1:30 PM",
+      "task": "WriteCodeTask"
+    },
+    {
+      "time": "3:30 PM",
+      "task": "ResearchTask"
+    },
+    {
+      "time": "4:30 PM",
+      "task": "DataAnalysisTask"
+    },
+    {
+      "time": "6:00 PM",
+      "task": "WriteDocumentSpreadsheetTask"
+    },
+    {
+      "time": "7:30 PM",
+      "task": "WriteDocumentPresentationTask"
+    },
+    {
+      "time": "9:00 PM",
+      "task": "NothingTask"
+    }
+  ]
+}

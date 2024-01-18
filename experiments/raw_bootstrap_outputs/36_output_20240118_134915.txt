@@ -1,0 +1,22 @@
+It is not possible for me to generate a daily routine in real-time as it requires specific time allocations for each task. However, I can provide you with a sample routine in JSON format for your reference:
+
+```
+{
+  "schedule": [
+    {"time": "08:00 AM", "task": "BreakTask"},
+    {"time": "08:15 AM", "task": "EmailTask"},
+    {"time": "09:00 AM", "task": "MeetingTask"},
+    {"time": "10:00 AM", "task": "WebTask"},
+    {"time": "11:00 AM", "task": "WriteCodeTask"},
+    {"time": "12:00 PM", "task": "LunchTask"},
+    {"time": "01:00 PM", "task": "WriteDocumentTask"},
+    {"time": "02:00 PM", "task": "DataAnalysisTask"},
+    {"time": "03:00 PM", "task": "ResearchTask"},
+    {"time": "04:00 PM", "task": "WriteDocumentSpreadsheetTask"},
+    {"time": "05:00 PM", "task": "WriteDocumentPresentationTask"},
+    {"time": "06:00 PM", "task": "NothingTask"}
+  ]
+}
+```
+
+Please note that this sample routine assigns fixed times for each task, but you can adjust the schedule as per your specific requirements.

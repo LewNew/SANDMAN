@@ -1,0 +1,22 @@
+Here's an example of a daily routine with tasks randomly selected from the given list:
+
+```json
+{
+  "schedule": [
+    {"time": "09:00", "task": "BreakTask"},
+    {"time": "09:30", "task": "EmailTask"},
+    {"time": "10:00", "task": "MeetingTask"},
+    {"time": "11:00", "task": "WriteDocumentSpreadsheetTask"},
+    {"time": "12:00", "task": "LunchTask"},
+    {"time": "13:00", "task": "WriteDocumentPresentationTask"},
+    {"time": "14:30", "task": "NothingTask"},
+    {"time": "15:00", "task": "WebTask"},
+    {"time": "16:00", "task": "ResearchTask"},
+    {"time": "17:00", "task": "DataAnalysisTask"},
+    {"time": "18:00", "task": "WriteDocumentTask"},
+    {"time": "19:30", "task": "WriteCodeTask"}
+  ]
+}
+```
+
+Please note that the tasks and time slots provided in the JSON are just an example and can be modified to fit your specific requirements.

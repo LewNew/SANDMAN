@@ -1,0 +1,43 @@
+Here is an example of a daily routine with tasks selected from the provided list:
+
+```python
+import json
+
+routine = [
+    {'time': '08:00', 'task': 'BreakTask'},
+    {'time': '09:00', 'task': 'EmailTask'},
+    {'time': '10:00', 'task': 'WriteDocumentTask'},
+    {'time': '11:00', 'task': 'MeetingTask'},
+    {'time': '12:00', 'task': 'LunchTask'},
+    {'time': '13:00', 'task': 'WebTask'},
+    {'time': '14:00', 'task': 'WriteDocumentPresentationTask'},
+    {'time': '15:00', 'task': 'WriteCodeTask'},
+    {'time': '16:00', 'task': 'ResearchTask'},
+    {'time': '17:00', 'task': 'DataAnalysisTask'},
+    {'time': '18:00', 'task': 'NothingTask'}
+]
+
+output = {'schedule': routine}
+
+output_json = json.dumps(output)
+print(output_json)
+```
+
+Output:
+```
+{"schedule": [
+    {"time": "08:00", "task": "BreakTask"},
+    {"time": "09:00", "task": "EmailTask"},
+    {"time": "10:00", "task": "WriteDocumentTask"},
+    {"time": "11:00", "task": "MeetingTask"},
+    {"time": "12:00", "task": "LunchTask"},
+    {"time": "13:00", "task": "WebTask"},
+    {"time": "14:00", "task": "WriteDocumentPresentationTask"},
+    {"time": "15:00", "task": "WriteCodeTask"},
+    {"time": "16:00", "task": "ResearchTask"},
+    {"time": "17:00", "task": "DataAnalysisTask"},
+    {"time": "18:00", "task": "NothingTask"}
+]}
+```
+
+Please note that the time values in the example are placeholders and should be replaced with the actual times for your daily routine.

@@ -1,0 +1,22 @@
+Here's an example of a daily routine in JSON format, where each task is assigned a specific time:
+
+```json
+{
+  "schedule": [
+    { "time": "09:00", "task": "ResearchTask" },
+    { "time": "10:00", "task": "WriteDocumentTask" },
+    { "time": "11:00", "task": "MeetingTask" },
+    { "time": "12:00", "task": "LunchTask" },
+    { "time": "13:00", "task": "WriteCodeTask" },
+    { "time": "14:00", "task": "DataAnalysisTask" },
+    { "time": "15:00", "task": "EmailTask" },
+    { "time": "16:00", "task": "WriteDocumentSpreadsheetTask" },
+    { "time": "17:00", "task": "WebTask" },
+    { "time": "17:30", "task": "BreakTask" },
+    { "time": "18:00", "task": "WriteDocumentPresentationTask" },
+    { "time": "19:00", "task": "NothingTask" }
+  ]
+}
+```
+
+Please note that the tasks are scheduled in chronological order, but you can modify the timings according to your own preferences or requirements.

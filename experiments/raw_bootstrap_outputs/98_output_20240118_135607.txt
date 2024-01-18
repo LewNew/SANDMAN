@@ -1,0 +1,46 @@
+Here is an example of a daily routine in JSON format:
+
+```
+{
+  "schedule": [
+    {
+      "time": "08:00 AM",
+      "task": "BreakTask"
+    },
+    {
+      "time": "09:00 AM",
+      "task": "EmailTask"
+    },
+    {
+      "time": "10:00 AM",
+      "task": "MeetingTask"
+    },
+    {
+      "time": "12:30 PM",
+      "task": "LunchTask"
+    },
+    {
+      "time": "01:30 PM",
+      "task": "WriteDocumentSpreadsheetTask"
+    },
+    {
+      "time": "03:00 PM",
+      "task": "WebTask"
+    },
+    {
+      "time": "04:00 PM",
+      "task": "WriteCodeTask"
+    },
+    {
+      "time": "06:00 PM",
+      "task": "ResearchTask"
+    },
+    {
+      "time": "07:30 PM",
+      "task": "DataAnalysisTask"
+    }
+  ]
+}
+```
+
+Please note that this is just an example schedule and you can modify it according to your own preferences and requirements.

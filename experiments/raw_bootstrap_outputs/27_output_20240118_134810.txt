@@ -1,0 +1,14 @@
+{
+  "schedule": [
+    {"time": "08:00", "task": "NothingTask"},
+    {"time": "09:00", "task": "EmailTask"},
+    {"time": "10:00", "task": "WriteCodeTask"},
+    {"time": "12:00", "task": "LunchTask"},
+    {"time": "13:00", "task": "MeetingTask"},
+    {"time": "14:00", "task": "ResearchTask"},
+    {"time": "16:00", "task": "WebTask"},
+    {"time": "17:00", "task": "WriteDocumentTask"},
+    {"time": "18:00", "task": "BreakTask"},
+    {"time": "19:00", "task": "DataAnalysisTask"}
+  ]
+}
