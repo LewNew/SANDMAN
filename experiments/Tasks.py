@@ -10,7 +10,5 @@ tasks = [
     {"WriteCodeTask": "Writing, reviewing, or debugging computer code."},
     {"WriteDocumentTask": "Drafting or editing text documents."},
     {"ResearchTask": "Conducting study or investigation into a subject for information."},
-    {"CollaborationTask": "Working together with others on a project or task."},
-    {"DataAnalysisTask": "Examining and modeling data to draw conclusions."},
-    {"ProjectManagementTask": "Overseeing and managing a project's progress."}
+    {"DataAnalysisTask": "Examining and modeling data to draw conclusions."}
 ]

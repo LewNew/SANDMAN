@@ -45,7 +45,7 @@ if __name__ == "__main__":
         response_content = text_generator.prompt()
 
         if response_content:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             filename = os.path.join(output_dir, f'{i + 1}_output_{timestamp}.txt')
             text_generator.save_to_file(response_content, filename)
             print(f"Output saved as {filename}")
