@@ -1,0 +1,70 @@
+To create a daily routine in JSON format, randomly selecting tasks from the provided list, you can use the following code:
+
+```python
+import json
+import random
+
+# Define the list of tasks
+tasks = [
+    "BreakTask",
+    "EmailTask",
+    "LunchTask",
+    "MeetingTask",
+    "NothingTask",
+    "WebTask",
+    "WriteDocumentSpreadsheetTask",
+    "WriteDocumentPresentationTask",
+    "WriteCodeTask",
+    "WriteDocumentTask",
+    "ResearchTask",
+    "DataAnalysisTask"
+]
+
+# Define the time range for the schedule
+start_time = 9  # 9:00 AM
+end_time = 18  # 6:00 PM
+
+# Define the duration for each task in minutes
+task_durations = {
+    "BreakTask": 15,
+    "EmailTask": 30,
+    "LunchTask": 60,
+    "MeetingTask": 45,
+    "NothingTask": 10,
+    "WebTask": 20,
+    "WriteDocumentSpreadsheetTask": 60,
+    "WriteDocumentPresentationTask": 45,
+    "WriteCodeTask": 90,
+    "WriteDocumentTask": 60,
+    "ResearchTask": 30,
+    "DataAnalysisTask": 90
+}
+
+# Create the schedule
+schedule = []
+
+# Generate tasks randomly and assign times
+current_time = start_time
+while current_time < end_time:
+    # Randomly select a task
+    task = random.choice(tasks)
+    
+    # Calculate the task end time based on its duration
+    duration = task_durations[task]
+    end_time_task = current_time + (duration / 60)
+    
+    # Append the task to the schedule
+    schedule.append({'time': str(current_time), 'task': task})
+    
+    # Update the current time
+    current_time = end_time_task
+
+# Convert the schedule to JSON format
+output = {'schedule': schedule}
+json_output = json.dumps(output)
+
+# Print the JSON output
+print(json_output)
+```
+
+The above code will assign random tasks to time slots within the specified start and end time range, with each task having a random duration from the `task_durations` dictionary. The resulting schedule will be stored in the `schedule` list and then converted to JSON format.

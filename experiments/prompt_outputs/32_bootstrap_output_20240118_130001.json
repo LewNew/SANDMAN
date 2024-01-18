@@ -1,0 +1,36 @@
+{
+    "schedule": [
+        {
+            "time": "08:00",
+            "task": "BreakTask"
+        },
+        {
+            "time": "08:15",
+            "task": "EmailTask"
+        },
+        {
+            "time": "09:00",
+            "task": "MeetingTask"
+        },
+        {
+            "time": "10:00",
+            "task": "WebTask"
+        },
+        {
+            "time": "12:00",
+            "task": "LunchTask"
+        },
+        {
+            "time": "13:00",
+            "task": "WriteDocumentTask"
+        },
+        {
+            "time": "14:00",
+            "task": "ResearchTask"
+        },
+        {
+            "time": "15:30",
+            "task": "DataAnalysisTask"
+        }
+    ]
+}

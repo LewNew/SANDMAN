@@ -1,0 +1,84 @@
+Here's an example of a daily routine where tasks are randomly selected from the given list:
+
+```
+import random
+import json
+
+# Define the list of available tasks
+tasks = [
+    "BreakTask", "EmailTask", "LunchTask", "MeetingTask", "NothingTask", 
+    "WebTask", "WriteDocumentSpreadsheetTask", "WriteDocumentPresentationTask", 
+    "WriteCodeTask", "WriteDocumentTask", "ResearchTask", "DataAnalysisTask"
+]
+
+# Define the schedule list
+schedule = []
+
+# Define the time range for the tasks
+time_range = range(9, 18)  # 9 AM to 5 PM
+
+# Generate the schedule
+for hour in time_range:
+    time = f"{hour:02d}:00"  # Format time as HH:00
+    
+    # Select a random task for the current hour
+    task = random.choice(tasks)
+    
+    # Append the task and time to the schedule
+    schedule.append({'time': time, 'task': task})
+
+# Create a dictionary with the schedule
+output = {'schedule': schedule}
+
+# Convert the dictionary to JSON format
+json_output = json.dumps(output)
+
+# Print the JSON output
+print(json_output)
+```
+
+Sample JSON output:
+```
+{
+  "schedule": [
+    {
+      "time": "09:00",
+      "task": "EmailTask"
+    },
+    {
+      "time": "10:00",
+      "task": "WriteDocumentTask"
+    },
+    {
+      "time": "11:00",
+      "task": "DataAnalysisTask"
+    },
+    {
+      "time": "12:00",
+      "task": "NothingTask"
+    },
+    {
+      "time": "13:00",
+      "task": "BreakTask"
+    },
+    {
+      "time": "14:00",
+      "task": "MeetingTask"
+    },
+    {
+      "time": "15:00",
+      "task": "WebTask"
+    },
+    {
+      "time": "16:00",
+      "task": "LunchTask"
+    },
+    {
+      "time": "17:00",
+      "task": "ResearchTask"
+    }
+  ]
+}
+```
+
+Please note that this is just a sample routine and the tasks are randomly selected. You can modify the code according to your specific requirements and the desired number of tasks per day.

@@ -1,0 +1,40 @@
+{
+    "schedule": [
+        {
+            "time": "08:00",
+            "task": "BreakTask"
+        },
+        {
+            "time": "08:15",
+            "task": "EmailTask"
+        },
+        {
+            "time": "09:00",
+            "task": "WriteCodeTask"
+        },
+        {
+            "time": "10:30",
+            "task": "MeetingTask"
+        },
+        {
+            "time": "12:00",
+            "task": "LunchTask"
+        },
+        {
+            "time": "13:00",
+            "task": "ResearchTask"
+        },
+        {
+            "time": "14:30",
+            "task": "DataAnalysisTask"
+        },
+        {
+            "time": "16:00",
+            "task": "WriteDocumentTask"
+        },
+        {
+            "time": "17:30",
+            "task": "WebTask"
+        }
+    ]
+}

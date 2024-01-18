@@ -1,0 +1,49 @@
+Here's an example of a daily routine that selects tasks from the provided list and formats the output in JSON format:
+
+```python
+import random
+import json
+
+tasks = [
+    'BreakTask', 'EmailTask', 'LunchTask', 'MeetingTask', 'NothingTask', 'WebTask',
+    'WriteDocumentSpreadsheetTask', 'WriteDocumentPresentationTask', 'WriteCodeTask',
+    'WriteDocumentTask', 'ResearchTask', 'DataAnalysisTask'
+]
+
+daily_routine = []
+
+# Define the available time slots in a day
+time_slots = ['08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM',
+              '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM']
+
+# Randomly select tasks for each time slot
+for time_slot in time_slots:
+    task = random.choice(tasks)
+    daily_routine.append({'time': time_slot, 'task': task})
+
+# Format the output in JSON
+output = {'schedule': daily_routine}
+json_output = json.dumps(output)
+
+print(json_output)
+```
+
+Example Output:
+```
+{
+    "schedule": [
+        {"time": "08:00 AM", "task": "WriteDocumentTask"},
+        {"time": "09:00 AM", "task": "WriteCodeTask"},
+        {"time": "10:00 AM", "task": "MeetingTask"},
+        {"time": "11:00 AM", "task": "LunchTask"},
+        {"time": "12:00 PM", "task": "EmailTask"},
+        {"time": "01:00 PM", "task": "WebTask"},
+        {"time": "02:00 PM", "task": "DataAnalysisTask"},
+        {"time": "03:00 PM", "task": "WriteDocumentSpreadsheetTask"},
+        {"time": "04:00 PM", "task": "BreakTask"},
+        {"time": "05:00 PM", "task": "ResearchTask"}
+    ]
+}
+```
+
+Note that the tasks are randomly assigned, so each time you run the code, you will get a different daily routine.
