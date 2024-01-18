@@ -1,11 +1,8 @@
 import os
-import json
 import time
-import re
-from datetime import datetime
-from openai import OpenAI
+import datetime
 from Tasks import tasks
-
+from openai import OpenAI
 
 class TextGenerator:
 
@@ -35,21 +32,11 @@ class TextGenerator:
 
     def save_to_file(self, data, filename):
         with open(filename, 'w') as f:
-            f.write(
-                data if isinstance(data, str) else json.dumps(data, indent=4))
-
-    def extract_json(self, text):
-        try:
-            # Find JSON string within the text
-            json_str = re.search(r'\{.*\}', text, re.DOTALL).group()
-            return json.loads(json_str)
-        except Exception as e:
-            return None
-
+            f.write(data)
 
 if __name__ == "__main__":
     text_generator = TextGenerator()
-    output_dir = 'boostrap_outputs'
+    output_dir = 'raw_bootstrap_outputs'
     os.makedirs(output_dir, exist_ok=True)
     num_runs = 100
 
@@ -58,26 +45,15 @@ if __name__ == "__main__":
         response_content = text_generator.prompt()
 
         if response_content:
-            extracted_json = text_generator.extract_json(response_content)
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = os.path.join(output_dir,
-                                    f'{i + 1}_bootstrap_output_{timestamp}.json')
-
-            if extracted_json:
-                text_generator.save_to_file(extracted_json, filename)
-                print(
-                    f"Validation: Successfully Received and Saved JSON as {filename}")
-            else:
-                text_generator.save_to_file(response_content, filename)
-                print(
-                    f"Validation: Successfully Received Output but with Incorrect Format. Saved as {filename}")
+            filename = os.path.join(output_dir, f'{i + 1}_output_{timestamp}.txt')
+            text_generator.save_to_file(response_content, filename)
+            print(f"Output saved as {filename}")
         else:
-            print(
-                f"Prompt {i + 1} failed to generate output. Continuing to next prompt.")
+            print(f"Prompt {i + 1} failed to generate output.")
 
         if i < num_runs - 1:
-            print(
-                f"Completed run {i + 1}. Running next prompt after a 1s delay...")
+            print(f"Completed run {i + 1}. Running next prompt after a 1s delay...")
             time.sleep(1)
         else:
             print("All prompts completed.")
