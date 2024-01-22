@@ -101,9 +101,15 @@ organisation = {
     }
 }
 
+Simple Trait Pairs (Pos, Neg):
+1. Ambitious, Lazy
+2. Cheerful, Sad
+3. Friendly, Unfriendly
+4. Clumsy, Graceful
+5. Creative, Unimaginative
 
 
-Traits form sims:
+Traits from SIMS:
 Ambitious
 Cheerful
 Childish
@@ -113,6 +119,28 @@ erratic
 self-Assured
 Rude
 Stubborn
+
+Traits from Gen Agents:
+Organised
+Detail-Oriented
+Logical
+Enthusiastic
+Loud
+Resourceful
+Imaginative
+Driven
+Pragmatic
+Hardworking
+Aggressive
+Rude
+Determined
+Energetic
+Friendly
+Generous
+Toxic
+Intellectual
+Outgoing
+Nurturing
 
 other traits:
 ...
