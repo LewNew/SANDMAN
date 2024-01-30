@@ -1,0 +1,40 @@
+{
+    "schedule": [
+        {
+            "time": "",
+            "task": "Start"
+        },
+        {
+            "time": "08:00",
+            "task": "Email"
+        },
+        {
+            "time": "09:00",
+            "task": "Work"
+        },
+        {
+            "time": "12:00",
+            "task": "Lunch"
+        },
+        {
+            "time": "13:00",
+            "task": "Meeting"
+        },
+        {
+            "time": "14:00",
+            "task": "Work"
+        },
+        {
+            "time": "16:00",
+            "task": "Call"
+        },
+        {
+            "time": "17:00",
+            "task": "Break"
+        },
+        {
+            "time": "",
+            "task": "End"
+        }
+    ]
+}

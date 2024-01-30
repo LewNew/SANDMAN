@@ -1,17 +1,3 @@
-'''
-
-RUN THIS SCRIPT ONCE YOU HAVE RUN THE BOOTSTRAP EXPERIMENT AND HAVE THE RAW OUTPUTS
-
-Raw Boostrap Outputs are stored in /raw_bootstrap_outputs as .txt files
-These save the raw outputs from the GPT model. Some are correctly formatted
-as JSON, whereas others contain fluff text that needs to be removed.
-
-THIS SCRIPT SOLELY PARSES THE RAW OUTPUTS INTO JSON FILES
-RAW INPUT DIRECTORY: raw_bootstrap_outputs
-JSON OUTPUT DIRECTORY: raw_bootstrap_parsed_outputs
-
-'''
-
 import json
 import os
 import re
@@ -27,7 +13,10 @@ def process_files(input_directory, output_directory):
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
-    for filename in os.listdir(input_directory):
+    # Get a list of files sorted by their names
+    files_to_process = sorted(os.listdir(input_directory), key=lambda x: int(x.split('_')[0]))
+
+    for filename in files_to_process:
         if filename.endswith('.txt'):
             print(f"Processing file: {filename}")
             with open(os.path.join(input_directory, filename), 'r') as file:
@@ -42,13 +31,8 @@ def process_files(input_directory, output_directory):
                     print(f"Error processing {filename}: {error}")
 
 # Replace 'raw_bootstrap_outputs' with your input directory name
-input_directory = 'raw_bootstrap_outputs'
+input_directory = 'feminine_output_raw'
 # Output directory
-output_directory = 'raw_bootstrap_parsed_outputs'
+output_directory = 'feminine_output_raw_parsed'
 
 process_files(input_directory, output_directory)
-
-
-
-
-

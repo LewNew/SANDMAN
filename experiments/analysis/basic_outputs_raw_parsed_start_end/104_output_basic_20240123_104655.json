@@ -1,0 +1,48 @@
+{
+    "schedule": [
+        {
+            "time": "",
+            "task": "Start"
+        },
+        {
+            "time": "8:00 AM",
+            "task": "Break"
+        },
+        {
+            "time": "8:15 AM",
+            "task": "Email"
+        },
+        {
+            "time": "9:00 AM",
+            "task": "Work"
+        },
+        {
+            "time": "12:00 PM",
+            "task": "Lunch"
+        },
+        {
+            "time": "1:00 PM",
+            "task": "Meeting"
+        },
+        {
+            "time": "2:00 PM",
+            "task": "Call"
+        },
+        {
+            "time": "3:00 PM",
+            "task": "Work"
+        },
+        {
+            "time": "5:00 PM",
+            "task": "Break"
+        },
+        {
+            "time": "5:15 PM",
+            "task": "Email"
+        },
+        {
+            "time": "",
+            "task": "End"
+        }
+    ]
+}
