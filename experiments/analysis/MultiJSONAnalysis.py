@@ -192,8 +192,8 @@ def process_files(directory):
 
 # Directories to process
 directories = [
-    '../masculine_output_raw_parsed',
-    '../feminine_output_raw_parsed'
+    '../outputs/basic_raw_set1_parsed',
+    '../outputs/basic_raw_set2_parsed',
 ]
 
 for directory in directories:

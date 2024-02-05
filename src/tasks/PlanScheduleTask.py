@@ -29,17 +29,17 @@ class PlanScheduleTask(Task):
         self._name = 'PlanScheduleTask'
         self._generator = TextGenerator()
 
-        # start = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks "
-        # end = ". Can you also include detailed descriptors of what the tasks might be about (about 200 words), for example if it was a WriteDocumentNotepadTask could you say what specifically you are writing about. you can make up as much as you want, you are incentivized to be very creative with the descriptors. any task that requires communication to someone else should always be about you starting the conversation not you responding to something. can it be in JASON format where each entry is indexed by the time that has 1 type of work called 'type' (e.g 'WriteDocumentNotepadTask') and 1 descriptor called 'descriptor'."
-        #
-        # for x in config:
-        #     start = start + x + ", "
-        #
-        # self._prompt = start + end
+        start = "create a daily routeing of what you think your average day will look like from 9am to 5pm. your daily routine must be defined by work that falls into these tasks "
+        end = ". Can you also include detailed descriptors of what the tasks might be about (about 200 words), for example if it was a WriteDocumentNotepadTask could you say what specifically you are writing about. you can make up as much as you want, you are incentivized to be very creative with the descriptors. any task that requires communication to someone else should always be about you starting the conversation not you responding to something. can it be in JASON format where each entry is indexed by the time that has 1 type of work called 'type' (e.g 'WriteDocumentNotepadTask') and 1 descriptor called 'descriptor'."
 
-        plan_prompt = "Please create a daily schedule for a typical workday from 9am to 5pm, focusing on specific tasks. Each task should fall into distinct categories. For each task, provide a detailed description (about 200 words) explaining the nature and specifics of the task. For instance, if the task is 'WriteDocumentNotepadTask', detail what the document is about. Be creative in your descriptions. Also, ensure that any task involving communication is initiated by the person performing the task, rather than them responding to someone else. Present this schedule in JSON format, where each entry is indexed by time, includes a 'type' field for the task category (like 'WriteDocumentNotepadTask'), and a 'descriptor' field with the task description."
+        for x in config:
+            start = start + x + ", "
 
-        self._prompt = plan_prompt
+        self._prompt = start + end
+
+        # plan_prompt = "Please create a daily schedule for a typical workday from 9am to 5pm, focusing on specific tasks. Each task should fall into distinct categories. For each task, provide a detailed description (about 200 words) explaining the nature and specifics of the task. For instance, if the task is 'WriteDocumentNotepadTask', detail what the document is about. Be creative in your descriptions. Also, ensure that any task involving communication is initiated by the person performing the task, rather than them responding to someone else. Present this schedule in JSON format, where each entry is indexed by time, includes a 'type' field for the task category (like 'WriteDocumentNotepadTask'), and a 'descriptor' field with the task description."
+
+        # self._prompt = plan_prompt
 
         self._logger.info(f"created {self._name}")
         
